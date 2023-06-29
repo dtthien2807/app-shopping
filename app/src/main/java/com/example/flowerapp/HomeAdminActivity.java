@@ -20,6 +20,8 @@ public class HomeAdminActivity extends AppCompatActivity {
     }
 
     public void getListProduct(View view) {
+        Intent intent = new Intent(this, ProductAdminActivity.class);
+        startActivity(intent);
     }
 
     public void getListOrder(View view) {
