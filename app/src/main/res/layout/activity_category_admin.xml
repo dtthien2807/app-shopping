@@ -141,5 +141,15 @@
         app:layout_constraintStart_toEndOf="@+id/textView11"
         app:srcCompat="@drawable/add_icon_png_0"
         tools:layout_editor_absoluteY="9dp" />
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_nav"
+        android:layout_width="match_parent"
+        android:layout_height="65dp"
+        android:layout_alignParentBottom="true"
+        android:background="#B5F8A8C1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:menu="@menu/bottom_nav_admin" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
