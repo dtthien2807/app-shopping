@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".HomeActivity">
+
+    <LinearLayout
+        android:id="@+id/ll_search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:padding="5dp"
+        android:background="@drawable/search_style"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toStartOf="@+id/scrollView_home"
+        app:layout_constraintStart_toEndOf="@+id/scrollView_home"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <EditText
+            android:id="@+id/et_search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Search for love........."
+            android:textColorHint="#ffffff"></EditText>
+
+        <Button
+            android:id="@+id/btn_search"
+            android:layout_width="61dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="30dp"
+            android:backgroundTint="#F6EDED"
+            app:icon="@android:drawable/ic_search_category_default"
+            app:iconTint="#F8B5B5"></Button>
+    </LinearLayout>
+
+    <ScrollView
+        android:id="@+id/scrollView_home"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ll_search">
+
+        <LinearLayout
+            android:id="@+id/ll_main_home"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tượng trưng"
+                android:textSize="25dp"></TextView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Hãy chọn để khám phá ý nghĩa!"
+                android:textSize="15dp"></TextView>
+
+            <ViewFlipper
+                android:layout_width="match_parent"
+                android:layout_height="200dp"></ViewFlipper>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sự kiện"
+                android:textSize="25dp"></TextView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Hãy chọn để khám phá ý nghĩa!"
+                android:textSize="15dp"></TextView>
+
+            <ViewFlipper
+                android:layout_width="match_parent"
+                android:layout_height="200dp"></ViewFlipper>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Ngày lễ"
+                android:textSize="25dp"></TextView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Hãy chọn để khám phá ý nghĩa!"
+                android:textSize="15dp"></TextView>
+
+            <ViewFlipper
+                android:layout_width="match_parent"
+                android:layout_height="200dp"></ViewFlipper>
+        </LinearLayout>
+    </ScrollView>
+
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_nav"
+        android:layout_width="match_parent"
+        android:layout_height="65dp"
+        android:background="#B5F8A8C1"
+        android:layout_alignParentBottom="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:menu="@menu/bottom_nav"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
