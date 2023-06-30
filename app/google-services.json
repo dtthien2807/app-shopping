@@ -1,0 +1,69 @@
+{
+  "project_info": {
+    "project_number": "159211228918",
+    "firebase_url": "https://btlandroidnangcao-168c7-default-rtdb.firebaseio.com",
+    "project_id": "btlandroidnangcao-168c7",
+    "storage_bucket": "btlandroidnangcao-168c7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:159211228918:android:c7d8f19183d338db7ae6d7",
+        "android_client_info": {
+          "package_name": "com.example.flowerapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "159211228918-qooli07lgul7vv355c9mjdp5vs6a0gg4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBBWRGr-0uacS9X2GnmbNFZPEXfGA9nbvA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "159211228918-qooli07lgul7vv355c9mjdp5vs6a0gg4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:159211228918:android:ccd6adc25793fccb7ae6d7",
+        "android_client_info": {
+          "package_name": "com.example.maytinhbotui"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "159211228918-qooli07lgul7vv355c9mjdp5vs6a0gg4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBBWRGr-0uacS9X2GnmbNFZPEXfGA9nbvA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "159211228918-qooli07lgul7vv355c9mjdp5vs6a0gg4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
