@@ -25,6 +25,8 @@ public class HomeAdminActivity extends AppCompatActivity {
     }
 
     public void getListOrder(View view) {
+        Intent intent = new Intent(this, OrderAdminActivity.class);
+        startActivity(intent);
     }
 
     public void getListUser(View view) {
