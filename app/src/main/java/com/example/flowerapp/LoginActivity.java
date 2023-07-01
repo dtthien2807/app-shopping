@@ -82,17 +82,24 @@ public class LoginActivity extends AppCompatActivity{
         }
     }
     public void checkUser(){
-        String userUsername = txtNumberphone.getText().toString();
+        String userNumberphone = txtNumberphone.getText().toString();
         String userPassword = txtPassword.getText().toString();
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("User");
         reference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.hasChild(userUsername)) {
-                    final String passwordFromDB = snapshot.child(userUsername).child("password").getValue(String.class);
+                if (snapshot.hasChild(userNumberphone)) {
+                    final String passwordFromDB = snapshot.child(userNumberphone).child("password").getValue(String.class);
+                    Boolean checkRole = snapshot.child(userNumberphone).child("role").getValue(Boolean.class);
                     if (passwordFromDB.equals(userPassword)) {
-                        Toast.makeText(LoginActivity.this, "You have login successfully!", Toast.LENGTH_SHORT).show();
-                        openHomeActivity();
+                        if (checkRole){
+                            Toast.makeText(LoginActivity.this, "You have login successfully!", Toast.LENGTH_SHORT).show();
+                            openAdminActivity();
+                        }
+                        else {
+                            Toast.makeText(LoginActivity.this, "You have login successfully!", Toast.LENGTH_SHORT).show();
+                            openHomeActivity();
+                        }
                     } else {
                         txtPassword.setError("Invalid Credentials");
                         txtPassword.requestFocus();
@@ -111,6 +118,10 @@ public class LoginActivity extends AppCompatActivity{
     }
     public void openHomeActivity(){
         Intent intent = new Intent(this, HomeActivity.class);
+        startActivity(intent);
+    }
+    public void openAdminActivity(){
+        Intent intent = new Intent(this, HomeAdminActivity.class);
         startActivity(intent);
     }
 }
