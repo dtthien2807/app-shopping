@@ -3,15 +3,19 @@ package com.example.flowerapp;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.example.flowerapp.Entity.User;
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
@@ -20,7 +24,7 @@ import com.google.firebase.database.ValueEventListener;
 public class LoginActivity extends AppCompatActivity{
     private Button btnRegister, btnLogin;
     private ProgressBar progressbar;
-    private EditText txtUsername, txtPassword;
+    private EditText txtNumberphone, txtPassword;
     FirebaseDatabase database;
     DatabaseReference reference;
     @Override
@@ -30,7 +34,7 @@ public class LoginActivity extends AppCompatActivity{
 
         btnRegister = findViewById(R.id.register);
         btnLogin = findViewById(R.id.login);
-        txtUsername = findViewById(R.id.username);
+        txtNumberphone = findViewById(R.id.numberphone);
         txtPassword = findViewById(R.id.password);
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
@@ -38,6 +42,10 @@ public class LoginActivity extends AppCompatActivity{
             public void onClick(View v) {
                 if (!validateUsername() | !validatePassword()) {
                 }
+                else {
+                    checkUser();
+                }
+
             }
         });
         btnRegister.setOnClickListener(new View.OnClickListener() {
@@ -54,12 +62,12 @@ public class LoginActivity extends AppCompatActivity{
         startActivity(intent);
     }
     public Boolean validateUsername() {
-        String val = txtUsername.getText().toString();
+        String val = txtNumberphone.getText().toString();
         if (val.isEmpty()) {
-            txtUsername.setError("Username cannot be empty");
+            txtNumberphone.setError("Username cannot be empty");
             return false;
         } else {
-            txtUsername.setError(null);
+            txtNumberphone.setError(null);
             return true;
         }
     }
@@ -73,38 +81,36 @@ public class LoginActivity extends AppCompatActivity{
             return true;
         }
     }
-//    public void checkUser(){
-//        String userUsername = txtUsername.getText().toString().trim();
-//        String userPassword = txtPassword.getText().toString().trim();
-//        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("User");
-//        Query checkUserDatabase = reference.orderByChild("username").equalTo(userUsername);
-//        checkUserDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                if (snapshot.exists()) {
-//                    txtUsername.setError(null);
-//                    String passwordFromDB = snapshot.child(userUsername).child("password").getValue(String.class);
-//                    if (passwordFromDB.equals(userPassword)) {
-//                        txtUsername.setError(null);
-//                        String nameFromDB = snapshot.child(userUsername).child("name").getValue(String.class);
-//                        String emailFromDB = snapshot.child(userUsername).child("email").getValue(String.class);
-//                        String usernameFromDB = snapshot.child(userUsername).child("username").getValue(String.class);
-//                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-//                        intent.putExtra("name", nameFromDB);
-//                        intent.putExtra("email", emailFromDB);
-//                        intent.putExtra("username", usernameFromDB);
-//                        intent.putExtra("password", passwordFromDB);
-//                        startActivity(intent);
-//                    } else {
-//                        txtPassword.setError("Invalid Credentials");
-//                        txtPassword.requestFocus();
-//                    }
-//                } else {
-//                    txtUsername.setError("User does not exist");
-//                    txtUsername.requestFocus();
-//                }
-//            }
-//        });
-//    }
+    public void checkUser(){
+        String userUsername = txtNumberphone.getText().toString();
+        String userPassword = txtPassword.getText().toString();
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("User");
+        reference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.hasChild(userUsername)) {
+                    final String passwordFromDB = snapshot.child(userUsername).child("password").getValue(String.class);
+                    if (passwordFromDB.equals(userPassword)) {
+                        Toast.makeText(LoginActivity.this, "You have login successfully!", Toast.LENGTH_SHORT).show();
+                        openHomeActivity();
+                    } else {
+                        txtPassword.setError("Invalid Credentials");
+                        txtPassword.requestFocus();
+                    }
+                } else {
+                    txtNumberphone.setError("User does not exist");
+                    txtNumberphone.requestFocus();
+                }
+            }
 
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+    public void openHomeActivity(){
+        Intent intent = new Intent(this, HomeActivity.class);
+        startActivity(intent);
+    }
 }
