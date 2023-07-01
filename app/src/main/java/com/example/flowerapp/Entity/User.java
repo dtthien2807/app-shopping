@@ -1,23 +1,27 @@
 package com.example.flowerapp.Entity;
 
 import java.sql.Date;
+import java.time.LocalDate;
 
 public class User {
     private String username;
     private String fullname;
     private String password;
     private String address;
+    private String numberphone;
     private boolean role;
-    private Date created_at;
+    private String created_at;
     private boolean status;
-    private String id_user;
 
-    public String getId_user() {
-        return id_user;
-    }
-
-    public void setId_user(String id_user) {
-        this.id_user = id_user;
+    public User(String username, String fullname, String password, String address, boolean role, boolean status, String numberphone, String created_at) {
+        this.username = username;
+        this.fullname = fullname;
+        this.password = password;
+        this.address = address;
+        this.role = role;
+        this.status = status;
+        this.numberphone = numberphone;
+        this.created_at = created_at;
     }
 
     public String getUsername() {
@@ -60,11 +64,11 @@ public class User {
         this.role = role;
     }
 
-    public Date getCreated_at() {
+    public String getCreated_at() {
         return created_at;
     }
 
-    public void setCreated_at(Date created_at) {
+    public void setCreated_at(String created_at) {
         this.created_at = created_at;
     }
 
@@ -74,6 +78,14 @@ public class User {
 
     public void setStatus(boolean status) {
         this.status = status;
+    }
+
+    public String getNumberphone() {
+        return numberphone;
+    }
+
+    public void setNumberphone(String numberphone) {
+        this.numberphone = numberphone;
     }
 
 }
