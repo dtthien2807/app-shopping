@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 public class HomeAdminActivity extends AppCompatActivity {
 
@@ -41,5 +42,8 @@ public class HomeAdminActivity extends AppCompatActivity {
     }
 
     public void signOut(View view) {
+        Toast.makeText(this, "You have logged out successful!", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
     }
 }
