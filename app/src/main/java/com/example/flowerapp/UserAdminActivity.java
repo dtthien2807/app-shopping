@@ -55,7 +55,8 @@ public class UserAdminActivity extends AppCompatActivity {
                     for(DataSnapshot studentsnapshot : dataSnapshot.getChildren())
                     {
                         Boolean checkRole = studentsnapshot.child("role").getValue(Boolean.class);
-                        if(!checkRole)
+                        Boolean checkStatus = studentsnapshot.child("status").getValue(Boolean.class);
+                        if(!checkRole && checkStatus)
                         {
                             User user = studentsnapshot.getValue(User.class);
                             userList.add(user);

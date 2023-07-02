@@ -11,10 +11,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.android.volley.toolbox.ImageLoader;
 import com.example.flowerapp.Entity.Flower;
 import com.example.flowerapp.R;
-import com.android.volley.toolbox.NetworkImageView;
 
 import java.util.List;
 
