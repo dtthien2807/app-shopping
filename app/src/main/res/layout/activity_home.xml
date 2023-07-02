@@ -14,9 +14,9 @@
         android:padding="5dp"
         android:background="@drawable/search_style"
         android:gravity="center"
-        android:orientation="horizontal"
         app:layout_constraintEnd_toStartOf="@+id/scrollView_home"
         app:layout_constraintStart_toEndOf="@+id/scrollView_home"
+        android:orientation="horizontal"
         app:layout_constraintTop_toTopOf="parent">
 
         <EditText
@@ -24,6 +24,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="Search for love........."
+            android:minHeight="48dp"
             android:textColorHint="#ffffff"></EditText>
 
         <Button
@@ -33,7 +34,9 @@
             android:layout_marginLeft="30dp"
             android:backgroundTint="#F6EDED"
             app:icon="@android:drawable/ic_search_category_default"
-            app:iconTint="#F8B5B5"></Button>
+            app:iconTint="#F8B5B5"
+            tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck"></Button>
+
     </LinearLayout>
 
     <ScrollView
@@ -45,60 +48,75 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ll_search">
 
-        <LinearLayout
-            android:id="@+id/ll_main_home"
+<!--        <LinearLayout-->
+<!--            android:id="@+id/ll_main_home"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:orientation="vertical">-->
+
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="Tượng trưng"-->
+<!--                android:textSize="25dp"-->
+<!--                android:textStyle="bold"></TextView>-->
+
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="Hãy chọn để khám phá ý nghĩa!"-->
+<!--                android:textSize="15dp"-->
+<!--                tools:ignore="TextSizeCheck"></TextView>-->
+
+<!--            <HorizontalScrollView-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent"/>-->
+
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="Sự kiện"-->
+<!--                android:textSize="25dp"-->
+<!--                android:textStyle="bold"></TextView>-->
+
+<!--            <ListView-->
+<!--                android:id="@+id/lst_sukien"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent" />-->
+
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="Hãy chọn để khám phá ý nghĩa!"-->
+<!--                android:textSize="15dp"-->
+<!--                tools:ignore="TextSizeCheck"></TextView>-->
+
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="Ngày lễ"-->
+<!--                android:textSize="25dp"-->
+<!--                android:textStyle="bold"></TextView>-->
+
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="Hãy chọn để khám phá ý nghĩa!"-->
+<!--                android:textSize="15dp"-->
+<!--                tools:ignore="TextSizeCheck"></TextView>-->
+
+<!--            <ListView-->
+<!--                android:id="@+id/lst_ngayle"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent" />-->
+
+<!--        </LinearLayout>-->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rcyCategoryxml"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Tượng trưng"
-                android:textSize="25dp"></TextView>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Hãy chọn để khám phá ý nghĩa!"
-                android:textSize="15dp"></TextView>
-
-            <ViewFlipper
-                android:layout_width="match_parent"
-                android:layout_height="200dp"></ViewFlipper>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Sự kiện"
-                android:textSize="25dp"></TextView>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Lựa chọn phù hợp cho sự kiện"
-                android:textSize="15dp"></TextView>
-
-            <ViewFlipper
-                android:layout_width="match_parent"
-                android:layout_height="200dp"></ViewFlipper>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Ngày lễ"
-                android:textSize="25dp"></TextView>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Lựa chọn phù hợp cho các ngày lễ"
-                android:textSize="15dp"></TextView>
-
-            <ViewFlipper
-                android:layout_width="match_parent"
-                android:layout_height="200dp"></ViewFlipper>
-        </LinearLayout>
+            android:layout_height="wrap_content"
+            android:layout_marginTop="0dp"
+            android:paddingTop="0dp" />
     </ScrollView>
 
 
@@ -106,11 +124,11 @@
         android:id="@+id/bottom_nav"
         android:layout_width="match_parent"
         android:layout_height="65dp"
-        android:background="#B5F8A8C1"
         android:layout_alignParentBottom="true"
+        android:background="#B5F8A8C1"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:menu="@menu/bottom_nav"/>
+        app:menu="@menu/bottom_nav" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

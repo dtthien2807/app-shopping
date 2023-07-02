@@ -1,23 +1,34 @@
 package com.example.flowerapp.Entity;
 
-import java.sql.Date;
+import java.util.Date;
 
-public class Product {
-    public int getId_product() {
-        return id_product;
-    }
+public class Flower {
+    private String url;
+    private  String name;
+    private String description;
+    private  float price;
+    private float quantity;
+    private Date created_at;
 
-    public void setId_product(int id_product) {
-        this.id_product = id_product;
+    public Flower(String url, String name, String description, float price, float quantity, Date created_at, boolean status) {
+        this.url = url;
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.quantity = quantity;
+        this.created_at = created_at;
+        this.status = status;
     }
-
-    public int getId_category() {
-        return id_category;
+    public Flower() {
+        this.url = "";
+        this.name = "name";
+        this.description = "description";
+        this.price = 0;
+        this.quantity = 0;
+        this.created_at = new Date() ;
+        this.status = true;
     }
-
-    public void setId_category(int id_category) {
-        this.id_category = id_category;
-    }
+    private boolean status;
 
     public String getName() {
         return name;
@@ -67,12 +78,11 @@ public class Product {
         this.status = status;
     }
 
-    private  int id_product;
-    private  int id_category;
-    private  String name;
-    private String description;
-    private  float price;
-    private float quantity;
-    private Date created_at;
-    private boolean status;
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
 }

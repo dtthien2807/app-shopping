@@ -1,15 +1,27 @@
 package com.example.flowerapp.Entity;
 
-public class Category {
-        private int id_catetory;
-        private String name_catetory;
-        public int getId_catetory() {
-            return id_catetory;
-        }
+import java.util.List;
 
-        public void setId_catetory(int id_catetory) {
-            this.id_catetory = id_catetory;
-        }
+public class Category {
+    public Category(String name_catetory, List<Flower> lstFlower) {
+        this.name_catetory = name_catetory;
+        this.lstFlower = lstFlower;
+    }
+    public Category() {
+        this.name_catetory = "demo";
+        this.lstFlower = lstFlower;
+    }
+    private String name_catetory;
+        private List<Flower> lstFlower;
+    public List<Flower> getLstImage() {
+        return lstFlower;
+    }
+
+    public void setLstImage(List<Flower> lstFlower) {
+        this.lstFlower = lstFlower;
+    }
+
+
 
         public String getName_catetory() {
             return name_catetory;
