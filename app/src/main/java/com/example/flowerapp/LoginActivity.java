@@ -91,14 +91,34 @@ public class LoginActivity extends AppCompatActivity{
                 if (snapshot.hasChild(userNumberphone)) {
                     final String passwordFromDB = snapshot.child(userNumberphone).child("password").getValue(String.class);
                     Boolean checkRole = snapshot.child(userNumberphone).child("role").getValue(Boolean.class);
+                    String usernameFromDB = snapshot.child(userNumberphone).child("username").getValue(String.class);
+                    String fullnameFromDB = snapshot.child(userNumberphone).child("fullname").getValue(String.class);
+                    String addressFromDB = snapshot.child(userNumberphone).child("address").getValue(String.class);
+                    Boolean checkStatus = snapshot.child(userNumberphone).child("status").getValue(Boolean.class);
                     if (passwordFromDB.equals(userPassword)) {
-                        if (checkRole){
-                            Toast.makeText(LoginActivity.this, "You have login successfully!", Toast.LENGTH_SHORT).show();
-                            openAdminActivity();
+                        if(checkStatus) {
+                            if (checkRole) {
+                                Toast.makeText(LoginActivity.this, "You have login successfully!", Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(LoginActivity.this, HomeAdminActivity.class);
+                                intent.putExtra("numberphone", userNumberphone);
+                                intent.putExtra("username", usernameFromDB);
+                                intent.putExtra("fullname", fullnameFromDB);
+                                intent.putExtra("password", passwordFromDB);
+                                intent.putExtra("address", addressFromDB);
+                                startActivity(intent);
+                            } else {
+                                Toast.makeText(LoginActivity.this, "You have login successfully!", Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                                intent.putExtra("numberphone", userNumberphone);
+                                intent.putExtra("username", usernameFromDB);
+                                intent.putExtra("fullname", fullnameFromDB);
+                                intent.putExtra("password", passwordFromDB);
+                                intent.putExtra("address", addressFromDB);
+                                startActivity(intent);
+                            }
                         }
                         else {
-                            Toast.makeText(LoginActivity.this, "You have login successfully!", Toast.LENGTH_SHORT).show();
-                            openHomeActivity();
+                            Toast.makeText(LoginActivity.this, "Your account have been locked! Call admin by hotline", Toast.LENGTH_SHORT).show();
                         }
                     } else {
                         txtPassword.setError("Invalid Credentials");
@@ -115,13 +135,5 @@ public class LoginActivity extends AppCompatActivity{
 
             }
         });
-    }
-    public void openHomeActivity(){
-        Intent intent = new Intent(this, HomeActivity.class);
-        startActivity(intent);
-    }
-    public void openAdminActivity(){
-        Intent intent = new Intent(this, HomeAdminActivity.class);
-        startActivity(intent);
     }
 }
