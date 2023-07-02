@@ -76,7 +76,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Hãy chọn để khám phá ý nghĩa!"
+                android:text="Lựa chọn phù hợp cho sự kiện"
                 android:textSize="15dp"></TextView>
 
             <ViewFlipper
@@ -92,7 +92,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Hãy chọn để khám phá ý nghĩa!"
+                android:text="Lựa chọn phù hợp cho các ngày lễ"
                 android:textSize="15dp"></TextView>
 
             <ViewFlipper
