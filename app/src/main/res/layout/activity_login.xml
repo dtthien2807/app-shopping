@@ -24,13 +24,13 @@
             app:srcCompat="@android:drawable/ic_menu_revert" />
 
         <EditText
-            android:id="@+id/username"
+            android:id="@+id/numberphone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
-            android:autofillHints="@string/prompt_email"
+            android:autofillHints="@string/prompt_numberphone"
             android:padding="8dp"
-            android:hint="@string/prompt_email"
+            android:hint="@string/prompt_numberphone"
             android:selectAllOnFocus="true" />
 
         <EditText
