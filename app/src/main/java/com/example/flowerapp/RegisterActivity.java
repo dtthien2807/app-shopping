@@ -68,6 +68,11 @@ public class RegisterActivity extends AppCompatActivity {
                                 reference.child(numberphone).setValue(user);
                                 Toast.makeText(RegisterActivity.this, "You have signup successfully!", Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(RegisterActivity.this, HomeActivity.class);
+                                intent.putExtra("numberphone", numberphone);
+                                intent.putExtra("username", username);
+                                intent.putExtra("fullname", fullname);
+                                intent.putExtra("password", password);
+                                intent.putExtra("address", address);
                                 startActivity(intent);
                             }
                         }

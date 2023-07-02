@@ -2,6 +2,8 @@ package com.example.flowerapp.Entity;
 
 import java.sql.Date;
 import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.Map;
 
 public class User {
     private String username;
@@ -12,6 +14,7 @@ public class User {
     private boolean role;
     private String created_at;
     private boolean status;
+    public User(){}
 
     public User(String username, String fullname, String password, String address, boolean role, boolean status, String numberphone, String created_at) {
         this.username = username;
@@ -87,5 +90,10 @@ public class User {
     public void setNumberphone(String numberphone) {
         this.numberphone = numberphone;
     }
+    public Map<String, Object> toMap(){
+        HashMap<String,Object> result = new HashMap<>();
+        result.put("status", status);
 
+        return result;
+    }
 }

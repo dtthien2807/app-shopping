@@ -13,13 +13,20 @@
         android:theme="@style/Theme.FlowerApp"
         tools:targetApi="31">
         <activity
-            android:name=".OptionAddActivity"
-            android:exported="false" >
+            android:name=".UserAdminActivity"
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
+            android:name=".OptionAddActivity"
+            android:exported="false"></activity>
+        <activity
             android:name=".HomeActivity"
-            android:exported="false">
-        </activity>
+            android:exported="false"></activity>
         <activity
             android:name=".OrderAdminActivity"
             android:exported="false" />
@@ -31,16 +38,11 @@
             android:exported="false" />
         <activity
             android:name=".HomeAdminActivity"
-            android:exported="false">
-        </activity>
+            android:exported="false"></activity>
         <activity
             android:name=".LoginActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+            android:exported="false">
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name=".MainActivity" />
         <activity android:name=".RegisterActivity" />

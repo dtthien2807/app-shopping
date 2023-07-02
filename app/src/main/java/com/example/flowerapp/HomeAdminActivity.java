@@ -30,6 +30,8 @@ public class HomeAdminActivity extends AppCompatActivity {
     }
 
     public void getListUser(View view) {
+        Intent intent = new Intent(this, UserAdminActivity.class);
+        startActivity(intent);
     }
 
     public void getListImage(View view) {
