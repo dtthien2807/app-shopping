@@ -5,6 +5,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -33,6 +34,7 @@ public class CategoryAdminActivity extends AppCompatActivity {
     DatabaseReference databasecategory;
     ListView categoryListView;
     List<Category> categoryList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,7 +87,7 @@ public class CategoryAdminActivity extends AppCompatActivity {
         Button btn_edit = dialog.findViewById(R.id.btn_edit);
         Button btn_cancel = dialog.findViewById(R.id.btn_cancel);
         EditText txtName = dialog.findViewById(R.id.txtName);
-
+        txtName.setText(category.getName_category());
         btn_cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -109,5 +111,52 @@ public class CategoryAdminActivity extends AppCompatActivity {
             }
         });
         dialog.show();
+    }
+
+    public void openDialogAddNew(View view) {
+        final Dialog dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.layout_dialog_add_category);
+        Window window = dialog.getWindow();
+        window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+        window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.setCancelable(false);
+
+        Button btn_add = dialog.findViewById(R.id.btn_add);
+        Button btn_cancel = dialog.findViewById(R.id.btn_cancel);
+        EditText txtName = dialog.findViewById(R.id.txtName);
+        btn_cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        btn_add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                databasecategory = FirebaseDatabase.getInstance().getReference("Cate_Flower");
+                String key = databasecategory.push().getKey();
+                databasecategory.child(key).removeValue();
+                String newName = txtName.getText().toString().trim();
+                databasecategory.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        Category category = new Category();
+                        category.setId_category(key);
+                        category.setName_category(newName);
+                        databasecategory.child(key).setValue(category);
+                        Toast.makeText(CategoryAdminActivity.this, "You have add successfully!", Toast.LENGTH_SHORT).show();
+                        dialog.dismiss();
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+            }
+        });
+        dialog.show();
+
     }
 }
