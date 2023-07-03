@@ -231,6 +231,7 @@ public class OptionAddActivity extends AppCompatActivity {
                 List<Category> lstCate = new ArrayList<>();
                 for (DataSnapshot categorySnapshot : dataSnapshot.getChildren()) {
                     String title = categorySnapshot.child("name_category").getValue(String.class);
+                    String id = categorySnapshot.child("id_category").getValue(String.class);
                     List<Flower> lstFlower = new ArrayList<>();
                     DataSnapshot flowerSnapshot = categorySnapshot.child("Flower");
                     for (DataSnapshot flowerDocument : flowerSnapshot.getChildren()) {
@@ -257,7 +258,7 @@ public class OptionAddActivity extends AppCompatActivity {
                             lstFlower.add(item);
                         }
                     }
-                    Category cate = new Category(title, lstFlower);
+                    Category cate = new Category(id,title, lstFlower);
                     lstCate.add(cate);
                 }
                 listener.onSuccess(lstCate);

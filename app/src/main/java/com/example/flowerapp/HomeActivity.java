@@ -24,10 +24,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -74,6 +70,7 @@ public class HomeActivity extends AppCompatActivity {
                 List<Category> lstCate = new ArrayList<>();
                 for (DataSnapshot categorySnapshot : dataSnapshot.getChildren()) {
                     String title = categorySnapshot.child("name_category").getValue(String.class);
+                    String id = categorySnapshot.child("id_category").getValue(String.class);
                     List<Flower> lstFlower = new ArrayList<>();
                     DataSnapshot flowerSnapshot = categorySnapshot.child("Flower");
                     for (DataSnapshot flowerDocument : flowerSnapshot.getChildren()) {
@@ -95,7 +92,7 @@ public class HomeActivity extends AppCompatActivity {
                         lstFlower.add(item);
 
                     }
-                    Category cate = new Category(title, lstFlower);
+                    Category cate = new Category(id, title, lstFlower);
                     lstCate.add(cate);
                 }
                 listener.onSuccess(lstCate);

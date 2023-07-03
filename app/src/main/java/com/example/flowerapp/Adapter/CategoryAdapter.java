@@ -44,7 +44,7 @@ public class CategoryAdapter  extends RecyclerView.Adapter<CategoryAdapter.Categ
             return;
         }
         //gán tiêu đề tương ứng
-        holder.tvCategory.setText(category.getName_catetory());
+        holder.tvCategory.setText(category.getName_category());
         //Tạo danh sách theo chiều ngang
         LinearLayoutManager linearLayoutManager= new LinearLayoutManager(context,RecyclerView.HORIZONTAL,false);
         //Gán vào RecyleView mình đã custom
