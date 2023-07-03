@@ -108,11 +108,7 @@ public class OptionAddActivity extends AppCompatActivity {
                         addnewitems(getUserID(),"items");
                     }
                 } else {
-                    try {
-                        addneworder();
-                    } catch (ParseException e) {
-                        throw new RuntimeException(e);
-                    }
+
                 }
             }
 
@@ -141,6 +137,7 @@ public class OptionAddActivity extends AppCompatActivity {
                 Order newOrder = new Order();
                 newOrder.setNote("Phải đổi hoa hồng thành hoa cẩm chướng");
                 newOrder.setCreate_at(currentDate);
+
 
         // Tạo một đối tượng Item1 và thiết lập giá trị cho các thuộc tính của nó
         Flower newItem = new Flower();
