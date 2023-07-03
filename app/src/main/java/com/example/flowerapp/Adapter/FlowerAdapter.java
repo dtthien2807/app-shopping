@@ -1,6 +1,7 @@
 package com.example.flowerapp.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.flowerapp.Entity.Flower;
+import com.example.flowerapp.HomeActivity;
+import com.example.flowerapp.Item_Detail_Fragment;
+import com.example.flowerapp.OptionAddActivity;
 import com.example.flowerapp.R;
 
 import java.util.List;
@@ -43,9 +47,17 @@ public class FlowerAdapter  extends RecyclerView.Adapter<FlowerAdapter.FlowerVie
         Resources resources = context.getResources();
         String imageResourceName = product.getUrl();
         int imageResourceId = resources.getIdentifier(imageResourceName, "drawable", context.getPackageName());
-
         holder.imgFlower.setImageResource(imageResourceId);
         holder.title.setText(product.getName());
+        holder.imgFlower.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, OptionAddActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.putExtra("id_flower_pic",product.getId_flower());
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override

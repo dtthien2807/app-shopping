@@ -78,10 +78,11 @@ public class HomeActivity extends AppCompatActivity {
                     DataSnapshot flowerSnapshot = categorySnapshot.child("Flower");
                     for (DataSnapshot flowerDocument : flowerSnapshot.getChildren()) {
                         Flower item = new Flower();
+                        item.setId_flower(flowerDocument.getKey());
                         item.setUrl(flowerDocument.child("url").getValue(String.class));
                         item.setStatus(flowerDocument.child("status").getValue(Boolean.class));
-                          item.setQuantity(flowerDocument.child("quantity").getValue(Long.class));
-                          item.setPrice(flowerDocument.child("price").getValue(Float.class));
+                        item.setQuantity(flowerDocument.child("quantity").getValue(Long.class));
+                        item.setPrice(flowerDocument.child("price").getValue(Float.class));
 //
 //                        try {
 //                            date = format.parse(flowerDocument.child("created_at").getValue(String.class));

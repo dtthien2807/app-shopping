@@ -39,82 +39,14 @@
 
     </LinearLayout>
 
-
     <ScrollView
         android:id="@+id/scrollView_home"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
-        app:layout_constraintBottom_toTopOf="@+id/bottom_nav"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.444"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ll_search"
-        app:layout_constraintVertical_bias="0.0">
-
-        <!--        <LinearLayout-->
-        <!--            android:id="@+id/ll_main_home"-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:orientation="vertical">-->
-
-        <!--            <TextView-->
-        <!--                android:layout_width="wrap_content"-->
-        <!--                android:layout_height="wrap_content"-->
-        <!--                android:text="Tượng trưng"-->
-        <!--                android:textSize="25dp"-->
-        <!--                android:textStyle="bold"></TextView>-->
-
-        <!--            <TextView-->
-        <!--                android:layout_width="wrap_content"-->
-        <!--                android:layout_height="wrap_content"-->
-        <!--                android:text="Hãy chọn để khám phá ý nghĩa!"-->
-        <!--                android:textSize="15dp"-->
-        <!--                tools:ignore="TextSizeCheck"></TextView>-->
-
-        <!--            <HorizontalScrollView-->
-        <!--                android:layout_width="match_parent"-->
-        <!--                android:layout_height="match_parent"/>-->
-
-        <!--            <TextView-->
-        <!--                android:layout_width="wrap_content"-->
-        <!--                android:layout_height="wrap_content"-->
-        <!--                android:text="Sự kiện"-->
-        <!--                android:textSize="25dp"-->
-        <!--                android:textStyle="bold"></TextView>-->
-
-        <!--            <ListView-->
-        <!--                android:id="@+id/lst_sukien"-->
-        <!--                android:layout_width="match_parent"-->
-        <!--                android:layout_height="match_parent" />-->
-
-        <!--            <TextView-->
-        <!--                android:layout_width="wrap_content"-->
-        <!--                android:layout_height="wrap_content"-->
-        <!--                android:text="Hãy chọn để khám phá ý nghĩa!"-->
-        <!--                android:textSize="15dp"-->
-        <!--                tools:ignore="TextSizeCheck"></TextView>-->
-
-        <!--            <TextView-->
-        <!--                android:layout_width="wrap_content"-->
-        <!--                android:layout_height="wrap_content"-->
-        <!--                android:text="Ngày lễ"-->
-        <!--                android:textSize="25dp"-->
-        <!--                android:textStyle="bold"></TextView>-->
-
-        <!--            <TextView-->
-        <!--                android:layout_width="wrap_content"-->
-        <!--                android:layout_height="wrap_content"-->
-        <!--                android:text="Hãy chọn để khám phá ý nghĩa!"-->
-        <!--                android:textSize="15dp"-->
-        <!--                tools:ignore="TextSizeCheck"></TextView>-->
-
-        <!--            <ListView-->
-        <!--                android:id="@+id/lst_ngayle"-->
-        <!--                android:layout_width="match_parent"-->
-        <!--                android:layout_height="match_parent" />-->
-
-        <!--        </LinearLayout>-->
+        app:layout_constraintTop_toBottomOf="@+id/ll_search">
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rcyCategoryxml"
             android:layout_width="match_parent"
@@ -122,6 +54,7 @@
             android:layout_marginTop="0dp"
             android:paddingTop="0dp" />
     </ScrollView>
+
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_nav"

@@ -34,7 +34,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".OrderAdminActivity"
+            android:name=".GiohangActivity"
             android:exported="false" />
         <activity
             android:name=".ProductAdminActivity"
@@ -51,8 +51,8 @@
 
         </activity>
         <activity android:name=".MainActivity" />
+        <activity android:name=".Item_Detail_Fragment" />
         <activity android:name=".RegisterActivity" />
-
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />

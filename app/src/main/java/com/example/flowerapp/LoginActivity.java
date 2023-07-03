@@ -4,7 +4,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -91,34 +93,18 @@ public class LoginActivity extends AppCompatActivity{
                 if (snapshot.hasChild(userNumberphone)) {
                     final String passwordFromDB = snapshot.child(userNumberphone).child("password").getValue(String.class);
                     Boolean checkRole = snapshot.child(userNumberphone).child("role").getValue(Boolean.class);
-                    String usernameFromDB = snapshot.child(userNumberphone).child("username").getValue(String.class);
-                    String fullnameFromDB = snapshot.child(userNumberphone).child("fullname").getValue(String.class);
-                    String addressFromDB = snapshot.child(userNumberphone).child("address").getValue(String.class);
-                    Boolean checkStatus = snapshot.child(userNumberphone).child("status").getValue(Boolean.class);
                     if (passwordFromDB.equals(userPassword)) {
-                        if(checkStatus) {
-                            if (checkRole) {
-                                Toast.makeText(LoginActivity.this, "You have login successfully!", Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(LoginActivity.this, HomeAdminActivity.class);
-                                intent.putExtra("numberphone", userNumberphone);
-                                intent.putExtra("username", usernameFromDB);
-                                intent.putExtra("fullname", fullnameFromDB);
-                                intent.putExtra("password", passwordFromDB);
-                                intent.putExtra("address", addressFromDB);
-                                startActivity(intent);
-                            } else {
-                                Toast.makeText(LoginActivity.this, "You have login successfully!", Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
-                                intent.putExtra("numberphone", userNumberphone);
-                                intent.putExtra("username", usernameFromDB);
-                                intent.putExtra("fullname", fullnameFromDB);
-                                intent.putExtra("password", passwordFromDB);
-                                intent.putExtra("address", addressFromDB);
-                                startActivity(intent);
-                            }
+                        if (checkRole){
+                            Toast.makeText(LoginActivity.this, "You have login successfully!", Toast.LENGTH_SHORT).show();
+                            openAdminActivity();
+                            String id= snapshot.child(userNumberphone).getKey();
+                                    setUserID(snapshot.child(userNumberphone).getKey());
                         }
                         else {
-                            Toast.makeText(LoginActivity.this, "Your account have been locked! Call admin by hotline", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LoginActivity.this, "You have login successfully!", Toast.LENGTH_SHORT).show();
+                            openHomeActivity();
+                            String id1= snapshot.child(userNumberphone).getKey();
+                            setUserID(snapshot.child(userNumberphone).getKey());
                         }
                     } else {
                         txtPassword.setError("Invalid Credentials");
@@ -135,5 +121,28 @@ public class LoginActivity extends AppCompatActivity{
 
             }
         });
+    }
+    public void openHomeActivity(){
+        Intent intent = new Intent(this, HomeActivity.class);
+        startActivity(intent);
+    }
+    public void openAdminActivity(){
+        Intent intent = new Intent(this, HomeAdminActivity.class);
+        startActivity(intent);
+    }
+    public void setUserID(String userID)
+    {
+            // Khởi tạo SharedPreferences
+               SharedPreferences sharedPreferences = getSharedPreferences("MyCookies", Context.MODE_PRIVATE);
+
+            // Tạo một Editor để chỉnh sửa SharedPreferences
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+
+            // Lưu trữ Cookie
+                    editor.putString("userID", userID);
+
+            // Áp dụng các thay đổi
+                    editor.apply();
+
     }
 }
