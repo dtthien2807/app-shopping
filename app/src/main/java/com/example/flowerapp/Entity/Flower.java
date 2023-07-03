@@ -1,8 +1,9 @@
 package com.example.flowerapp.Entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Flower {
+public class Flower implements Serializable {
     private String url;
     private  String name;
     private String description;
@@ -10,7 +11,18 @@ public class Flower {
     private float quantity;
     private Date created_at;
 
-    public Flower(String url, String name, String description, float price, float quantity, Date created_at, boolean status) {
+    public String getId_flower() {
+        return id_flower;
+    }
+
+    public void setId_flower(String id_flower) {
+        this.id_flower = id_flower;
+    }
+
+    private String id_flower;
+
+    public Flower(String id_flower, String url, String name, String description, float price, float quantity, Date created_at, boolean status) {
+        this.id_flower = id_flower;
         this.url = url;
         this.name = name;
         this.description = description;

@@ -1,6 +1,7 @@
 package com.example.flowerapp.Interface;
 
 import com.example.flowerapp.Entity.Category;
+import com.example.flowerapp.Entity.Flower;
 
 import java.util.List;
 

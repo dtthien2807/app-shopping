@@ -1,30 +1,16 @@
 package com.example.flowerapp.Entity;
 
-import java.sql.Date;
+import java.util.Date;
+import java.util.List;
 
-public class Oder {
-    public int getId_order() {
+public class Order {
+
+    public String getId_order() {
         return id_order;
     }
 
-    public void setId_order(int id_order) {
+    public void setId_order(String id_order) {
         this.id_order = id_order;
-    }
-
-    public String getUser_fullname() {
-        return user_fullname;
-    }
-
-    public void setUser_fullname(String user_fullname) {
-        this.user_fullname = user_fullname;
-    }
-
-    public String getUser_address() {
-        return user_address;
-    }
-
-    public void setUser_address(String user_address) {
-        this.user_address = user_address;
     }
 
     public float getPrice() {
@@ -67,21 +53,48 @@ public class Oder {
         this.ship_date = ship_date;
     }
 
-    public int getUser_id() {
-        return user_id;
+    public List<Flower> getLstItemsGiohang() {
+        return items;
     }
 
-    public void setUser_id(int user_id) {
-        this.user_id = user_id;
+    public void setLstItemsGiohang(List<Flower> lstItemsGiohang) {
+        this.items = lstItemsGiohang;
     }
 
-    private int id_order;
-    private String user_fullname;
-    private String user_address;
+    public int getId_user() {
+        return id_user;
+    }
+
+    public void setId_user(int id_user) {
+        this.id_user = id_user;
+    }
+
+    private String id_order;
+
+    public String getNote() {
+        return Note;
+    }
+
+    public void setNote(String note) {
+        Note = note;
+    }
+
+    private String Note;
     private float price;
     private boolean status;
     private Date create_at;
     private Date order_ship_date;
     private Date ship_date;
-    private int user_id;
+    private List<Flower> items;
+    private int id_user;
+
+    public float getTotal_bill() {
+        return total_bill;
+    }
+
+    public void setTotal_bill(float total_bill) {
+        this.total_bill = total_bill;
+    }
+
+    private float total_bill;
 }

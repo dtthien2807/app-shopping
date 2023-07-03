@@ -4,7 +4,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -95,10 +97,14 @@ public class LoginActivity extends AppCompatActivity{
                         if (checkRole){
                             Toast.makeText(LoginActivity.this, "You have login successfully!", Toast.LENGTH_SHORT).show();
                             openAdminActivity();
+                            String id= snapshot.child(userNumberphone).getKey();
+                                    setUserID(snapshot.child(userNumberphone).getKey());
                         }
                         else {
                             Toast.makeText(LoginActivity.this, "You have login successfully!", Toast.LENGTH_SHORT).show();
                             openHomeActivity();
+                            String id1= snapshot.child(userNumberphone).getKey();
+                            setUserID(snapshot.child(userNumberphone).getKey());
                         }
                     } else {
                         txtPassword.setError("Invalid Credentials");
@@ -123,5 +129,20 @@ public class LoginActivity extends AppCompatActivity{
     public void openAdminActivity(){
         Intent intent = new Intent(this, HomeAdminActivity.class);
         startActivity(intent);
+    }
+    public void setUserID(String userID)
+    {
+            // Khởi tạo SharedPreferences
+               SharedPreferences sharedPreferences = getSharedPreferences("MyCookies", Context.MODE_PRIVATE);
+
+            // Tạo một Editor để chỉnh sửa SharedPreferences
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+
+            // Lưu trữ Cookie
+                    editor.putString("userID", userID);
+
+            // Áp dụng các thay đổi
+                    editor.apply();
+
     }
 }

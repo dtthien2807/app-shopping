@@ -33,25 +33,27 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="#FFFFFF"
-                        android:text="My cart"
+                        android:text="MY CART"
                         android:textAlignment="center"
-                        android:textSize="20sp"
+                        android:textSize="24sp"
                         android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/textView9"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:paddingLeft="20dp"
+                        android:paddingTop="5dp"
                         android:text="Customer information"
-                        android:textSize="16sp"
+                        android:textSize="20sp"
                         android:textStyle="bold" />
 
                     <EditText
-                        android:id="@+id/et_name"
+                        android:id="@+id/ed_name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:ems="10"
-                        android:hint="Name "
+                        android:hint="Name ..."
                         android:inputType="text"
                         android:minHeight="48dp" />
 
@@ -60,7 +62,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:ems="10"
-                        android:hint="Contact"
+                        android:hint="Contact..."
                         android:inputType="text"
                         android:minHeight="48dp" />
 
@@ -69,7 +71,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:ems="10"
-                        android:hint="Address"
+                        android:hint="Address..."
                         android:inputType="text"
                         android:minHeight="48dp" />
 
@@ -86,13 +88,21 @@
                         android:id="@+id/textView3"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:paddingLeft="20dp"
+                        android:paddingTop="5dp"
                         android:text="Oder Summary"
-                        android:textSize="16sp"
+                        android:textSize="20sp"
                         android:textStyle="bold" />
 
-                    <ListView
+                    <ScrollView
                         android:layout_width="match_parent"
-                        android:layout_height="300dp" />
+                        android:layout_height="match_parent">
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/ryc_items"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+                    </ScrollView>
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -107,7 +117,7 @@
                             android:textStyle="italic" />
 
                         <TextView
-                            android:id="@+id/textView10"
+                            android:id="@+id/tv_feeship"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="0.00" />
@@ -128,7 +138,7 @@
                             android:textStyle="italic" />
 
                         <TextView
-                            android:id="@+id/textView11"
+                            android:id="@+id/tv_totalbill"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -149,8 +159,10 @@
                         android:id="@+id/etpay"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Payment Methods"
-                        android:textSize="16sp"
+                        android:paddingLeft="20dp"
+                        android:paddingTop="5dp"
+                        android:text="Note"
+                        android:textSize="20sp"
                         android:textStyle="bold" />
 
                     <LinearLayout
@@ -159,19 +171,14 @@
                         android:background="@drawable/radius"
                         android:orientation="horizontal">
 
-                        <TextView
-                            android:id="@+id/textView8"
+                        <EditText
+                            android:id="@+id/ed_note"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Payment on delivery"
+                            android:hint="Add your's note...."
                             android:textStyle="italic" />
 
-                        <com.google.android.material.chip.Chip
-                            android:id="@+id/chip4"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1" />
                     </LinearLayout>
 
                     <Button
