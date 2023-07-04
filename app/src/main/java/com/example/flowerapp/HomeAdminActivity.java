@@ -66,6 +66,8 @@ public class HomeAdminActivity extends AppCompatActivity {
     }
 
     public void signOut(View view) {
+        SharedPreferences settings = getSharedPreferences("MyCookies", Context.MODE_PRIVATE);
+        settings.edit().clear().commit();
         Toast.makeText(this, "You have logged out successful!", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
