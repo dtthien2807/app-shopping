@@ -115,6 +115,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="15dp"
+                android:paddingBottom="10dp"
                 android:src="@drawable/baseline_minimize_24"></ImageView>
 
             <TextView
@@ -122,9 +123,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="15dp"
+                android:gravity="center"
                 android:minWidth="48dp"
                 android:minHeight="48dp"
-                android:text="1"></TextView>
+                android:text="1"
+                android:textSize="20sp"></TextView>
 
             <ImageView
                 android:id="@+id/btn_tang"
