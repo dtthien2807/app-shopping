@@ -26,7 +26,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.ktx.Firebase;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,15 +47,6 @@ public class GiohangActivity extends AppCompatActivity {
         itemsGiohangAdapter.setData(getDataBill());
         ryc_items.setAdapter(itemsGiohangAdapter);
 
-        //Code back tu gio hang quay ve trang chu
-        //Ma hoi sai sai
-        img.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent= new Intent(GiohangActivity.this, HomeActivity.class);
-                startActivity(intent);
-            }
-        });
     }
     public List<ItemsGiohang> getDataBill()
     {
@@ -72,7 +62,6 @@ public class GiohangActivity extends AppCompatActivity {
         tv_total=findViewById(R.id.tv_totalbill);
         tv_price_ship=findViewById(R.id.tv_feeship);
         ryc_items=findViewById(R.id.ryc_items);
-        img=findViewById(R.id.img_btn_back_from_cart);
     }
     public  void setInforUser()
     {
