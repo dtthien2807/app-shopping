@@ -3,12 +3,16 @@ package com.example.flowerapp;
 import static android.content.ContentValues.TAG;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.example.flowerapp.Adapter.CategoryAdapter;
@@ -19,6 +23,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -40,14 +45,21 @@ public class HomeActivity extends AppCompatActivity {
     CategoryAdapter categoryAdapter;
     SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
     Date date;
+
+    private ActionBar toolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        toolbar = getSupportActionBar();
+
+
         init();
         //hiển thị view Category theo chiều dọc
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
         rcyCategoy.setLayoutManager(linearLayoutManager);
+
+
         lstCate(new OnGetDataListener() {
             @Override
             public void onSuccess(List<Category> lstCate) {
@@ -112,6 +124,5 @@ public class HomeActivity extends AppCompatActivity {
     {
         rcyCategoy= findViewById(R.id.rcyCategoryxml);
         categoryAdapter= new CategoryAdapter(this);
-
     }
 }
