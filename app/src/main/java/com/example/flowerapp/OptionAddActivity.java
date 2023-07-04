@@ -3,7 +3,6 @@ package com.example.flowerapp;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -29,8 +28,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
 import java.util.Date;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -50,6 +47,7 @@ public class OptionAddActivity extends AppCompatActivity {
     Integer dathang=0;
     String name_pic,id_user;
     Button btn_themgiohang;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,14 +70,13 @@ public class OptionAddActivity extends AppCompatActivity {
                 tv_quanity_dathang.setText(String.valueOf(soluongdat));
             }
         });
-
         lstCate(new OnGetDataListener() {
             @Override
             public void onSuccess(List<Category> lstCate) {
                 btn_themgiohang.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        addBill(getUserID(),0);
+//                        addBill(getUserID(),0);
                         Intent intent = new Intent(OptionAddActivity.this, GiohangActivity.class);
                         startActivity(intent);
                     }
@@ -234,7 +231,6 @@ public class OptionAddActivity extends AppCompatActivity {
                 List<Category> lstCate = new ArrayList<>();
                 for (DataSnapshot categorySnapshot : dataSnapshot.getChildren()) {
                     String title = categorySnapshot.child("name_category").getValue(String.class);
-                    String id = categorySnapshot.child("id_category").getValue(String.class);
                     List<Flower> lstFlower = new ArrayList<>();
                     DataSnapshot flowerSnapshot = categorySnapshot.child("Flower");
                     for (DataSnapshot flowerDocument : flowerSnapshot.getChildren()) {
@@ -253,16 +249,15 @@ public class OptionAddActivity extends AppCompatActivity {
                             String imageResourceName = item.getUrl();
                             int imageResourceId = resources.getIdentifier(imageResourceName, "drawable", getPackageName());
                             imageView.setImageResource(imageResourceId);
-                            //xu ly so nguyen
-                            tv_quanity_cosan.setText(String.valueOf(Math.round(item.getQuantity())));
-                            tv_price.setText(String.valueOf(Math.round(item.getPrice())+" VND"));
+                            tv_quanity_cosan.setText(String.valueOf(item.getQuantity()));
+                            tv_price.setText(String.valueOf(item.getPrice()));
                             tv_description.setText(item.getDescription());
                             tv_nameflower.setText(item.getName());
                             name_pic=item.getUrl();
                             lstFlower.add(item);
                         }
                     }
-                    Category cate = new Category(id,title, lstFlower);
+                    Category cate = new Category(title, lstFlower);
                     lstCate.add(cate);
                 }
                 listener.onSuccess(lstCate);

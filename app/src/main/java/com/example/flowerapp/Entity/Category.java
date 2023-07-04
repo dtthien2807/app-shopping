@@ -1,19 +1,18 @@
 package com.example.flowerapp.Entity;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class Category {
-    private String id_category;
-    private String name_category;
-    private List<Flower> lstFlower;
-    public Category() {}
-    public Category(String id, String name, List<Flower> lstFlower) {
-        this.id_category = id;
-        this.name_category = name;
+    public Category(String name_catetory, List<Flower> lstFlower) {
+        this.name_catetory = name_catetory;
         this.lstFlower = lstFlower;
     }
+    public Category() {
+        this.name_catetory = "demo";
+        this.lstFlower = lstFlower;
+    }
+    private String name_catetory;
+        private List<Flower> lstFlower;
     public List<Flower> getLstImage() {
         return lstFlower;
     }
@@ -22,23 +21,14 @@ public class Category {
         this.lstFlower = lstFlower;
     }
 
-    public String getName_category() {
-        return name_category;
-    }
 
-    public void setName_category(String name_category) {
-        this.name_category = name_category;
-    }
 
-    public String getId_category(){return id_category;}
-    public void setId_category(String id_category) {
-        this.id_category = id_category;
-    }
-    public Map<String, Object> toMap(){
-        HashMap<String,Object> result = new HashMap<>();
-        result.put("name_category", name_category);
+        public String getName_catetory() {
+            return name_catetory;
+        }
 
-        return result;
-    }
+        public void setName_catetory(String name_catetory) {
+            this.name_catetory = name_catetory;
+        }
 
 }

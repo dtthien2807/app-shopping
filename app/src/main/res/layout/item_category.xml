@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="serif"
         android:text="category"
-        android:textColor="@color/title_color"
+        android:textColor="#B58F0B33"
         android:textSize="26dp"
         android:textStyle="bold"></TextView>
 

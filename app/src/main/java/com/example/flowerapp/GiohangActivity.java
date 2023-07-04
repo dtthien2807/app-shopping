@@ -1,13 +1,9 @@
 package com.example.flowerapp;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,7 +22,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.ktx.Firebase;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,22 +40,17 @@ public class GiohangActivity extends AppCompatActivity {
         setInforUser();
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
         ryc_items.setLayoutManager(linearLayoutManager);
-        itemsGiohangAdapter.setData(getDataBill());
-        ryc_items.setAdapter(itemsGiohangAdapter);
-
-        //Code back tu gio hang quay ve trang chu
-        //Ma hoi sai sai
-        img.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent= new Intent(GiohangActivity.this, HomeActivity.class);
-                startActivity(intent);
-            }
-        });
+//        itemsGiohangAdapter.setData(getDataBill());
+//        ryc_items.setAdapter(itemsGiohangAdapter);
     }
     public List<ItemsGiohang> getDataBill()
     {
         List<ItemsGiohang> lst_flower= new ArrayList<>();
+        ItemsGiohang itemsGiohang= new ItemsGiohang();
+        itemsGiohang.setNameflower("tulip1");
+        itemsGiohang.setSoluongmuahang(2);
+        itemsGiohang.setImgFlower("hoacamchuong");
+        lst_flower.add(itemsGiohang);
         return lst_flower;
     }
     public void init()
@@ -72,7 +62,6 @@ public class GiohangActivity extends AppCompatActivity {
         tv_total=findViewById(R.id.tv_totalbill);
         tv_price_ship=findViewById(R.id.tv_feeship);
         ryc_items=findViewById(R.id.ryc_items);
-        img=findViewById(R.id.img_btn_back_from_cart);
     }
     public  void setInforUser()
     {
@@ -80,9 +69,9 @@ public class GiohangActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.hasChild(getUserID())) {
-                    ed_sdt.setText(snapshot.child(getUserID()).child("numberphone").getValue(String.class));
-                    ed_name.setText(snapshot.child(getUserID()).child("fullname").getValue(String.class));
-                    ed_address.setText(snapshot.child(getUserID()).child("address").getValue(String.class));
+                    ed_sdt.setText("Phone: "+snapshot.child(getUserID()).child("numberphone").getValue(String.class));
+                    ed_name.setText("Full Name"+snapshot.child(getUserID()).child("fullname").getValue(String.class));
+                    ed_address.setText("Address: "+snapshot.child(getUserID()).child("address").getValue(String.class));
                 }
                 }
             @Override
@@ -96,7 +85,6 @@ public class GiohangActivity extends AppCompatActivity {
 
         // Truy xuất Cookie
                 String cookieValue = sharedPreferences.getString("userID", "");
-
         // Sử dụng Cookie
                 return cookieValue;
     }
