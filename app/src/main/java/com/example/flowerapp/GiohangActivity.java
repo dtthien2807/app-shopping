@@ -35,6 +35,7 @@ public class GiohangActivity extends AppCompatActivity {
     ItemsGiohangAdapter itemsGiohangAdapter;
     EditText ed_name,ed_sdt,ed_address,ed_note;
     TextView tv_total,tv_price_ship;
+    ImageButton imageButton;
     DatabaseReference reference = FirebaseDatabase.getInstance().getReference("User");
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,10 +43,17 @@ public class GiohangActivity extends AppCompatActivity {
         setContentView(R.layout.fragment_gio_hang);
         init();
         setInforUser();
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
-        ryc_items.setLayoutManager(linearLayoutManager);
-        itemsGiohangAdapter.setData(getDataBill());
-        ryc_items.setAdapter(itemsGiohangAdapter);
+        imageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(GiohangActivity.this, HomeActivity.class);
+                startActivity(intent);
+            }
+        });
+//        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
+//        ryc_items.setLayoutManager(linearLayoutManager);
+//        itemsGiohangAdapter.setData(getDataBill());
+//        ryc_items.setAdapter(itemsGiohangAdapter);
 
     }
     public List<ItemsGiohang> getDataBill()
@@ -62,6 +70,7 @@ public class GiohangActivity extends AppCompatActivity {
         tv_total=findViewById(R.id.tv_totalbill);
         tv_price_ship=findViewById(R.id.tv_feeship);
         ryc_items=findViewById(R.id.ryc_items);
+        imageButton =findViewById(R.id.img_btn_back_from_cart);
     }
     public  void setInforUser()
     {
@@ -69,9 +78,9 @@ public class GiohangActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.hasChild(getUserID())) {
-                    ed_sdt.setText(snapshot.child(getUserID()).child("numberphone").getValue(String.class));
-                    ed_name.setText(snapshot.child(getUserID()).child("fullname").getValue(String.class));
-                    ed_address.setText(snapshot.child(getUserID()).child("address").getValue(String.class));
+                    ed_sdt.setText("Phone: "+snapshot.child(getUserID()).child("numberphone").getValue(String.class));
+                    ed_name.setText("FullName: "+snapshot.child(getUserID()).child("fullname").getValue(String.class));
+                    ed_address.setText("Address: "+snapshot.child(getUserID()).child("address").getValue(String.class));
                 }
                 }
             @Override

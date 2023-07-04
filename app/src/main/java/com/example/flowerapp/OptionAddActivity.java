@@ -79,7 +79,7 @@ public class OptionAddActivity extends AppCompatActivity {
                 btn_themgiohang.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        addBill(getUserID(),0);
+                       // addBill(getUserID(),0);
                         Intent intent = new Intent(OptionAddActivity.this, GiohangActivity.class);
                         startActivity(intent);
                     }

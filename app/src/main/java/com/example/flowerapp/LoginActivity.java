@@ -145,4 +145,9 @@ public class LoginActivity extends AppCompatActivity{
                     editor.apply();
 
     }
+
+    public void revert(View view) {
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+    }
 }
