@@ -1,17 +1,22 @@
 package com.example.flowerapp.Adapter;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.flowerapp.Entity.Category;
+import com.example.flowerapp.OptionAddActivity;
+import com.example.flowerapp.ProductAdminActivity;
 import com.example.flowerapp.R;
 
 import java.util.List;
@@ -38,6 +43,8 @@ public class AdminCategoryAdapter extends ArrayAdapter<Category> {
         TextView txtId = ListItem.findViewById(R.id.idCategory);
         TextView txtName = ListItem.findViewById(R.id.nameCategory);
         ImageButton btn_edit = ListItem.findViewById(R.id.btnEdit);
+        LinearLayout item = ListItem.findViewById(R.id.itemCategory);
+        ImageView img = ListItem.findViewById(R.id.imgCategory);
 
         Category category = categoryList.get(position);
 
@@ -48,6 +55,15 @@ public class AdminCategoryAdapter extends ArrayAdapter<Category> {
             @Override
             public void onClick(View v) {
                 mIClickListener.onClickEditCategory(category);
+            }
+        });
+        img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, ProductAdminActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.putExtra("id_category",category.getId_category());
+                context.startActivity(intent);
             }
         });
 

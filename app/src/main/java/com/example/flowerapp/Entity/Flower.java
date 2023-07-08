@@ -2,6 +2,8 @@ package com.example.flowerapp.Entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Flower implements Serializable {
     private String url;
@@ -9,7 +11,7 @@ public class Flower implements Serializable {
     private String description;
     private  float price;
     private float quantity;
-    private Date created_at;
+    private String created_at;
 
     public String getId_flower() {
         return id_flower;
@@ -21,7 +23,7 @@ public class Flower implements Serializable {
 
     private String id_flower;
 
-    public Flower(String id_flower, String url, String name, String description, float price, float quantity, Date created_at, boolean status) {
+    public Flower(String id_flower, String url, String name, String description, float price, float quantity, String created_at, boolean status) {
         this.id_flower = id_flower;
         this.url = url;
         this.name = name;
@@ -32,12 +34,13 @@ public class Flower implements Serializable {
         this.status = status;
     }
     public Flower() {
+        this.id_flower="";
         this.url = "";
         this.name = "name";
         this.description = "description";
         this.price = 0;
         this.quantity = 0;
-        this.created_at = new Date() ;
+        this.created_at = "" ;
         this.status = true;
     }
     private boolean status;
@@ -74,11 +77,11 @@ public class Flower implements Serializable {
         this.quantity = quantity;
     }
 
-    public Date getCreated_at() {
+    public String getCreated_at() {
         return created_at;
     }
 
-    public void setCreated_at(Date created_at) {
+    public void setCreated_at(String created_at) {
         this.created_at = created_at;
     }
 
@@ -96,5 +99,14 @@ public class Flower implements Serializable {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+    public Map<String, Object> toMap(){
+        HashMap<String,Object> result = new HashMap<>();
+        result.put("name", name);
+        result.put("description", description);
+        result.put("quantity", quantity);
+        result.put("price", price);
+        result.put("status", status);
+        return result;
     }
 }
