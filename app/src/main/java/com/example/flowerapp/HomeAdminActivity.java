@@ -44,11 +44,6 @@ public class HomeAdminActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void getListProduct(View view) {
-        Intent intent = new Intent(this, ProductAdminActivity.class);
-        startActivity(intent);
-    }
-
     public void getListOrder(View view) {
         Intent intent = new Intent(this, GiohangActivity.class);
         startActivity(intent);
@@ -57,12 +52,6 @@ public class HomeAdminActivity extends AppCompatActivity {
     public void getListUser(View view) {
         Intent intent = new Intent(this, UserAdminActivity.class);
         startActivity(intent);
-    }
-
-    public void getListImage(View view) {
-    }
-
-    public void getListFeedback(View view) {
     }
 
     public void signOut(View view) {

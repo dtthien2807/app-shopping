@@ -21,51 +21,43 @@ public class Order {
         this.price = price;
     }
 
-    public boolean isStatus() {
+    public int isStatus() {
         return status;
     }
 
-    public void setStatus(boolean status) {
+    public void setStatus(int status) {
         this.status = status;
     }
 
-    public Date getCreate_at() {
+    public String getCreate_at() {
         return create_at;
     }
 
-    public void setCreate_at(Date create_at) {
+    public void setCreate_at(String create_at) {
         this.create_at = create_at;
     }
 
-    public Date getOrder_ship_date() {
+    public String getOrder_ship_date() {
         return order_ship_date;
     }
 
-    public void setOrder_ship_date(Date order_ship_date) {
+    public void setOrder_ship_date(String order_ship_date) {
         this.order_ship_date = order_ship_date;
     }
 
-    public Date getShip_date() {
+    public String getShip_date() {
         return ship_date;
     }
 
-    public void setShip_date(Date ship_date) {
+    public void setShip_date(String ship_date) {
         this.ship_date = ship_date;
     }
 
-    public List<Flower> getLstItemsGiohang() {
-        return items;
-    }
-
-    public void setLstItemsGiohang(List<Flower> lstItemsGiohang) {
-        this.items = lstItemsGiohang;
-    }
-
-    public int getId_user() {
+    public String getId_user() {
         return id_user;
     }
 
-    public void setId_user(int id_user) {
+    public void setId_user(String id_user) {
         this.id_user = id_user;
     }
 
@@ -75,18 +67,29 @@ public class Order {
         return Note;
     }
 
+    public void setItems(List<Flower> items) {
+        this.items = items;
+    }
+
+    public List<Flower> getItems() {
+        return items;
+    }
+
     public void setNote(String note) {
         Note = note;
     }
 
     private String Note;
     private float price;
-    private boolean status;
-    private Date create_at;
-    private Date order_ship_date;
-    private Date ship_date;
+    private int status;
+    private String create_at;
+    private String order_ship_date;
+    private String ship_date;
     private List<Flower> items;
-    private int id_user;
+    private String id_user;
+    private String name_user;
+    private String number_phone;
+    private String address_user;
 
     public float getTotal_bill() {
         return total_bill;
@@ -97,4 +100,43 @@ public class Order {
     }
 
     private float total_bill;
+
+    public String getName_user() {
+        return name_user;
+    }
+
+    public void setName_user(String name_user) {
+        this.name_user = name_user;
+    }
+
+    public String getNumber_phone() {
+        return number_phone;
+    }
+
+    public void setNumber_phone(String number_phone) {
+        this.number_phone = number_phone;
+    }
+
+    public String getAddress_user() {
+        return address_user;
+    }
+
+    public void setAddress_user(String address_user) {
+        this.address_user = address_user;
+    }
+    public Order(String id_order, String name_user, String number_phone, String note, String id_user,
+                 String address_user, String order_ship_date, String ship_date, Float total_bill, int status
+    ){
+        this.address_user = address_user;
+        this.id_order = id_order;
+        this.name_user = name_user;
+        this.number_phone = number_phone;
+        this.Note = note;
+        this.id_user = id_user;
+        this.order_ship_date = order_ship_date;
+        this.ship_date = ship_date;
+        this.total_bill = total_bill;
+        this.status = status;
+    }
+    public Order(){}
 }

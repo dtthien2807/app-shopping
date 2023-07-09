@@ -139,7 +139,6 @@ public class OptionAddActivity extends AppCompatActivity {
         //Tạo 1 order mới
                 Order newOrder = new Order();
                 newOrder.setNote("Phải đổi hoa hồng thành hoa cẩm chướng");
-                newOrder.setCreate_at(currentDate);
 
 
         // Tạo một đối tượng Item1 và thiết lập giá trị cho các thuộc tính của nó
@@ -150,13 +149,11 @@ public class OptionAddActivity extends AppCompatActivity {
         newItem.setUrl(name_pic);
         List<Flower> lstFlower= new ArrayList<>();
         lstFlower.add(newItem);
-        newOrder.setLstItemsGiohang(lstFlower);
+        newOrder.setItems(lstFlower);
 
         // Tạo key tự động cho order mới bằng phương thức push()
                 String orderKey = orderRef.push().getKey();
-        newOrder.setShip_date((java.sql.Date) dateFormat.parse("20/07/2023"));
-        newOrder.setOrder_ship_date((java.sql.Date) dateFormat.parse("15/07/2023"));
-        newOrder.setStatus(false);
+        newOrder.setStatus(0);
         newOrder.setTotal_bill(4500000);
         newOrder.setId_order(getUserID().toString());
 
