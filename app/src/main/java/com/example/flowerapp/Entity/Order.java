@@ -21,11 +21,11 @@ public class Order {
         this.price = price;
     }
 
-    public boolean isStatus() {
+    public int isStatus() {
         return status;
     }
 
-    public void setStatus(boolean status) {
+    public void setStatus(int status) {
         this.status = status;
     }
 
@@ -81,7 +81,7 @@ public class Order {
 
     private String Note;
     private float price;
-    private boolean status;
+    private int status;
     private String create_at;
     private String order_ship_date;
     private String ship_date;
@@ -124,8 +124,8 @@ public class Order {
     public void setAddress_user(String address_user) {
         this.address_user = address_user;
     }
-    public Order(String id_order, String name_user, String number_phone, String note, String id_user,List<Flower> items,
-                 String address_user, String order_ship_date, String ship_date, Float total_bill, Boolean status
+    public Order(String id_order, String name_user, String number_phone, String note, String id_user,
+                 String address_user, String order_ship_date, String ship_date, Float total_bill, int status
     ){
         this.address_user = address_user;
         this.id_order = id_order;
@@ -133,7 +133,6 @@ public class Order {
         this.number_phone = number_phone;
         this.Note = note;
         this.id_user = id_user;
-        this.items = items;
         this.order_ship_date = order_ship_date;
         this.ship_date = ship_date;
         this.total_bill = total_bill;

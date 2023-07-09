@@ -153,7 +153,7 @@ public class OptionAddActivity extends AppCompatActivity {
 
         // Tạo key tự động cho order mới bằng phương thức push()
                 String orderKey = orderRef.push().getKey();
-        newOrder.setStatus(false);
+        newOrder.setStatus(0);
         newOrder.setTotal_bill(4500000);
         newOrder.setId_order(getUserID().toString());
 
