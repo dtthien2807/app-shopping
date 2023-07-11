@@ -36,6 +36,7 @@ public class GiohangActivity extends AppCompatActivity {
     EditText ed_name,ed_sdt,ed_address,ed_note;
     TextView tv_total,tv_price_ship;
     ImageButton imageButton;
+    ImageView home, stories, pay, delivery;
     DatabaseReference reference = FirebaseDatabase.getInstance().getReference("User");
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +44,7 @@ public class GiohangActivity extends AppCompatActivity {
         setContentView(R.layout.fragment_gio_hang);
         init();
         setInforUser();
+        loadLayout();
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -61,6 +63,38 @@ public class GiohangActivity extends AppCompatActivity {
         List<ItemsGiohang> lst_flower= new ArrayList<>();
         return lst_flower;
     }
+
+    public void loadLayout(){
+        init();
+        home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent ih= new Intent(GiohangActivity.this, HomeActivity.class);
+                startActivity(ih);
+            }
+        });
+        stories.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent is = new Intent(GiohangActivity.this, StoriesActivity.class);
+                startActivity(is);
+            }
+        });
+        pay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent ip= new Intent(GiohangActivity.this, GiohangActivity.class);
+                startActivity(ip);
+            }
+        });
+        delivery.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent id= new Intent(GiohangActivity.this, DeliveryActivity.class);
+                startActivity(id);
+            }
+        });
+    }
     public void init()
     {
         ed_name=findViewById(R.id.ed_name);
@@ -71,6 +105,10 @@ public class GiohangActivity extends AppCompatActivity {
         tv_price_ship=findViewById(R.id.tv_feeship);
         ryc_items=findViewById(R.id.ryc_items);
         imageButton =findViewById(R.id.img_btn_back_from_cart);
+        home= findViewById(R.id.ic_home);
+        stories= findViewById(R.id.ic_stories);
+        pay= findViewById(R.id.ic_pay);
+        delivery= findViewById(R.id.ic_delivery);
     }
     public  void setInforUser()
     {

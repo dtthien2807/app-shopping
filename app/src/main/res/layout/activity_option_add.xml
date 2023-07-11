@@ -142,7 +142,7 @@
             android:id="@+id/btn_themgiohang"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="#B5F8A8C1"
+            android:backgroundTint="#B5EE3F76"
             android:text="Thêm vào giỏ hàng"
             android:textSize="20dp"></Button>
     </LinearLayout>
