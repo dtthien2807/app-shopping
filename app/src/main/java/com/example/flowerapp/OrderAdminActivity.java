@@ -17,6 +17,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class OrderAdminActivity extends AppCompatActivity {
@@ -45,6 +46,7 @@ public class OrderAdminActivity extends AppCompatActivity {
                         Order order = ordersnapshot.getValue(Order.class);
                         orderList.add(order);
                     }
+                    Collections.reverse(orderList);
                     OrderAdapter adaptor = new OrderAdapter(OrderAdminActivity.this, orderList);
                     adaptor.notifyDataSetChanged();
                     orderListView.setAdapter(adaptor);
