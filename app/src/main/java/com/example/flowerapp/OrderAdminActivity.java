@@ -47,7 +47,12 @@ public class OrderAdminActivity extends AppCompatActivity {
                         orderList.add(order);
                     }
                     Collections.reverse(orderList);
-                    OrderAdapter adaptor = new OrderAdapter(OrderAdminActivity.this, orderList);
+                    OrderAdapter adaptor = new OrderAdapter(OrderAdminActivity.this, orderList, new OrderAdapter.IClickListener() {
+                        @Override
+                        public void onClickEdit(Order order) {
+
+                        }
+                    });
                     adaptor.notifyDataSetChanged();
                     orderListView.setAdapter(adaptor);
                 }

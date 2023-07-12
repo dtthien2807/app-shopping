@@ -1,7 +1,9 @@
 package com.example.flowerapp.Entity;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Order {
 
@@ -19,10 +21,6 @@ public class Order {
 
     public void setPrice(float price) {
         this.price = price;
-    }
-
-    public int isStatus() {
-        return status;
     }
 
     public void setStatus(int status) {
@@ -125,7 +123,7 @@ public class Order {
         this.address_user = address_user;
     }
     public Order(String id_order, String name_user, String number_phone, String note, String id_user,
-                 String address_user, String order_ship_date, String ship_date, Float total_bill, int status
+                 String address_user, String order_ship_date, String ship_date, Float total_bill, int status, String create_at
     ){
         this.address_user = address_user;
         this.id_order = id_order;
@@ -137,6 +135,16 @@ public class Order {
         this.ship_date = ship_date;
         this.total_bill = total_bill;
         this.status = status;
+        this.create_at = create_at;
     }
     public Order(){}
+
+    public int getStatus() {
+        return status;
+    }
+    public Map<String, Object> toMap(){
+        HashMap<String,Object> result = new HashMap<>();
+        result.put("status", status);
+        return result;
+    }
 }

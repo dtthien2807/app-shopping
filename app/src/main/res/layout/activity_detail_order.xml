@@ -66,11 +66,11 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:background="#564CAF50"
+                        android:background="#F80E0E0E"
                         android:text="Đã giao hàng"
                         android:textAlignment="center"
                         android:textAllCaps="true"
-                        android:textColor="#185A1B"
+                        android:textColor="#F1F4F1"
                         android:textSize="12sp"
                         android:textStyle="bold" />
                 </LinearLayout>
@@ -106,6 +106,7 @@
                     android:text="Ngày giao thực tế: 09/07/2023" />
 
                 <ListView
+                    android:id="@+id/lstProduct"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 

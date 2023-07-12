@@ -65,15 +65,20 @@ public class HomeAdminActivity extends AppCompatActivity {
                 orderList.clear();
                 if(snapshot.exists()) {
                     for (DataSnapshot ordersnapshot : snapshot.getChildren()) {
-                        int checkStatus = ordersnapshot.child("status").getValue(int.class);
-                        if (checkStatus == 0) {
+                        String checkStatus = String.valueOf(ordersnapshot.child("status").getValue(Integer.class));
+                        if (checkStatus.equals("0")) {
                             layout_new_order.setVisibility(View.VISIBLE);
                             Order order = ordersnapshot.getValue(Order.class);
                             orderList.add(order);
                         }
                     }
                     Collections.reverse(orderList);
-                    OrderAdapter adaptor = new OrderAdapter(HomeAdminActivity.this, orderList);
+                    OrderAdapter adaptor = new OrderAdapter(HomeAdminActivity.this, orderList, new OrderAdapter.IClickListener() {
+                        @Override
+                        public void onClickEdit(Order order) {
+
+                        }
+                    });
                     adaptor.notifyDataSetChanged();
                     lstOrderNew.setAdapter(adaptor);
                 }
@@ -92,7 +97,7 @@ public class HomeAdminActivity extends AppCompatActivity {
     }
 
     public void getListOrder(View view) {
-        Intent intent = new Intent(this, GiohangActivity.class);
+        Intent intent = new Intent(this, OrderAdminActivity.class);
         startActivity(intent);
     }
 
