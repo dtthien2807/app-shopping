@@ -57,6 +57,7 @@
         <activity android:name=".OrderAdminActivity" />
         <activity android:name=".StoriesActivity"/>
         <activity android:name=".DetailOrderActivity"/>
+
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />

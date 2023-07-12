@@ -1,39 +1,27 @@
 package com.example.flowerapp.Entity;
 
 public class Feedback {
-    private  int id_feedback;
-    private int id_order;
-    private String contentFeedback;
-    private boolean Status;
-    public int getId_feedback() {
-        return id_feedback;
+    private String img;
+    private String content;
+
+    public String getContent() {
+        return content;
     }
 
-    public void setId_feedback(int id_feedback) {
-        this.id_feedback = id_feedback;
+    public void setContent(String content) {
+        this.content = content;
     }
 
-    public int getId_order() {
-        return id_order;
+    public String getImg() {
+        return img;
     }
 
-    public void setId_order(int id_order) {
-        this.id_order = id_order;
+    public void setImg(String img) {
+        this.img = img;
     }
-
-    public String getContentFeedback() {
-        return contentFeedback;
+    public Feedback(String img, String content){
+        this.img = img;
+        this.content = content;
     }
-
-    public void setContentFeedback(String contentFeedback) {
-        this.contentFeedback = contentFeedback;
-    }
-
-    public boolean isStatus() {
-        return Status;
-    }
-
-    public void setStatus(boolean status) {
-        Status = status;
-    }
+    public Feedback(){}
 }

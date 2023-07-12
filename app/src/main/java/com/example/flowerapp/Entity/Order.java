@@ -88,6 +88,7 @@ public class Order {
     private String name_user;
     private String number_phone;
     private String address_user;
+    public Feedback feedbacks;
 
     public float getTotal_bill() {
         return total_bill;
@@ -122,8 +123,18 @@ public class Order {
     public void setAddress_user(String address_user) {
         this.address_user = address_user;
     }
+
+    public Feedback getFeedbacks() {
+        return feedbacks;
+    }
+
+    public void setFeedbacks(Feedback feedbacks) {
+        this.feedbacks = feedbacks;
+    }
+
     public Order(String id_order, String name_user, String number_phone, String note, String id_user,
-                 String address_user, String order_ship_date, String ship_date, Float total_bill, int status, String create_at
+                 String address_user, String order_ship_date, String ship_date, Float total_bill, int status,
+                 String create_at, Feedback feedbacks
     ){
         this.address_user = address_user;
         this.id_order = id_order;
@@ -136,6 +147,7 @@ public class Order {
         this.total_bill = total_bill;
         this.status = status;
         this.create_at = create_at;
+        this.feedbacks= feedbacks;
     }
     public Order(){}
 

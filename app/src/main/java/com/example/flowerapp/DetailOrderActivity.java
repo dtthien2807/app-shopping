@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,7 +32,7 @@ import com.google.firebase.database.ValueEventListener;
 public class DetailOrderActivity extends AppCompatActivity {
     DatabaseReference databaseorder;
     TextView orderID, createdAt, statusOrder, nameUser, phoneUser, addressUser, dateOrder, dateShip, sumBill, noteBill;
-    Button btnUpdateBill;
+    Button btnUpdateBill, btnFeedback;
     CheckBox option0, option1, option2, option3, option4;
     private String id_order;
     @Override
@@ -46,6 +47,44 @@ public class DetailOrderActivity extends AppCompatActivity {
                 openDialogUpdateBill();
             }
         });
+        btnFeedback.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openDialogFeedback();
+            }
+        });
+    }
+
+    private void openDialogFeedback() {
+        final Dialog dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.layout_dialog_feedback);
+        Window window = dialog.getWindow();
+        window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+        window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.setCancelable(false);
+        ImageView btnCancel = dialog.findViewById(R.id.btCancel);
+        ImageView imgFeedback = dialog.findViewById(R.id.imgFeedback);
+        TextView txtFeedback = dialog.findViewById(R.id.txtFeedback);
+        databaseorder.child(id_order).child("feedbacks").addListenerForSingleValueEvent(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                txtFeedback.setText(snapshot.child("content").getValue(String.class));
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
     }
 
 
@@ -62,6 +101,7 @@ public class DetailOrderActivity extends AppCompatActivity {
         sumBill = findViewById(R.id.sumBill);
         noteBill = findViewById(R.id.noteBill);
         btnUpdateBill = findViewById(R.id.btnUpdateBill);
+        btnFeedback = findViewById(R.id.btnFeedback);
     }
     public void openDialogUpdateBill() {
         final Dialog dialog = new Dialog(this);
@@ -291,7 +331,7 @@ public class DetailOrderActivity extends AppCompatActivity {
                     dateOrder.setText("Ngày yêu cầu giao: " +snapshot.child("order_ship_date").getValue(String.class));
                     dateShip.setText("Ngày giao: "+snapshot.child("ship_date").getValue(String.class));
                     sumBill.setText(String.valueOf(snapshot.child("total_bill").getValue(Float.class)));
-                    noteBill.setText(snapshot.child("note").getValue(String.class));
+                    noteBill.setText("Ghi chú: "+snapshot.child("note").getValue(String.class));
 
                 }
             }
