@@ -5,66 +5,140 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".HomeActivity">
-
-    <LinearLayout
-        android:id="@+id/ll_search"
+    <FrameLayout
+        android:id="@+id/frame_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:padding="5dp"
-        android:background="@drawable/search_style"
-        android:gravity="center"
-        app:layout_constraintEnd_toStartOf="@+id/scrollView_home"
-        app:layout_constraintStart_toEndOf="@+id/scrollView_home"
-        android:orientation="horizontal"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <EditText
-            android:id="@+id/et_search"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="Search for love........."
-            android:minHeight="48dp"
-            android:textColorHint="#ffffff"></EditText>
-
-        <Button
-            android:id="@+id/btn_search"
-            android:layout_width="61dp"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="30dp"
-            android:backgroundTint="#F6EDED"
-            app:icon="@android:drawable/ic_search_category_default"
-            app:iconTint="#F8B5B5"
-            tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck"></Button>
-
-    </LinearLayout>
-
-    <ScrollView
-        android:id="@+id/scrollView_home"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ll_search">
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rcyCategoryxml"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="0dp"
-            android:paddingTop="0dp" />
-    </ScrollView>
+            android:orientation="vertical">
 
+            <LinearLayout
+                android:id="@+id/ll_search"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@drawable/search_style"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="5dp">
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottom_nav"
+                <EditText
+                    android:id="@+id/et_search"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="Search for love........."
+                    android:minHeight="48dp"
+                    android:textColorHint="#ffffff"></EditText>
+
+                <Button
+                    android:id="@+id/btn_search"
+                    android:layout_width="61dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="30dp"
+                    android:backgroundTint="#F6EDED"
+                    app:icon="@android:drawable/ic_search_category_default"
+                    app:iconTint="#F8B5B5"
+                    tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck"></Button>
+
+            </LinearLayout>
+
+            <ScrollView
+                android:id="@+id/scrollView_home"
+                android:layout_width="match_parent"
+                android:layout_height="520dp"
+                android:layout_marginTop="5dp">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rcyCategoryxml"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="0dp"
+                    android:paddingTop="0dp" />
+            </ScrollView>
+        </LinearLayout>
+    </FrameLayout>
+
+    <LinearLayout
+        android:id="@+id/menu"
         android:layout_width="match_parent"
         android:layout_height="65dp"
-        android:layout_alignParentBottom="true"
-        android:background="#B5F8A8C1"
+        android:background="#B5EE3F76"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:menu="@menu/bottom_nav" />
+        app:layout_constraintEnd_toEndOf="parent"
+        android:gravity="center">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_margin="10dp">
+            <ImageView
+                android:id="@+id/ic_home"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/baseline_home_24"></ImageView>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Trang chủ"></TextView>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_margin="10dp">
+            <ImageView
+                android:id="@+id/ic_stories"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/baseline_auto_stories_24"></ImageView>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Câu chuyện"></TextView>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_margin="10dp">
+            <ImageView
+                android:id="@+id/ic_pay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/baseline_payment_24"
+                ></ImageView>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Thanh toán"></TextView>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_margin="10dp">
+            <ImageView
+                android:id="@+id/ic_delivery"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/baseline_delivery_dining_24"></ImageView>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Vận chuyển"></TextView>
+        </LinearLayout>
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
