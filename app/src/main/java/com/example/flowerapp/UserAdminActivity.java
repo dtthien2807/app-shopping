@@ -133,7 +133,7 @@ public class UserAdminActivity extends AppCompatActivity {
         goods.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent ig= new Intent(UserAdminActivity.this, ProductAdminActivity.class);
+                Intent ig= new Intent(UserAdminActivity.this, CategoryAdminActivity.class);
                 startActivity(ig);
             }
         });
@@ -156,7 +156,7 @@ public class UserAdminActivity extends AppCompatActivity {
     public void init(){
         home_ad= findViewById(R.id.home_ad);
         goods= findViewById(R.id.goods_ad);
-        oder= findViewById(R.id.goods_ad);
+        oder= findViewById(R.id.oder_ad);
         user= findViewById(R.id.user_ad);
     }
 }

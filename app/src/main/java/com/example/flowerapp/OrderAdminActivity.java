@@ -52,7 +52,6 @@ public class OrderAdminActivity extends AppCompatActivity {
                 orderList.clear();
                 if(snapshot.exists()) {
                     for (DataSnapshot ordersnapshot : snapshot.getChildren()) {
-//                        Order order = ordersnapshot.getValue(Order.class);
                         String id_order = ordersnapshot.child("id_order").getValue(String.class);
                         String name_user = ordersnapshot.child("name_user").getValue(String.class);
                         String number_phone = ordersnapshot.child("number_phone").getValue(String.class);
@@ -106,7 +105,7 @@ public class OrderAdminActivity extends AppCompatActivity {
         goods.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent ig= new Intent(OrderAdminActivity.this, ProductAdminActivity.class);
+                Intent ig= new Intent(OrderAdminActivity.this, CategoryAdminActivity.class);
                 startActivity(ig);
             }
         });
@@ -129,7 +128,7 @@ public class OrderAdminActivity extends AppCompatActivity {
     public void init(){
         home_ad= findViewById(R.id.home_ad);
         goods= findViewById(R.id.goods_ad);
-        oder= findViewById(R.id.goods_ad);
+        oder= findViewById(R.id.oder_ad);
         user= findViewById(R.id.user_ad);
     }
 }

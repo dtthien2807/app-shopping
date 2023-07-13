@@ -162,7 +162,7 @@ public class HomeAdminActivity extends AppCompatActivity {
         goods.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent ig= new Intent(HomeAdminActivity.this, ProductAdminActivity.class);
+                Intent ig= new Intent(HomeAdminActivity.this, CategoryAdminActivity.class);
                 startActivity(ig);
             }
         });
@@ -185,7 +185,7 @@ public class HomeAdminActivity extends AppCompatActivity {
     public void init(){
         home_ad= findViewById(R.id.home_ad);
         goods= findViewById(R.id.goods_ad);
-        oder= findViewById(R.id.goods_ad);
+        oder= findViewById(R.id.oder_ad);
         user= findViewById(R.id.user_ad);
     }
 }

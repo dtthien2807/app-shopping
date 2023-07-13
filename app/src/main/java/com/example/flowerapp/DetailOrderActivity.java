@@ -21,10 +21,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.flowerapp.Adapter.ItemsOrderAdapter;
-import com.example.flowerapp.Adapter.OrderAdapter;
-import com.example.flowerapp.Entity.Category;
 import com.example.flowerapp.Entity.ItemsGiohang;
-import com.example.flowerapp.Entity.Order;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -114,7 +111,7 @@ public class DetailOrderActivity extends AppCompatActivity {
         lstProduct = findViewById(R.id.lstProduct);
         home_ad= findViewById(R.id.home_ad);
         goods= findViewById(R.id.goods_ad);
-        oder= findViewById(R.id.goods_ad);
+        oder= findViewById(R.id.oder_ad);
         user= findViewById(R.id.user_ad);
     }
     public void openDialogUpdateBill() {
@@ -301,7 +298,7 @@ public class DetailOrderActivity extends AppCompatActivity {
         goods.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent ig= new Intent(DetailOrderActivity.this, ProductAdminActivity.class);
+                Intent ig= new Intent(DetailOrderActivity.this, CategoryAdminActivity.class);
                 startActivity(ig);
             }
         });
