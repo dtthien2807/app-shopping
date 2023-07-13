@@ -3,7 +3,10 @@ package com.example.flowerapp;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.ListView;
 
 import com.example.flowerapp.Adapter.AdminCategoryAdapter;
@@ -25,6 +28,7 @@ public class OrderAdminActivity extends AppCompatActivity {
     DatabaseReference databaseorder;
     ListView orderListView;
     List<Order> orderList;
+    ImageView home_ad, classify, goods, oder, user;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,6 +36,8 @@ public class OrderAdminActivity extends AppCompatActivity {
         orderListView = findViewById(R.id.lstOrder);
         orderList = new ArrayList<>();
         databaseorder = FirebaseDatabase.getInstance().getReference("Order");
+
+        loadMenu();
     }
 
     @Override
@@ -58,5 +64,52 @@ public class OrderAdminActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    public void loadMenu(){
+        init();
+        home_ad.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent ih= new Intent(OrderAdminActivity.this, HomeAdminActivity.class);
+                startActivity(ih);
+            }
+        });
+        classify.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent is= new Intent(OrderAdminActivity.this, CategoryAdminActivity.class);
+                startActivity(is);
+            }
+        });
+        goods.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent ig= new Intent(OrderAdminActivity.this, ProductAdminActivity.class);
+                startActivity(ig);
+            }
+        });
+        oder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent io= new Intent(OrderAdminActivity.this, OrderAdminActivity.class);
+                startActivity(io);
+            }
+        });
+        user.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent iu= new Intent(OrderAdminActivity.this, UserAdminActivity.class);
+                startActivity(iu);
+            }
+        });
+    }
+
+    public void init(){
+        home_ad= findViewById(R.id.home_ad);
+        classify= findViewById(R.id.classify_ad);
+        goods= findViewById(R.id.goods_ad);
+        oder= findViewById(R.id.goods_ad);
+        user= findViewById(R.id.user_ad);
     }
 }
