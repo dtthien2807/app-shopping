@@ -65,12 +65,12 @@ public class Order {
         return Note;
     }
 
-    public void setItems(List<Flower> items) {
-        this.items = items;
+    public void setItems(List<ItemsGiohang> items) {
+        Items = items;
     }
 
-    public List<Flower> getItems() {
-        return items;
+    public List<ItemsGiohang> getItems() {
+        return Items;
     }
 
     public void setNote(String note) {
@@ -83,7 +83,7 @@ public class Order {
     private String create_at;
     private String order_ship_date;
     private String ship_date;
-    private List<Flower> items;
+    private List<ItemsGiohang> Items;
     private String id_user;
     private String name_user;
     private String number_phone;
@@ -134,8 +134,7 @@ public class Order {
 
     public Order(String id_order, String name_user, String number_phone, String note, String id_user,
                  String address_user, String order_ship_date, String ship_date, Float total_bill, int status,
-                 String create_at, Feedback feedbacks
-    ){
+                 String create_at, Feedback feedbacks, List<ItemsGiohang> items){
         this.address_user = address_user;
         this.id_order = id_order;
         this.name_user = name_user;
@@ -148,6 +147,7 @@ public class Order {
         this.status = status;
         this.create_at = create_at;
         this.feedbacks= feedbacks;
+        this.Items = items;
     }
     public Order(){}
 

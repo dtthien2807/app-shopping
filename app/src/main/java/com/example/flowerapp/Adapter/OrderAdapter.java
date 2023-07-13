@@ -9,7 +9,9 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -20,21 +22,18 @@ import com.example.flowerapp.Entity.Order;
 import com.example.flowerapp.ProductAdminActivity;
 import com.example.flowerapp.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class OrderAdapter extends ArrayAdapter {
     private Activity context;
     private List<Order> orderList;
     int lastPosition = -1;
-    private IClickListener mIClickListener;
-    public interface IClickListener {
-        void onClickEdit(Order order);
-    }
-    public OrderAdapter(@NonNull Activity context, List<Order> orderList, IClickListener mIClickListener) {
+    String[][] allItems = {};
+    public OrderAdapter(@NonNull Activity context, List<Order> orderList) {
         super(context, R.layout.activity_listview_order, orderList);
         this.orderList = orderList;
         this.context = context;
-        this.mIClickListener = mIClickListener;
     }
 
     @NonNull
@@ -53,8 +52,12 @@ public class OrderAdapter extends ArrayAdapter {
         LinearLayout btnDetailOrder = ListItem.findViewById(R.id.btnDetailOrder);
         TextView btnMore = ListItem.findViewById(R.id.btnMore);
         TextView status = ListItem.findViewById(R.id.statusOrder);
+        ListView lstProduct = ListItem.findViewById(R.id.lstProduct);
 
         Order order = orderList.get(position);
+
+        ItemsOrderAdapter itemsOrderAdapter= new ItemsOrderAdapter(context, order.getItems());
+        lstProduct.setAdapter(itemsOrderAdapter);
 
         int statusOrder = order.getStatus();
         txtId.setText(order.getId_order());
@@ -64,6 +67,7 @@ public class OrderAdapter extends ArrayAdapter {
         dateOrder.setText("Ngày đặt giao: " +order.getOrder_ship_date());
         dateShip.setText("Ngày thực tế: " +order.getShip_date());
         createdAt.setText(order.getCreate_at());
+
         switch (statusOrder){
             case 0:
             {

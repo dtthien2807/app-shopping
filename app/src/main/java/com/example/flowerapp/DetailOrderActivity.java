@@ -13,6 +13,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,7 +21,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.flowerapp.Adapter.ItemsOrderAdapter;
+import com.example.flowerapp.Adapter.OrderAdapter;
 import com.example.flowerapp.Entity.Category;
+import com.example.flowerapp.Entity.ItemsGiohang;
 import com.example.flowerapp.Entity.Order;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
@@ -29,12 +33,16 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class DetailOrderActivity extends AppCompatActivity {
     DatabaseReference databaseorder;
     TextView orderID, createdAt, statusOrder, nameUser, phoneUser, addressUser, dateOrder, dateShip, sumBill, noteBill;
     Button btnUpdateBill, btnFeedback;
     CheckBox option0, option1, option2, option3, option4;
     private String id_order;
+    ListView lstProduct;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -102,6 +110,7 @@ public class DetailOrderActivity extends AppCompatActivity {
         noteBill = findViewById(R.id.noteBill);
         btnUpdateBill = findViewById(R.id.btnUpdateBill);
         btnFeedback = findViewById(R.id.btnFeedback);
+        lstProduct = findViewById(R.id.lstProduct);
     }
     public void openDialogUpdateBill() {
         final Dialog dialog = new Dialog(this);
@@ -330,6 +339,19 @@ public class DetailOrderActivity extends AppCompatActivity {
                     addressUser.setText("Địa chỉ: " +snapshot.child("address_user").getValue(String.class));
                     dateOrder.setText("Ngày yêu cầu giao: " +snapshot.child("order_ship_date").getValue(String.class));
                     dateShip.setText("Ngày giao: "+snapshot.child("ship_date").getValue(String.class));
+                    List<ItemsGiohang> itemsGiohangList = new ArrayList<>();
+                    DataSnapshot flowerSnapshot = snapshot.child("Items");
+                    if (flowerSnapshot != null)
+                    {
+                        for (DataSnapshot itemsnapshot : flowerSnapshot.getChildren()) {
+                            ItemsGiohang itemsGiohang = itemsnapshot.getValue(ItemsGiohang.class);
+                            itemsGiohangList.add(itemsGiohang);
+                        }
+                        ItemsOrderAdapter adaptor = new ItemsOrderAdapter(DetailOrderActivity.this, itemsGiohangList);
+                        adaptor.notifyDataSetChanged();
+                        lstProduct.setAdapter(adaptor);
+                    }
+
                     sumBill.setText(String.valueOf(snapshot.child("total_bill").getValue(Float.class)));
                     noteBill.setText("Ghi chú: "+snapshot.child("note").getValue(String.class));
 
@@ -345,5 +367,10 @@ public class DetailOrderActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+    }
+
+    public void revert(View view) {
+        Intent intent = new Intent(this, OrderAdminActivity.class);
+        startActivity(intent);
     }
 }
