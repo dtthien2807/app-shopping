@@ -3,7 +3,10 @@ package com.example.flowerapp;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.ListView;
 
 import com.example.flowerapp.Adapter.AdminCategoryAdapter;
@@ -28,6 +31,7 @@ public class OrderAdminActivity extends AppCompatActivity {
     DatabaseReference databaseorder;
     ListView orderListView;
     List<Order> orderList;
+    ImageView home_ad, goods, oder, user;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,6 +39,8 @@ public class OrderAdminActivity extends AppCompatActivity {
         orderListView = findViewById(R.id.lstOrder);
         orderList = new ArrayList<>();
         databaseorder = FirebaseDatabase.getInstance().getReference("Order");
+
+        loadMenu();
     }
 
     @Override
@@ -46,7 +52,6 @@ public class OrderAdminActivity extends AppCompatActivity {
                 orderList.clear();
                 if(snapshot.exists()) {
                     for (DataSnapshot ordersnapshot : snapshot.getChildren()) {
-//                        Order order = ordersnapshot.getValue(Order.class);
                         String id_order = ordersnapshot.child("id_order").getValue(String.class);
                         String name_user = ordersnapshot.child("name_user").getValue(String.class);
                         String number_phone = ordersnapshot.child("number_phone").getValue(String.class);
@@ -86,5 +91,44 @@ public class OrderAdminActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    public void loadMenu(){
+        init();
+        home_ad.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent ih= new Intent(OrderAdminActivity.this, HomeAdminActivity.class);
+                startActivity(ih);
+            }
+        });
+        goods.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent ig= new Intent(OrderAdminActivity.this, CategoryAdminActivity.class);
+                startActivity(ig);
+            }
+        });
+        oder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent io= new Intent(OrderAdminActivity.this, OrderAdminActivity.class);
+                startActivity(io);
+            }
+        });
+        user.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent iu= new Intent(OrderAdminActivity.this, UserAdminActivity.class);
+                startActivity(iu);
+            }
+        });
+    }
+
+    public void init(){
+        home_ad= findViewById(R.id.home_ad);
+        goods= findViewById(R.id.goods_ad);
+        oder= findViewById(R.id.oder_ad);
+        user= findViewById(R.id.user_ad);
     }
 }

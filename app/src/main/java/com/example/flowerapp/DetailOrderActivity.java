@@ -11,7 +11,6 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -22,10 +21,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.flowerapp.Adapter.ItemsOrderAdapter;
-import com.example.flowerapp.Adapter.OrderAdapter;
-import com.example.flowerapp.Entity.Category;
 import com.example.flowerapp.Entity.ItemsGiohang;
-import com.example.flowerapp.Entity.Order;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -37,6 +33,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DetailOrderActivity extends AppCompatActivity {
+    ImageView home_ad, goods, oder, user;
     DatabaseReference databaseorder;
     TextView orderID, createdAt, statusOrder, nameUser, phoneUser, addressUser, dateOrder, dateShip, sumBill, noteBill;
     Button btnUpdateBill, btnFeedback;
@@ -48,6 +45,7 @@ public class DetailOrderActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_order);
         init();
+        loadMenu();
         databaseorder = FirebaseDatabase.getInstance().getReference("Order");
         btnUpdateBill.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -111,6 +109,10 @@ public class DetailOrderActivity extends AppCompatActivity {
         btnUpdateBill = findViewById(R.id.btnUpdateBill);
         btnFeedback = findViewById(R.id.btnFeedback);
         lstProduct = findViewById(R.id.lstProduct);
+        home_ad= findViewById(R.id.home_ad);
+        goods= findViewById(R.id.goods_ad);
+        oder= findViewById(R.id.oder_ad);
+        user= findViewById(R.id.user_ad);
     }
     public void openDialogUpdateBill() {
         final Dialog dialog = new Dialog(this);
@@ -283,6 +285,39 @@ public class DetailOrderActivity extends AppCompatActivity {
             });
         dialog.show();
     }
+
+    public void loadMenu(){
+        init();
+        home_ad.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent ih= new Intent(DetailOrderActivity.this, HomeAdminActivity.class);
+                startActivity(ih);
+            }
+        });
+        goods.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent ig= new Intent(DetailOrderActivity.this, CategoryAdminActivity.class);
+                startActivity(ig);
+            }
+        });
+        oder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent io= new Intent(DetailOrderActivity.this, OrderAdminActivity.class);
+                startActivity(io);
+            }
+        });
+        user.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent iu= new Intent(DetailOrderActivity.this, UserAdminActivity.class);
+                startActivity(iu);
+            }
+        });
+    }
+
 
     @Override
     protected void onStart() {
