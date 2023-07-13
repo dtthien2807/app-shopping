@@ -5,6 +5,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -32,7 +34,7 @@ public class UserAdminActivity extends AppCompatActivity {
     DatabaseReference databaseuser;
     ListView userListView;
     List<User> userList;
-
+    ImageView home_ad, goods, oder, user;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +42,8 @@ public class UserAdminActivity extends AppCompatActivity {
         userListView = findViewById(R.id.user_list);
         userList = new ArrayList<>();
         databaseuser = FirebaseDatabase.getInstance().getReference("User");
+
+        loadMenu();
     }
     @Override
     protected void onStart() {
@@ -115,5 +119,44 @@ public class UserAdminActivity extends AppCompatActivity {
         });
 
         dialog.show();
+    }
+
+    public void loadMenu(){
+        init();
+        home_ad.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent ih= new Intent(UserAdminActivity.this, HomeAdminActivity.class);
+                startActivity(ih);
+            }
+        });
+        goods.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent ig= new Intent(UserAdminActivity.this, CategoryAdminActivity.class);
+                startActivity(ig);
+            }
+        });
+        oder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent io= new Intent(UserAdminActivity.this, OrderAdminActivity.class);
+                startActivity(io);
+            }
+        });
+        user.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent iu= new Intent(UserAdminActivity.this, UserAdminActivity.class);
+                startActivity(iu);
+            }
+        });
+    }
+
+    public void init(){
+        home_ad= findViewById(R.id.home_ad);
+        goods= findViewById(R.id.goods_ad);
+        oder= findViewById(R.id.oder_ad);
+        user= findViewById(R.id.user_ad);
     }
 }
