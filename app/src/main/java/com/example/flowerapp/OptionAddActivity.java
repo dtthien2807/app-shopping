@@ -149,7 +149,7 @@ public class OptionAddActivity extends AppCompatActivity {
         newItem.setUrl(name_pic);
         List<Flower> lstFlower= new ArrayList<>();
         lstFlower.add(newItem);
-        newOrder.setItems(lstFlower);
+//        newOrder.setItems(lstFlower);
 
         // Tạo key tự động cho order mới bằng phương thức push()
                 String orderKey = orderRef.push().getKey();

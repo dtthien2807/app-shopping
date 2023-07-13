@@ -14,6 +14,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.flowerapp.Adapter.OrderAdapter;
+import com.example.flowerapp.Entity.Feedback;
+import com.example.flowerapp.Entity.ItemsGiohang;
 import com.example.flowerapp.Entity.Order;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -68,17 +70,36 @@ public class HomeAdminActivity extends AppCompatActivity {
                         String checkStatus = String.valueOf(ordersnapshot.child("status").getValue(Integer.class));
                         if (checkStatus.equals("0")) {
                             layout_new_order.setVisibility(View.VISIBLE);
-                            Order order = ordersnapshot.getValue(Order.class);
+//                            Order order = ordersnapshot.getValue(Order.class);
+                            String id_order = ordersnapshot.child("id_order").getValue(String.class);
+                            String name_user = ordersnapshot.child("name_user").getValue(String.class);
+                            String number_phone = ordersnapshot.child("number_phone").getValue(String.class);
+                            String note = ordersnapshot.child("note").getValue(String.class);
+                            String id_user = ordersnapshot.child("id_user").getValue(String.class);
+                            String address_user = ordersnapshot.child("address_user").getValue(String.class);
+                            String order_ship_date = ordersnapshot.child("order_ship_date").getValue(String.class);
+                            String ship_date = ordersnapshot.child("ship_date").getValue(String.class);
+                            Float total_bill = ordersnapshot.child("total_bill").getValue(Float.class);
+                            Integer status = ordersnapshot.child("status").getValue(Integer.class);
+                            String create_at = ordersnapshot.child("create_at").getValue(String.class);
+
+                            Feedback feedbacks = new Feedback();
+                            List<ItemsGiohang> itemsGiohangs = new ArrayList<>();
+                            DataSnapshot flowerSnapshot = ordersnapshot.child("Items");
+                            if(flowerSnapshot != null) {
+                                for (DataSnapshot item : flowerSnapshot.getChildren()) {
+                                    ItemsGiohang itemsGiohang = item.getValue(ItemsGiohang.class);
+                                    itemsGiohangs.add(itemsGiohang);
+                                }
+                            }
+                            Order order = new Order(id_order,name_user,number_phone,note,id_user,
+                                    address_user,order_ship_date,ship_date,total_bill,status,create_at,
+                                    feedbacks,itemsGiohangs);
                             orderList.add(order);
                         }
                     }
                     Collections.reverse(orderList);
-                    OrderAdapter adaptor = new OrderAdapter(HomeAdminActivity.this, orderList, new OrderAdapter.IClickListener() {
-                        @Override
-                        public void onClickEdit(Order order) {
-
-                        }
-                    });
+                    OrderAdapter adaptor = new OrderAdapter(HomeAdminActivity.this, orderList);
                     adaptor.notifyDataSetChanged();
                     lstOrderNew.setAdapter(adaptor);
                 }
