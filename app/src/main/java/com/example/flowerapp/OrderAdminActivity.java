@@ -28,7 +28,7 @@ public class OrderAdminActivity extends AppCompatActivity {
     DatabaseReference databaseorder;
     ListView orderListView;
     List<Order> orderList;
-    ImageView home_ad, classify, goods, oder, user;
+    ImageView home_ad, goods, oder, user;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,13 +75,6 @@ public class OrderAdminActivity extends AppCompatActivity {
                 startActivity(ih);
             }
         });
-        classify.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent is= new Intent(OrderAdminActivity.this, CategoryAdminActivity.class);
-                startActivity(is);
-            }
-        });
         goods.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -107,7 +100,6 @@ public class OrderAdminActivity extends AppCompatActivity {
 
     public void init(){
         home_ad= findViewById(R.id.home_ad);
-        classify= findViewById(R.id.classify_ad);
         goods= findViewById(R.id.goods_ad);
         oder= findViewById(R.id.goods_ad);
         user= findViewById(R.id.user_ad);

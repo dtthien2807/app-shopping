@@ -54,7 +54,7 @@ public class ProductAdminActivity extends AppCompatActivity {
     GridView productListView;
     List<Flower> flowerList;
     ImageView imgUpload;
-    ImageView home_ad, classify, goods, oder, user;
+    ImageView home_ad, goods, oder, user;
     public static final int SELECT_PICTURE = 200;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -365,13 +365,6 @@ public class ProductAdminActivity extends AppCompatActivity {
                 startActivity(ih);
             }
         });
-        classify.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent is= new Intent(ProductAdminActivity.this, CategoryAdminActivity.class);
-                startActivity(is);
-            }
-        });
         goods.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -397,7 +390,6 @@ public class ProductAdminActivity extends AppCompatActivity {
 
     public void init(){
         home_ad= findViewById(R.id.home_ad);
-        classify= findViewById(R.id.classify_ad);
         goods= findViewById(R.id.goods_ad);
         oder= findViewById(R.id.goods_ad);
         user= findViewById(R.id.user_ad);

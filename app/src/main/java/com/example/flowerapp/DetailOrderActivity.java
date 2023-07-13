@@ -9,7 +9,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class DetailOrderActivity extends AppCompatActivity {
-    ImageView home_ad, classify, goods, oder, user;
+    ImageView home_ad, goods, oder, user;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,13 +25,6 @@ public class DetailOrderActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent ih= new Intent(DetailOrderActivity.this, HomeAdminActivity.class);
                 startActivity(ih);
-            }
-        });
-        classify.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent is= new Intent(DetailOrderActivity.this, CategoryAdminActivity.class);
-                startActivity(is);
             }
         });
         goods.setOnClickListener(new View.OnClickListener() {
@@ -59,7 +52,6 @@ public class DetailOrderActivity extends AppCompatActivity {
 
     public void init(){
         home_ad= findViewById(R.id.home_ad);
-        classify= findViewById(R.id.classify_ad);
         goods= findViewById(R.id.goods_ad);
         oder= findViewById(R.id.goods_ad);
         user= findViewById(R.id.user_ad);
