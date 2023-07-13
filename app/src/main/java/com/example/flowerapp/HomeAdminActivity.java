@@ -3,11 +3,13 @@ package com.example.flowerapp;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -33,6 +35,7 @@ public class HomeAdminActivity extends AppCompatActivity {
     ListView lstOrderNew;
     List<Order> orderList;
     LinearLayout layout_new_order;
+    ImageView home_ad, classify, goods, oder, user;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +45,8 @@ public class HomeAdminActivity extends AppCompatActivity {
         layout_new_order = findViewById(R.id.layout_new_order);
         layout_new_order.setVisibility(View.INVISIBLE);
         reference = FirebaseDatabase.getInstance().getReference();
+
+        loadMenu();
         reference.child("User").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -143,5 +148,52 @@ public class HomeAdminActivity extends AppCompatActivity {
 
         // Sử dụng Cookie
         return cookieValue;
+    }
+
+    public void loadMenu(){
+        init();
+        home_ad.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent ih= new Intent(HomeAdminActivity.this, HomeAdminActivity.class);
+                startActivity(ih);
+            }
+        });
+        classify.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent is= new Intent(HomeAdminActivity.this, CategoryAdminActivity.class);
+                startActivity(is);
+            }
+        });
+        goods.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent ig= new Intent(HomeAdminActivity.this, ProductAdminActivity.class);
+                startActivity(ig);
+            }
+        });
+        oder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent io= new Intent(HomeAdminActivity.this, OrderAdminActivity.class);
+                startActivity(io);
+            }
+        });
+        user.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent iu= new Intent(HomeAdminActivity.this, UserAdminActivity.class);
+                startActivity(iu);
+            }
+        });
+    }
+
+    public void init(){
+        home_ad= findViewById(R.id.home_ad);
+        classify= findViewById(R.id.classify_ad);
+        goods= findViewById(R.id.goods_ad);
+        oder= findViewById(R.id.goods_ad);
+        user= findViewById(R.id.user_ad);
     }
 }
