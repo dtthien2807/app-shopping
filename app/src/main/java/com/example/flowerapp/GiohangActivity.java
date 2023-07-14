@@ -44,20 +44,18 @@ import java.util.Map;
 public class GiohangActivity extends AppCompatActivity {
     ListView ryc_items;
     ItemsGiohangAdapter itemsGiohangAdapter;
-    EditText ed_name, ed_sdt, ed_address, ed_note;
-    TextView tv_total, tv_price_ship;
+    EditText ed_name,ed_sdt,ed_address,ed_note;
+    TextView tv_total,tv_price_ship;
     ImageButton imageButton;
     DatabaseReference reference;
     final String[] id_order = {"null"};
     ImageView home, stories, pay, delivery;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_gio_hang);
         init();
         setInforUser();
-        loadLayout();
         findOrderByUserId(getUserID());
         loadLayout();
     }
@@ -187,6 +185,7 @@ public class GiohangActivity extends AppCompatActivity {
         }
     }
 
+
     public void loadLayout(){
         init();
         home.setOnClickListener(new View.OnClickListener() {
@@ -218,35 +217,6 @@ public class GiohangActivity extends AppCompatActivity {
             }
         });
     }
-    public void getDataBill(OnGetDataUser listener) {
-
-        List<ItemsGiohang> itemsGiohangList = new ArrayList<>();
-        if (id_order[0].equals("null")) {
-            Toast.makeText(GiohangActivity.this, "None find order!", Toast.LENGTH_SHORT).show();
-        } else {
-            reference = FirebaseDatabase.getInstance().getReference("Order/" + id_order[0] + "/Items");
-            reference.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    for (DataSnapshot snapshot1: snapshot.getChildren())
-                    {
-                        ItemsGiohang itemsGiohang= new ItemsGiohang();
-                        itemsGiohang.setSoluongmuahang(snapshot1.child("soluongmuahang").getValue(Integer.class));
-                        itemsGiohang.setfDongiamua(snapshot1.child("fDongiamua").getValue(Float.class));
-                        itemsGiohang.setNameflower(snapshot1.child("nameflower").getValue(String.class));
-                        itemsGiohang.setImgFlower(snapshot1.child("imgFlower").getValue(String.class));
-                        itemsGiohangList.add(itemsGiohang);
-                    }
-                    listener.onSuccess(itemsGiohangList);
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-                }
-            });
-        }
-    }
-
     public void init()
     {
         ed_name=findViewById(R.id.ed_name);
