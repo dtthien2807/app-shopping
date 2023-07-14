@@ -42,16 +42,14 @@ import java.util.List;
 import java.util.Map;
 
 public class GiohangActivity extends AppCompatActivity {
-    RecyclerView ryc_items;
+    ListView ryc_items;
     ItemsGiohangAdapter itemsGiohangAdapter;
     EditText ed_name,ed_sdt,ed_address,ed_note;
     TextView tv_total,tv_price_ship;
     ImageButton imageButton;
     DatabaseReference reference;
     final String[] id_order = {"null"};
-
     ImageView home, stories, pay, delivery;
-    DatabaseReference reference = FirebaseDatabase.getInstance().getReference("User");
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -145,7 +143,7 @@ public class GiohangActivity extends AppCompatActivity {
                 Float fee_ship=Float.parseFloat(tv_price_ship.getText().toString());
                 for (ItemsGiohang item : lstItemsGiohang)
                 {
-                    total+=item.getfDongiamua()*item.getSoluongmuahang();
+                    total+=item.getPrice()*item.getSoluongmuahang();
                 }
                 total+=fee_ship;
                 tv_total.setText(String.valueOf(total));
@@ -171,7 +169,7 @@ public class GiohangActivity extends AppCompatActivity {
                     {
                         ItemsGiohang itemsGiohang= new ItemsGiohang();
                         itemsGiohang.setSoluongmuahang(snapshot1.child("soluongmuahang").getValue(Integer.class));
-                        itemsGiohang.setfDongiamua(snapshot1.child("fDongiamua").getValue(Float.class));
+                        itemsGiohang.setPrice(snapshot1.child("price").getValue(Float.class));
                         itemsGiohang.setNameflower(snapshot1.child("nameflower").getValue(String.class));
                         itemsGiohang.setImgFlower(snapshot1.child("imgFlower").getValue(String.class));
                         itemsGiohangList.add(itemsGiohang);

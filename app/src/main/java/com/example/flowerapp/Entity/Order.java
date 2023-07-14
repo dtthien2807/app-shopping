@@ -69,11 +69,11 @@ public class Order {
         return Note;
     }
 
-    public void setItems(List<Flower> items) {
+    public void setItems(List<ItemsGiohang> items) {
         this.items = items;
     }
 
-    public List<Flower> getItems() {
+    public List<ItemsGiohang> getItems() {
         return items;
     }
 
@@ -87,7 +87,7 @@ public class Order {
     private String create_at;
     private String order_ship_date;
     private String ship_date;
-    private List<ItemsGiohang> Items;
+    private List<ItemsGiohang> items;
     private String id_user;
     private String name_user;
     private String number_phone;
@@ -151,7 +151,7 @@ public class Order {
         this.status = status;
         this.create_at = create_at;
         this.feedbacks= feedbacks;
-        this.Items = items;
+        this.items = items;
     }
     public Order(){
         this.address_user = "hà nam ";
