@@ -1,71 +1,59 @@
 package com.example.flowerapp.Adapter;
 
+import android.app.Activity;
 import android.content.ClipData;
 import android.content.Context;
 import android.content.res.Resources;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.flowerapp.Entity.Flower;
 import com.example.flowerapp.Entity.ItemsGiohang;
+import com.example.flowerapp.Entity.Order;
 import com.example.flowerapp.R;
 
 import java.util.List;
+public class ItemsGiohangAdapter extends ArrayAdapter {
+    private Activity context;
+    private List<ItemsGiohang> itemsGiohangList;
+    int lastPosition = -1;
+    public ItemsGiohangAdapter(@NonNull Activity context, List<ItemsGiohang> lstItemGiohang) {
+        super(context, R.layout.item_giohang,lstItemGiohang);
+        this.itemsGiohangList = lstItemGiohang;
+        this.context = context;
+    }
 
-public class ItemsGiohangAdapter extends RecyclerView.Adapter<ItemsGiohangAdapter.ItemsViewHolder> {
-    private List<ItemsGiohang> lst_Flower;
-    private Context context;
     @NonNull
     @Override
-    public ItemsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.item_giohang,parent,false);
-        return new ItemsViewHolder(view);
-    }
+    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
 
-    public void setData(List<ItemsGiohang> lstProduct)
-    {
-        this.lst_Flower=lstProduct;
-        notifyDataSetChanged();
-    }
-    @Override
-    public void onBindViewHolder(@NonNull ItemsViewHolder holder, int position) {
-        ItemsGiohang product= lst_Flower.get(position);
-        if(product==null)
-            return;
-        //gắn dữ liệu url cho img trong items
+        LayoutInflater inflater = context.getLayoutInflater();
+        View ListItem = inflater.inflate(R.layout.item_giohang,null,true);
+        TextView tv_nameflower= ListItem.findViewById(R.id.tv_namesp);
+        TextView tv_soluong = ListItem.findViewById(R.id.tv_soluongitems);
+        ImageView tv_url = ListItem.findViewById(R.id.img_itemsgiohang);
+
+        ItemsGiohang Giohang = itemsGiohangList.get(position);
+        tv_nameflower.setText(Giohang.getNameflower());
+        tv_soluong.setText(String.valueOf(Giohang.getSoluongmuahang()));
         Resources resources = context.getResources();
-        String imageResourceName = product.getImgFlower();
+        String imageResourceName = Giohang.getImgFlower();
         int imageResourceId = resources.getIdentifier(imageResourceName, "drawable", context.getPackageName());
-        holder.imgFlower.setImageResource(imageResourceId);
-        holder.nameflower.setText(product.getNameflower());
-        holder.soluongmuahang.setText(String.valueOf(product.getSoluongmuahang()));
-    }
+        tv_url.setImageResource(imageResourceId);
+        Animation animation = AnimationUtils.loadAnimation(context,R.anim.slide_left);
+        ListItem.startAnimation(animation);
 
-    @Override
-    public int getItemCount() {
-        if(lst_Flower!=null)
-        {
-            return lst_Flower.size();
-        }
-        return 0;
-    }
-
-    public class ItemsViewHolder extends RecyclerView.ViewHolder{
-        private ImageView imgFlower;
-        private TextView nameflower;
-        private TextView soluongmuahang;
-        public ItemsViewHolder(@NonNull View itemView) {
-            super(itemView);
-            imgFlower= itemView.findViewById(R.id.img_itemsgiohang);
-            nameflower= itemView.findViewById(R.id.tv_namesp);
-            soluongmuahang=itemView.findViewById(R.id.tv_soluongitems);
-        }
+        return  ListItem;
     }
 }
