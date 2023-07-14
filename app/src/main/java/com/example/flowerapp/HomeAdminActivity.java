@@ -3,17 +3,21 @@ package com.example.flowerapp;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.flowerapp.Adapter.OrderAdapter;
+import com.example.flowerapp.Entity.Feedback;
+import com.example.flowerapp.Entity.ItemsGiohang;
 import com.example.flowerapp.Entity.Order;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -31,6 +35,7 @@ public class HomeAdminActivity extends AppCompatActivity {
     ListView lstOrderNew;
     List<Order> orderList;
     LinearLayout layout_new_order;
+    ImageView home_ad, goods, oder, user;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +45,8 @@ public class HomeAdminActivity extends AppCompatActivity {
         layout_new_order = findViewById(R.id.layout_new_order);
         layout_new_order.setVisibility(View.INVISIBLE);
         reference = FirebaseDatabase.getInstance().getReference();
+
+        loadMenu();
         reference.child("User").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -65,10 +72,34 @@ public class HomeAdminActivity extends AppCompatActivity {
                 orderList.clear();
                 if(snapshot.exists()) {
                     for (DataSnapshot ordersnapshot : snapshot.getChildren()) {
-                        int checkStatus = ordersnapshot.child("status").getValue(int.class);
-                        if (checkStatus == 0) {
+                        String checkStatus = String.valueOf(ordersnapshot.child("status").getValue(Integer.class));
+                        if (checkStatus.equals("0")) {
                             layout_new_order.setVisibility(View.VISIBLE);
-                            Order order = ordersnapshot.getValue(Order.class);
+//                            Order order = ordersnapshot.getValue(Order.class);
+                            String id_order = ordersnapshot.child("id_order").getValue(String.class);
+                            String name_user = ordersnapshot.child("name_user").getValue(String.class);
+                            String number_phone = ordersnapshot.child("number_phone").getValue(String.class);
+                            String note = ordersnapshot.child("note").getValue(String.class);
+                            String id_user = ordersnapshot.child("id_user").getValue(String.class);
+                            String address_user = ordersnapshot.child("address_user").getValue(String.class);
+                            String order_ship_date = ordersnapshot.child("order_ship_date").getValue(String.class);
+                            String ship_date = ordersnapshot.child("ship_date").getValue(String.class);
+                            Float total_bill = ordersnapshot.child("total_bill").getValue(Float.class);
+                            Integer status = ordersnapshot.child("status").getValue(Integer.class);
+                            String create_at = ordersnapshot.child("create_at").getValue(String.class);
+
+                            Feedback feedbacks = new Feedback();
+                            List<ItemsGiohang> itemsGiohangs = new ArrayList<>();
+                            DataSnapshot flowerSnapshot = ordersnapshot.child("Items");
+                            if(flowerSnapshot != null) {
+                                for (DataSnapshot item : flowerSnapshot.getChildren()) {
+                                    ItemsGiohang itemsGiohang = item.getValue(ItemsGiohang.class);
+                                    itemsGiohangs.add(itemsGiohang);
+                                }
+                            }
+                            Order order = new Order(id_order,name_user,number_phone,note,id_user,
+                                    address_user,order_ship_date,ship_date,total_bill,status,create_at,
+                                    feedbacks,itemsGiohangs);
                             orderList.add(order);
                         }
                     }
@@ -92,7 +123,7 @@ public class HomeAdminActivity extends AppCompatActivity {
     }
 
     public void getListOrder(View view) {
-        Intent intent = new Intent(this, GiohangActivity.class);
+        Intent intent = new Intent(this, OrderAdminActivity.class);
         startActivity(intent);
     }
 
@@ -117,5 +148,44 @@ public class HomeAdminActivity extends AppCompatActivity {
 
         // Sử dụng Cookie
         return cookieValue;
+    }
+
+    public void loadMenu(){
+        init();
+        home_ad.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent ih= new Intent(HomeAdminActivity.this, HomeAdminActivity.class);
+                startActivity(ih);
+            }
+        });
+        goods.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent ig= new Intent(HomeAdminActivity.this, CategoryAdminActivity.class);
+                startActivity(ig);
+            }
+        });
+        oder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent io= new Intent(HomeAdminActivity.this, OrderAdminActivity.class);
+                startActivity(io);
+            }
+        });
+        user.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent iu= new Intent(HomeAdminActivity.this, UserAdminActivity.class);
+                startActivity(iu);
+            }
+        });
+    }
+
+    public void init(){
+        home_ad= findViewById(R.id.home_ad);
+        goods= findViewById(R.id.goods_ad);
+        oder= findViewById(R.id.oder_ad);
+        user= findViewById(R.id.user_ad);
     }
 }

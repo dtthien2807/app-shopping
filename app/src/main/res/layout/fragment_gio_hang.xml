@@ -236,7 +236,7 @@
                         android:id="@+id/btn_thanhtoan"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:backgroundTint="#FBD7DB"
+                        android:backgroundTint="#B5EE3F76"
                         android:text="BUY"
                         android:textColor="#1C1B1F"
                         android:textSize="20sp"

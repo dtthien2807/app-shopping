@@ -1,36 +1,29 @@
 package com.example.flowerapp;
 
-import static android.content.ContentValues.TAG;
-
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
+
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.flowerapp.Adapter.CategoryAdapter;
 import com.example.flowerapp.Entity.Category;
 import com.example.flowerapp.Entity.Flower;
 import com.example.flowerapp.Interface.OnGetDataListener;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
+
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -41,14 +34,12 @@ public class HomeActivity extends AppCompatActivity {
     CategoryAdapter categoryAdapter;
     SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
     Date date;
+    ImageView home, stories, pay, delivery;
 
-    private ActionBar toolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        toolbar = getSupportActionBar();
-
 
         init();
         //hiển thị view Category theo chiều dọc
@@ -71,6 +62,7 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
+        loadLayout();
     }
 
     public void lstCate(OnGetDataListener listener) {
@@ -110,9 +102,44 @@ public class HomeActivity extends AppCompatActivity {
         });
     }
 
+    public void loadLayout(){
+        init();
+        home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent ih= new Intent(HomeActivity.this, HomeActivity.class);
+                startActivity(ih);
+            }
+        });
+        stories.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent is = new Intent(HomeActivity.this, StoriesActivity.class);
+                startActivity(is);
+            }
+        });
+        pay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent ip= new Intent(HomeActivity.this, GiohangActivity.class);
+                startActivity(ip);
+            }
+        });
+        delivery.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent id= new Intent(HomeActivity.this, DeliveryActivity.class);
+                startActivity(id);
+            }
+        });
+    }
     public void init()
     {
         rcyCategoy= findViewById(R.id.rcyCategoryxml);
         categoryAdapter= new CategoryAdapter(this);
+        home= findViewById(R.id.ic_home);
+        stories= findViewById(R.id.ic_stories);
+        pay= findViewById(R.id.ic_pay);
+        delivery= findViewById(R.id.ic_delivery);
     }
 }

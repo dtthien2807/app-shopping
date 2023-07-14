@@ -8,7 +8,7 @@ public class ItemsGiohang implements Serializable {
         this.soluongmuahang= Integer.valueOf(30);
         this.imgFlower="hoahuongduong";
         this.nameflower="hoa hướng dương";
-        this.fDongiamua=Float.valueOf(300000);
+        this.price=Float.valueOf(300000);
         this.id_flower="3234";
     }
     public int getSoluongmuahang() {
@@ -35,19 +35,12 @@ public class ItemsGiohang implements Serializable {
         this.imgFlower = imgFlower;
     }
 
-    private int soluongmuahang;
-    private String nameflower;
-    private String imgFlower;
+    public int soluongmuahang;
+    public String nameflower;
+    public String imgFlower;
+    public String id_flower;
+    public float price;
 
-    public Float getfDongiamua() {
-        return fDongiamua;
-    }
-
-    public void setfDongiamua(Float fDongiamua) {
-        this.fDongiamua = fDongiamua;
-    }
-
-    private  Float fDongiamua;
     public String getId_flower() {
         return id_flower;
     }
@@ -56,5 +49,19 @@ public class ItemsGiohang implements Serializable {
         this.id_flower = id_flower;
     }
 
-    private  String id_flower;
+    public float getPrice() {
+        return price;
+    }
+
+    public void setPrice(float price) {
+        this.price = price;
+    }
+    public ItemsGiohang(String id_flower, String nameflower, int soluongmuahang, float price, String imgFlower)
+    {
+        this.id_flower = id_flower;
+        this.nameflower = nameflower;
+        this.soluongmuahang = soluongmuahang;
+        this.price = price;
+        this.imgFlower = imgFlower;
+    }
 }

@@ -1,7 +1,9 @@
 package com.example.flowerapp.Entity;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Order {
 
@@ -85,11 +87,12 @@ public class Order {
     private String create_at;
     private String order_ship_date;
     private String ship_date;
-    private List<Flower> items;
+    private List<ItemsGiohang> Items;
     private String id_user;
     private String name_user;
     private String number_phone;
     private String address_user;
+    public Feedback feedbacks;
 
     public float getTotal_bill() {
         return total_bill;
@@ -124,9 +127,18 @@ public class Order {
     public void setAddress_user(String address_user) {
         this.address_user = address_user;
     }
+
+    public Feedback getFeedbacks() {
+        return feedbacks;
+    }
+
+    public void setFeedbacks(Feedback feedbacks) {
+        this.feedbacks = feedbacks;
+    }
+
     public Order(String id_order, String name_user, String number_phone, String note, String id_user,
-                 String address_user, String order_ship_date, String ship_date, Float total_bill, int status
-    ){
+                 String address_user, String order_ship_date, String ship_date, Float total_bill, int status,
+                 String create_at, Feedback feedbacks, List<ItemsGiohang> items){
         this.address_user = address_user;
         this.id_order = id_order;
         this.name_user = name_user;
@@ -137,10 +149,22 @@ public class Order {
         this.ship_date = ship_date;
         this.total_bill = total_bill;
         this.status = status;
+        this.create_at = create_at;
+        this.feedbacks= feedbacks;
+        this.Items = items;
     }
     public Order(){
         this.address_user = "hà nam ";
         this.name_user="thu hoài";
         this.number_phone="0347382190";
+    }
+
+    public int getStatus() {
+        return status;
+    }
+    public Map<String, Object> toMap(){
+        HashMap<String,Object> result = new HashMap<>();
+        result.put("status", status);
+        return result;
     }
 }
