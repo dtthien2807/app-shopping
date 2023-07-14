@@ -27,7 +27,7 @@
             android:exported="false">
         </activity>
         <activity
-            android:name=".HomeActivity"
+            android:name=".GiohangActivity"
             android:exported="false" />
         <activity
             android:name=".ProductAdminActivity"
@@ -36,7 +36,7 @@
             android:name=".CategoryAdminActivity"
             android:exported="false" />
         <activity
-            android:name=".GiohangActivity"
+            android:name=".LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -45,7 +45,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".LoginActivity"
+            android:name=".HomeActivity"
             android:exported="false">
 
         </activity>

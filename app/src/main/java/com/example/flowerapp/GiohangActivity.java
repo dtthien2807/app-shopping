@@ -145,7 +145,7 @@ public class GiohangActivity extends AppCompatActivity {
                 Float fee_ship=Float.parseFloat(tv_price_ship.getText().toString());
                 for (ItemsGiohang item : lstItemsGiohang)
                 {
-                    total+=item.getfDongiamua()*item.getSoluongmuahang();
+                    total+=item.getPrice()*item.getSoluongmuahang();
                 }
                 total+=fee_ship;
                 tv_total.setText(String.valueOf(total));
@@ -156,6 +156,34 @@ public class GiohangActivity extends AppCompatActivity {
 
             }
         });
+    }
+    public void getDataBill(OnGetDataUser listener) {
+
+        List<ItemsGiohang> itemsGiohangList = new ArrayList<>();
+        if (id_order[0].equals("null")) {
+            Toast.makeText(GiohangActivity.this, "None find order!", Toast.LENGTH_SHORT).show();
+        } else {
+            reference = FirebaseDatabase.getInstance().getReference("Order/" + id_order[0] + "/Items");
+            reference.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    for (DataSnapshot snapshot1: snapshot.getChildren())
+                    {
+                        ItemsGiohang itemsGiohang= new ItemsGiohang();
+                        itemsGiohang.setSoluongmuahang(snapshot1.child("soluongmuahang").getValue(Integer.class));
+                        itemsGiohang.setPrice(snapshot1.child("price").getValue(Float.class));
+                        itemsGiohang.setNameflower(snapshot1.child("nameflower").getValue(String.class));
+                        itemsGiohang.setImgFlower(snapshot1.child("imgFlower").getValue(String.class));
+                        itemsGiohangList.add(itemsGiohang);
+                    }
+                    listener.onSuccess(itemsGiohangList);
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                }
+            });
+        }
     }
 
     public void loadLayout(){
@@ -256,8 +284,6 @@ public class GiohangActivity extends AppCompatActivity {
 
         // Truy xuất Cookie
                 String cookieValue = sharedPreferences.getString("userID", "");
-           //     String cookieValue = "0923449320";
-
 
         // Sử dụng Cookie
                 return cookieValue;

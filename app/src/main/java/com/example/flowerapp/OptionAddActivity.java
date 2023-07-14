@@ -116,7 +116,7 @@ public class OptionAddActivity extends AppCompatActivity {
                     itemsGiohang.setImgFlower(name_pic);
                     itemsGiohang.setSoluongmuahang(Integer.parseInt(tv_quanity_dathang.getText().toString()));
                     itemsGiohang.setId_flower(getUserID("FlowerPickID"));
-                    itemsGiohang.setfDongiamua(Float.parseFloat(tv_price.getText().toString()));
+                    itemsGiohang.setPrice(Float.parseFloat(tv_price.getText().toString()));
                     databasecategory.child(key1).setValue(itemsGiohang);
                     Toast.makeText(OptionAddActivity.this, "You have add items successfully!", Toast.LENGTH_SHORT).show();
                 }
@@ -154,7 +154,7 @@ public class OptionAddActivity extends AppCompatActivity {
                         itemsGiohang.setImgFlower(name_pic);
                         itemsGiohang.setSoluongmuahang(Integer.parseInt(tv_quanity_dathang.getText().toString()));
                         itemsGiohang.setId_flower(getUserID("FlowerPickID"));
-                        itemsGiohang.setfDongiamua(Float.parseFloat(tv_price.getText().toString()));
+                        itemsGiohang.setPrice(Float.parseFloat(tv_price.getText().toString()));
                         databasecategory.child(key1).setValue(itemsGiohang);
                         Toast.makeText(OptionAddActivity.this, "You have create order successfully!", Toast.LENGTH_SHORT).show();
                     }
