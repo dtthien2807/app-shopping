@@ -25,12 +25,12 @@
             android:name=".OptionAddActivity"
             android:exported="false"></activity>
         <activity
-            android:name=".HomeActivity"
+            android:name=".HomeAdminActivity"
             android:exported="false">
 
         </activity>
         <activity
-            android:name=".GiohangActivity"
+            android:name=".HomeActivity"
             android:exported="false" />
         <activity
             android:name=".ProductAdminActivity"
@@ -41,7 +41,7 @@
 
         </activity>
         <activity
-            android:name=".HomeAdminActivity"
+            android:name=".GiohangActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -19,8 +19,11 @@ import com.example.flowerapp.Entity.Category;
 import com.example.flowerapp.Entity.Flower;
 import com.example.flowerapp.Entity.ItemsGiohang;
 import com.example.flowerapp.Entity.Order;
+import com.example.flowerapp.Entity.User;
 import com.example.flowerapp.Interface.OnGetDataListener;
+import com.example.flowerapp.Interface.OnGetDataUser;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -40,6 +43,7 @@ import java.util.Calendar;
 import java.util.List;
 
 public class OptionAddActivity extends AppCompatActivity {
+    DatabaseReference databasecategory;
     ImageView imageView;
     TextView tv_nameflower;
     TextView tv_description;
@@ -48,13 +52,17 @@ public class OptionAddActivity extends AppCompatActivity {
     TextView tv_quanity_dathang;
     ImageView btn_tang,btn_giam;
     Integer dathang=0;
-    String name_pic,id_user;
+    String name_pic;
     Button btn_themgiohang;
+    User user;
+    final String[] id_order = {"null"};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_option_add);
         init();
+        user= new User();
+        findOrderByUserId(getUserID("userID"));
         btn_tang.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -79,135 +87,120 @@ public class OptionAddActivity extends AppCompatActivity {
                 btn_themgiohang.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                       // addBill(getUserID(),0);
+                        addfinal();
                         Intent intent = new Intent(OptionAddActivity.this, GiohangActivity.class);
                         startActivity(intent);
                     }
                 });
             }
-
-            @Override
             public void onFailure(Exception e) {
             }
         });
 
+
     }
-    public void addBill(String searchUserId,int searchStatus)
+    public void addfinal()
     {
+        if(id_order[0].equals("null"))
+        {
+            additemsforbill();
+        }
+        else {
+            databasecategory = FirebaseDatabase.getInstance().getReference("Order/"+id_order[0]+"/Items");
+            String key1 = databasecategory.push().getKey();
+            databasecategory.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    ItemsGiohang itemsGiohang = new ItemsGiohang();
+                    itemsGiohang.setNameflower(tv_nameflower.getText().toString());
+                    itemsGiohang.setImgFlower(name_pic);
+                    itemsGiohang.setSoluongmuahang(Integer.parseInt(tv_quanity_dathang.getText().toString()));
+                    itemsGiohang.setId_flower(getUserID("FlowerPickID"));
+                    itemsGiohang.setfDongiamua(Float.parseFloat(tv_price.getText().toString()));
+                    databasecategory.child(key1).setValue(itemsGiohang);
+                    Toast.makeText(OptionAddActivity.this, "You have add items successfully!", Toast.LENGTH_SHORT).show();
+                }
 
-// Tạo một đối tượng DatabaseReference để tham chiếu đến nút "Order"
-        DatabaseReference orderRef = FirebaseDatabase.getInstance().getReference("Order");
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                }
+            });
+        }
+    }
+    public void additemsforbill()
+    {
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        Date date = new Date();
+        String created_at = dateFormat.format(date);
+        Order order=new Order();
+        databasecategory = FirebaseDatabase.getInstance().getReference("Order");
+        String key = databasecategory.push().getKey();
+        databasecategory.child(key).removeValue();
+        order.setId_order(key);
+        order.setStatus(0);
+        order.setId_user(getUserID("userID"));
+        order.setCreate_at(created_at);
+        databasecategory.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                databasecategory.child(key).setValue(order);
+                databasecategory=databasecategory.child(key).child("Items");
+                String key1=databasecategory.push().getKey();
+                databasecategory.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        ItemsGiohang itemsGiohang= new ItemsGiohang();
+                        itemsGiohang.setNameflower(tv_nameflower.getText().toString());
+                        itemsGiohang.setImgFlower(name_pic);
+                        itemsGiohang.setSoluongmuahang(Integer.parseInt(tv_quanity_dathang.getText().toString()));
+                        itemsGiohang.setId_flower(getUserID("FlowerPickID"));
+                        itemsGiohang.setfDongiamua(Float.parseFloat(tv_price.getText().toString()));
+                        databasecategory.child(key1).setValue(itemsGiohang);
+                        Toast.makeText(OptionAddActivity.this, "You have create order successfully!", Toast.LENGTH_SHORT).show();
+                    }
 
-// Sử dụng truy vấn Query để tìm kiếm dữ liệu
-        Query query = orderRef.orderByChild("user_id").equalTo(searchUserId).orderByChild("status").equalTo(searchStatus);
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                    }
+                });
+            }
 
-// Thực hiện truy vấn và lắng nghe sự kiện ValueEventListener để nhận kết quả
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+
+            }
+        });
+
+    }
+    public void findOrderByUserId(String userId) {
+
+        DatabaseReference ordersRef = FirebaseDatabase.getInstance().getReference("Order");
+
+        // Sử dụng phương thức orderByChild và equalTo để tìm kiếm đơn hàng có id_user tương ứng
+        Query query = ordersRef.orderByChild("id_user").equalTo(userId);
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()) {
-                    // Có dữ liệu trả về từ truy vấn
-                    for (DataSnapshot orderSnapshot : dataSnapshot.getChildren()) {
-                        addnewitems(getUserID(),"items");
+                for (DataSnapshot orderSnapshot : dataSnapshot.getChildren()) {
+                    long status = orderSnapshot.child("status").getValue(Long.class);
+                    if(status==0)
+                    {
+                        id_order[0] = orderSnapshot.child("id_order").getValue(String.class);
+                        Toast.makeText(OptionAddActivity.this, id_order[0], Toast.LENGTH_SHORT).show();
+                        break;
                     }
-                } else {
-
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 // Xử lý lỗi nếu có
-                Toast.makeText(getApplicationContext(), "Thêm giỏ hàng lỗi khi tìm kiếm", Toast.LENGTH_SHORT).show();
             }
         });
     }
-    public void addneworder() throws ParseException {
-        // Tạo một đối tượng DatabaseReference để truy cập nút "Order"
-        DatabaseReference orderRef = FirebaseDatabase.getInstance().getReference().child("Order");
-
-        // Tạo một đối tượng Order mới
-                // Tạo một đối tượng Calendar đại diện cho ngày hiện tại
-                Calendar calendar = Calendar.getInstance();
-
-        // Định dạng ngày theo định dạng mong muốn, ví dụ: "yyyy-MM-dd"
-                SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-
-        // Lấy ngày hiện tại
-                Date currentDate = dateFormat.parse(dateFormat.format(calendar.getTime())) ;
-
-        //Tạo 1 order mới
-                Order newOrder = new Order();
-                newOrder.setNote("Phải đổi hoa hồng thành hoa cẩm chướng");
 
 
-        // Tạo một đối tượng Item1 và thiết lập giá trị cho các thuộc tính của nó
-        Flower newItem = new Flower();
-        newItem.setId_flower(getUserID());
-        newItem.setPrice(Integer.parseInt(tv_price.getText().toString()));
-        newItem.setQuantity(Integer.parseInt(tv_quanity_dathang.getText().toString()));
-        newItem.setUrl(name_pic);
-        List<Flower> lstFlower= new ArrayList<>();
-        lstFlower.add(newItem);
-        newOrder.setItems(lstFlower);
-
-        // Tạo key tự động cho order mới bằng phương thức push()
-                String orderKey = orderRef.push().getKey();
-        newOrder.setStatus(0);
-        newOrder.setTotal_bill(4500000);
-        newOrder.setId_order(getUserID().toString());
-
-        // Xác định đường dẫn đến nút order mới
-                DatabaseReference newOrderRef = orderRef.child(orderKey);
-
-        // Thiết lập giá trị của order mới trong Firebase Realtime Database
-                newOrderRef.setValue(newOrder)
-                        .addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                if (task.isSuccessful()) {
-                                    // Order mới đã được thêm thành công
-                                } else {
-                                    // Xảy ra lỗi khi thêm order mới
-                                }
-                            }
-                        });
-
-            }
-    public void addnewitems( String orderKey, String itemsKey)
-    {
-    // Tạo một đối tượng DatabaseReference để truy cập nút "items"
-            DatabaseReference itemsRef = FirebaseDatabase.getInstance().getReference()
-                    .child("Order")
-                    .child(orderKey)
-                    .child(itemsKey);
-    // Tạo một đối tượng Item mới
-            Flower newItem = new Flower();
-            newItem.setId_flower(getUserID());
-            newItem.setPrice(Integer.parseInt(tv_price.getText().toString()));
-            newItem.setQuantity(Integer.parseInt(tv_quanity_dathang.getText().toString()));
-            newItem.setUrl(name_pic);
-
-    // Tạo một khóa mới cho đối tượng Item
-            String newItemKey = itemsRef.push().getKey();
-
-    // Thiết lập giá trị của đối tượng Item trong Firebase Realtime Database
-            itemsRef.child(newItemKey).setValue(newItem)
-                    .addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            if (task.isSuccessful()) {
-                                Toast.makeText(getApplicationContext(), "Thêm giỏ hàng thành công", Toast.LENGTH_SHORT).show();
-                                // Đối tượng Item đã được thêm thành công
-                            } else {
-                                // Xảy ra lỗi khi thêm đối tượng Item
-                                Toast.makeText(getApplicationContext(), "Thêm giỏ hàng Lỗi!!!", Toast.LENGTH_SHORT).show();
-
-                            }
-                        }
-                    });
-
-    }
     public void init() {
         imageView = findViewById(R.id.img_url);
         tv_description = findViewById(R.id.tv_description);
@@ -252,7 +245,7 @@ public class OptionAddActivity extends AppCompatActivity {
                             imageView.setImageResource(imageResourceId);
                             //xu ly so nguyen
                             tv_quanity_cosan.setText(String.valueOf(Math.round(item.getQuantity())));
-                            tv_price.setText(String.valueOf(Math.round(item.getPrice())+" VND"));
+                            tv_price.setText(String.valueOf(Math.round(item.getPrice())));
                             tv_description.setText(item.getDescription());
                             tv_nameflower.setText(item.getName());
                             name_pic=item.getUrl();
@@ -286,12 +279,12 @@ public class OptionAddActivity extends AppCompatActivity {
         editor.apply();
 
     }
-    public String getUserID()
+    public String getUserID(String FlowerPickID)
     {
         SharedPreferences sharedPreferences = getSharedPreferences("MyCookies", Context.MODE_PRIVATE);
 
         // Truy xuất Cookie
-        String cookieValue = sharedPreferences.getString("FlowerPickID", "");
+        String cookieValue = sharedPreferences.getString(FlowerPickID, "");
 
         // Sử dụng Cookie
         return cookieValue;

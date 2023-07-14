@@ -138,5 +138,9 @@ public class Order {
         this.total_bill = total_bill;
         this.status = status;
     }
-    public Order(){}
+    public Order(){
+        this.address_user = "hà nam ";
+        this.name_user="thu hoài";
+        this.number_phone="0347382190";
+    }
 }
