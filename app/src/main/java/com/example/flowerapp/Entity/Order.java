@@ -23,6 +23,10 @@ public class Order {
         this.price = price;
     }
 
+//    public int isStatus() {
+//        return status;
+//    }
+
     public void setStatus(int status) {
         this.status = status;
     }
@@ -149,7 +153,11 @@ public class Order {
         this.feedbacks= feedbacks;
         this.Items = items;
     }
-    public Order(){}
+    public Order(){
+        this.address_user = "hà nam ";
+        this.name_user="thu hoài";
+        this.number_phone="0347382190";
+    }
 
     public int getStatus() {
         return status;
