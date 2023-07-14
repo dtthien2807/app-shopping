@@ -57,6 +57,7 @@ public class GiohangActivity extends AppCompatActivity {
         init();
         setInforUser();
         findOrderByUserId(getUserID());
+        loadLayout();
     }
     public void thanhtoan()
     {

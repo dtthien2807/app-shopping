@@ -23,9 +23,9 @@ public class Order {
         this.price = price;
     }
 
-    public int isStatus() {
-        return status;
-    }
+//    public int isStatus() {
+//        return status;
+//    }
 
     public void setStatus(int status) {
         this.status = status;
