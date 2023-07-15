@@ -12,6 +12,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.bumptech.glide.Glide;
 import com.example.flowerapp.Entity.Flower;
 import com.example.flowerapp.R;
 
@@ -55,6 +56,8 @@ public class ProductAdapter extends ArrayAdapter {
         txtQuality.setText("Số lượng: "+String.valueOf(flower.getQuantity()));
         txtPrice.setText("Gía tiền: "+String.valueOf(flower.getPrice()));
         txtDate.setText("Date: "+flower.getCreated_at());
+        // Load the image using Glide
+        Glide.with(context).load(flower.getUrl()).into(imgFlower );
 
         btn_edit.setOnClickListener(new View.OnClickListener() {
             @Override
