@@ -107,6 +107,7 @@ public class Flower implements Serializable {
         result.put("quantity", quantity);
         result.put("price", price);
         result.put("status", status);
+        result.put("url", url);
         return result;
     }
 }

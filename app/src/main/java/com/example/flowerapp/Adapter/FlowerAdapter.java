@@ -12,6 +12,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.flowerapp.Entity.Flower;
 import com.example.flowerapp.HomeActivity;
 import com.example.flowerapp.Item_Detail_Fragment;
@@ -46,8 +47,9 @@ public class FlowerAdapter  extends RecyclerView.Adapter<FlowerAdapter.FlowerVie
       //gắn dữ liệu url cho img trong items
         Resources resources = context.getResources();
         String imageResourceName = product.getUrl();
-        int imageResourceId = resources.getIdentifier(imageResourceName, "drawable", context.getPackageName());
-        holder.imgFlower.setImageResource(imageResourceId);
+//        int imageResourceId = resources.getIdentifier(imageResourceName, "drawable", context.getPackageName());
+//        holder.imgFlower.setImageResource(imageResourceId);
+        Glide.with(context).load(imageResourceName).into(holder.imgFlower);
         holder.title.setText(product.getName());
         holder.imgFlower.setOnClickListener(new View.OnClickListener() {
             @Override

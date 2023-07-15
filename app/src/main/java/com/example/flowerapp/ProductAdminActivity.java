@@ -9,6 +9,7 @@ import androidx.loader.content.CursorLoader;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -26,19 +27,28 @@ import android.util.Base64;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.flowerapp.Adapter.ProductAdapter;
 import com.example.flowerapp.Entity.Flower;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -55,7 +65,12 @@ public class ProductAdminActivity extends AppCompatActivity {
     List<Flower> flowerList;
     ImageView imgUpload;
     ImageView home_ad, goods, oder, user;
+    private final StorageReference storageReference = FirebaseStorage.getInstance().getReference();
     public static final int SELECT_PICTURE = 200;
+    ProgressBar progressUpload;
+    Uri imgUrl;
+    Uri path;
+    private String pathImg ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -173,6 +188,7 @@ public class ProductAdminActivity extends AppCompatActivity {
         txtDescription.setText(flower.getDescription());
         txtQuantity.setText(String.valueOf(flower.getQuantity()));
         txtPrice.setText(String.valueOf(flower.getPrice()));
+        Glide.with(this).load(flower.getUrl()).into(imgUpload);
 
         btn_cancel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -198,10 +214,37 @@ public class ProductAdminActivity extends AppCompatActivity {
                 Float quantity = Float.valueOf(txtQuantity.getText().toString().trim());
                 Float price = Float.valueOf(txtPrice.getText().toString().trim());
 
-                flower.setName(newName);
-                flower.setDescription(description);
-                flower.setQuantity(quantity);
-                flower.setPrice(price);
+                StorageReference fileRef = storageReference.child(System.currentTimeMillis()+"."+ getFileExtension(imgUrl));
+                fileRef.putFile(imgUrl).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        Toast.makeText(ProductAdminActivity.this, "Upload success!", Toast.LENGTH_SHORT).show();
+                        fileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri downloadPhotoUrl) {
+                                flower.setName(newName);
+                                flower.setDescription(description);
+                                flower.setQuantity(quantity);
+                                flower.setPrice(price);
+                                flower.setUrl(downloadPhotoUrl.toString());
+
+                                progressUpload.setVisibility(View.INVISIBLE);
+                                Toast.makeText(ProductAdminActivity.this, "Uploaded ", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {
+                        progressUpload.setVisibility(View.VISIBLE);
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        progressUpload.setVisibility(View.INVISIBLE);
+                        Toast.makeText(ProductAdminActivity.this, "Uploading failed!", Toast.LENGTH_SHORT).show();
+                    }
+                });
                 databasecategory.child(String.valueOf(flower.getId_flower())).updateChildren(flower.toMap(), new DatabaseReference.CompletionListener() {
                     @Override
                     public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
@@ -233,8 +276,10 @@ public class ProductAdminActivity extends AppCompatActivity {
         EditText txtQuantity = dialog.findViewById(R.id.txtQuantity);
         EditText txtPrice = dialog.findViewById(R.id.txtPrice);
         Button btnUpload = dialog.findViewById(R.id.btnUpload);
+        progressUpload = dialog.findViewById(R.id.progressUpload);
         imgUpload = dialog.findViewById(R.id.imgUpload);
 
+        progressUpload.setVisibility(View.INVISIBLE);
         btn_cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -260,24 +305,49 @@ public class ProductAdminActivity extends AppCompatActivity {
                 String description = txtDescription.getText().toString().trim();
                 Float quantity = Float.valueOf(txtQuantity.getText().toString().trim());
                 Float price = Float.valueOf(txtPrice.getText().toString().trim());
-//                Bitmap bitmap = ((BitmapDrawable)imgUpload.getDrawable()).getBitmap();
                 DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
                 Date date = new Date();
                 String created_at = dateFormat.format(date);
+
                 databasecategory.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        Flower flower = new Flower();
-                        flower.setId_flower(key);
-                        flower.setName(newName);
-                        flower.setDescription(description);
-                        flower.setQuantity(quantity);
-                        flower.setPrice(price);
-                        flower.setCreated_at(created_at);
-                        flower.setStatus(true);
-//                        flower.setUrl(bitmap);
-                        databasecategory.child(key).setValue(flower);
-                        Toast.makeText(ProductAdminActivity.this, "You have add successfully!", Toast.LENGTH_SHORT).show();
+                        StorageReference fileRef = storageReference.child(System.currentTimeMillis()+"."+ getFileExtension(imgUrl));
+                        fileRef.putFile(imgUrl).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                            @Override
+                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                Toast.makeText(ProductAdminActivity.this, "Upload success!", Toast.LENGTH_SHORT).show();
+                                fileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                    @Override
+                                    public void onSuccess(Uri downloadPhotoUrl) {
+                                        Flower flower = new Flower();
+                                        flower.setId_flower(key);
+                                        flower.setName(newName);
+                                        flower.setDescription(description);
+                                        flower.setQuantity(quantity);
+                                        flower.setPrice(price);
+                                        flower.setCreated_at(created_at);
+                                        flower.setStatus(true);
+                                        flower.setUrl(downloadPhotoUrl.toString());
+                                        databasecategory.child(key).setValue(flower);
+
+                                        progressUpload.setVisibility(View.INVISIBLE);
+                                        Toast.makeText(ProductAdminActivity.this, "Uploaded ", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                            }
+                        }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                            @Override
+                            public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {
+                                progressUpload.setVisibility(View.VISIBLE);
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                progressUpload.setVisibility(View.INVISIBLE);
+                                Toast.makeText(ProductAdminActivity.this, "Uploading failed!", Toast.LENGTH_SHORT).show();
+                            }
+                        });
                         dialog.dismiss();
                     }
 
@@ -295,7 +365,7 @@ public class ProductAdminActivity extends AppCompatActivity {
         Intent i = new Intent();
         i.setType("image/*");
         i.setAction(Intent.ACTION_GET_CONTENT);
-
+//        startActivityForResult(i, 2);
         launchSomeActivity.launch(i);
     }
     ActivityResultLauncher<Intent> launchSomeActivity = registerForActivityResult(
@@ -304,56 +374,30 @@ public class ProductAdminActivity extends AppCompatActivity {
                     Intent data = result.getData();
                     // do your operation from here....
                     if (data != null && data.getData() != null) {
-                        Uri selectedImageUri = data.getData();
-                        Bitmap selectedImageBitmap = null;
-                        try {
-                            selectedImageBitmap = MediaStore.Images.Media.getBitmap(
-                                    this.getContentResolver(),
-                                    selectedImageUri);
-                        }
-                        catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                        imgUpload.setImageBitmap(selectedImageBitmap);
-                        String picturePath = getFileName(selectedImageUri );
-                        Toast.makeText(getApplicationContext(), "updated "+picturePath,Toast.LENGTH_LONG).show();
+                        imgUrl = data.getData();
+                        imgUpload.setImageURI(imgUrl);
                     }
                 }
             });
 
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//        if (requestCode==2 && requestCode == RESULT_OK && data !=null) {
+//            imgUrl = data.getData();
+//            imgUpload.setImageURI(imgUrl);
+//        }
+//    }
+    private String getFileExtension(Uri u)
+    {
+        ContentResolver cr = getContentResolver();
+        MimeTypeMap mime = MimeTypeMap.getSingleton();
+        return mime.getExtensionFromMimeType(cr.getType(u));
+    }
 
     public void revert(View view) {
         Intent intent = new Intent(this, CategoryAdminActivity.class);
         startActivity(intent);
-    }
-
-    public String getFileName(Uri uri) {
-        String result = null;
-        if (uri.getScheme().equals("content")) {
-            Cursor cursor = getContentResolver().query(uri, null, null, null, null);
-            try {
-                if (cursor != null && cursor.moveToFirst()) {
- //                   result = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
-                }
-            } finally {
-                cursor.close();
-            }
-        }
-        if (result == null) {
-            result = uri.getPath();
-            int cut = result.lastIndexOf('/');
-            if (cut != -1) {
-                result = result.substring(cut + 1);
-            }
-        }
-        return result;
-    }
-    public String getStringImage(Bitmap bm){
-        ByteArrayOutputStream ba=new ByteArrayOutputStream(  );
-        bm.compress( Bitmap.CompressFormat.PNG,90,ba );
-        byte[] by=ba.toByteArray();
-        String encod= Base64.encodeToString( by,Base64.DEFAULT );
-        return encod;
     }
 
     public void loadMenu(){

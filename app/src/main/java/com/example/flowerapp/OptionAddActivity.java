@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.flowerapp.Entity.Category;
 import com.example.flowerapp.Entity.Flower;
 import com.example.flowerapp.Entity.ItemsGiohang;
@@ -239,10 +240,11 @@ public class OptionAddActivity extends AppCompatActivity {
                             item.setPrice(flowerDocument.child("price").getValue(Float.class));
                             item.setName(flowerDocument.child("name_flower").getValue(String.class));
                             item.setDescription(flowerDocument.child("description").getValue(String.class));
-                            Resources resources = getResources();
+//                            Resources resources = getResources();
                             String imageResourceName = item.getUrl();
-                            int imageResourceId = resources.getIdentifier(imageResourceName, "drawable", getPackageName());
-                            imageView.setImageResource(imageResourceId);
+//                            int imageResourceId = resources.getIdentifier(imageResourceName, "drawable", getPackageName());
+//                            imageView.setImageResource(imageResourceId);
+                            Glide.with(OptionAddActivity.this).load(imageResourceName).into(imageView);
                             //xu ly so nguyen
                             tv_quanity_cosan.setText(String.valueOf(Math.round(item.getQuantity())));
                             tv_price.setText(String.valueOf(Math.round(item.getPrice())));
