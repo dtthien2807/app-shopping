@@ -72,11 +72,11 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:background="#F80E0E0E"
+                        android:background="#BF57DFD2"
                         android:text="Đã giao hàng"
                         android:textAlignment="center"
                         android:textAllCaps="true"
-                        android:textColor="#F1F4F1"
+                        android:textColor="#0E30ED"
                         android:textSize="12sp"
                         android:textStyle="bold" />
                 </LinearLayout>

@@ -20,6 +20,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.bumptech.glide.Glide;
 import com.example.flowerapp.Adapter.ItemsOrderAdapter;
 import com.example.flowerapp.Entity.ItemsGiohang;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -76,6 +77,8 @@ public class DetailOrderActivity extends AppCompatActivity {
 
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String path = snapshot.child("img").getValue(String.class);
+                Glide.with(DetailOrderActivity.this).load(path).into(imgFeedback);
                 txtFeedback.setText(snapshot.child("content").getValue(String.class));
             }
 
@@ -366,6 +369,13 @@ public class DetailOrderActivity extends AppCompatActivity {
                             statusOrder.setText("Giao hàng không thành công");
                             statusOrder.setBackgroundColor(0xF80E0E0E);
                             statusOrder.setTextColor(Color.parseColor("#F1F4F1"));
+                            break;
+                        }
+                        case 5:
+                        {
+                            statusOrder.setText("Chờ đặt hàng");
+                            statusOrder.setBackgroundColor(0xBF57DFD2);
+                            statusOrder.setTextColor(Color.parseColor("#0E30ED"));
                             break;
                         }
                     }
