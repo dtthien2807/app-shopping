@@ -14,7 +14,21 @@ public class User {
     private boolean role;
     private String created_at;
     private boolean status;
-    public User(){}
+    public User()
+    {
+
+    }
+//    public User()
+//    {
+//        this.username = "username";
+//        this.fullname = "fullname";
+//        this.password = "password";
+//        this.address = "address";
+//        this.role = true;
+//        this.status = false;
+//        this.numberphone = "0232434093";
+//        this.created_at = "2023/11/7";
+//    }
 
     public User(String username, String fullname, String password, String address, boolean role, boolean status, String numberphone, String created_at) {
         this.username = username;

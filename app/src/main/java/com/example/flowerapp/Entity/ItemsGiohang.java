@@ -48,6 +48,7 @@ public class ItemsGiohang implements Serializable {
     public void setPrice(float price) {
         this.price = price;
     }
+    public ItemsGiohang(){};
     public ItemsGiohang(String id_flower, String nameflower, int soluongmuahang, float price, String imgFlower)
     {
         this.id_flower = id_flower;
@@ -56,5 +57,4 @@ public class ItemsGiohang implements Serializable {
         this.price = price;
         this.imgFlower = imgFlower;
     }
-    public ItemsGiohang(){}
 }
