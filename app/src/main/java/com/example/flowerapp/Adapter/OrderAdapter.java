@@ -127,4 +127,16 @@ public class OrderAdapter extends ArrayAdapter {
 
         return  ListItem;
     }
+
+    @Nullable
+    @Override
+    public Object getItem(int position) {
+        return super.getItem(position);
+    }
+
+    public void searchDataList(ArrayList<Order> searchList)
+    {
+        orderList = searchList;
+        notifyDataSetChanged();
+    }
 }
