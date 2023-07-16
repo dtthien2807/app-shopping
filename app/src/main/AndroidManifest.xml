@@ -38,8 +38,7 @@
 
         </activity>
         <activity
-            android:name=".HomeAdminActivity"
-            android:exported="false">
+            android:name=".HomeAdminActivity">
         </activity>
         <activity
             android:name=".LoginActivity"
