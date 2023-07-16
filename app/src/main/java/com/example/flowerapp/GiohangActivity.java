@@ -1,6 +1,5 @@
 package com.example.flowerapp;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -30,6 +29,9 @@ import com.example.flowerapp.Entity.Order;
 import com.example.flowerapp.Interface.OnGetDataUser;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.example.flowerapp.Interface.OnGetDataUser;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -41,8 +43,11 @@ import org.checkerframework.checker.units.qual.A;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import org.checkerframework.checker.units.qual.A;
+
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -65,7 +70,6 @@ public class GiohangActivity extends AppCompatActivity {
         setContentView(R.layout.fragment_gio_hang);
         init();
         setInforUser();
-        findOrderByUserId(getUserID());
         loadLayout();
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -254,7 +258,7 @@ public class GiohangActivity extends AppCompatActivity {
         ed_note=findViewById(R.id.ed_note);
         tv_total=findViewById(R.id.tv_totalbill);
         tv_price_ship=findViewById(R.id.tv_feeship);
-        ryc_items=findViewById(R.id.lst_itemgiohang);
+        ryc_items=findViewById(R.id.ryc_items);
         imageButton =findViewById(R.id.img_btn_back_from_cart);
         btn_buy= findViewById(R.id.btn_thanhtoan);
         home= findViewById(R.id.ic_home);

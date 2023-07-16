@@ -13,6 +13,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.bumptech.glide.Glide;
 import com.example.flowerapp.Entity.Flower;
 import com.example.flowerapp.Entity.ItemsGiohang;
 import com.example.flowerapp.Entity.Order;
@@ -47,6 +48,7 @@ public class ItemsOrderAdapter extends ArrayAdapter {
         quantityOrder.setText("x"+String.valueOf(itemsGiohang.getSoluongmuahang()));
         sumOrder.setText(String.valueOf(itemsGiohang.getPrice()));
         idFlower.setText(itemsGiohang.getId_flower());
+        Glide.with(context).load(itemsGiohang.getImgFlower()).into(imgProduct );
 
         return ListItem;
 

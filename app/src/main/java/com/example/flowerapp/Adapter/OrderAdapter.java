@@ -104,6 +104,13 @@ public class OrderAdapter extends ArrayAdapter {
                 status.setTextColor(Color.parseColor("#F1F4F1"));
                 break;
             }
+            case 5:
+            {
+                status.setText("Chờ đặt hàng");
+                status.setBackgroundColor(0xBF57DFD2);
+                status.setTextColor(Color.parseColor("#0E30ED"));
+                break;
+            }
         }
         btnMore.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -119,5 +126,17 @@ public class OrderAdapter extends ArrayAdapter {
         ListItem.startAnimation(animation);
 
         return  ListItem;
+    }
+
+    @Nullable
+    @Override
+    public Object getItem(int position) {
+        return super.getItem(position);
+    }
+
+    public void searchDataList(ArrayList<Order> searchList)
+    {
+        orderList = searchList;
+        notifyDataSetChanged();
     }
 }
