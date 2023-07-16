@@ -23,7 +23,7 @@
             android:name=".OptionAddActivity"
             android:exported="false"/>
         <activity
-            android:name=".LoginActivity"
+            android:name=".OrderAdminActivity"
             android:exported="false">
         </activity>
         <activity
@@ -50,7 +50,7 @@
         </activity>
         <activity android:name=".Item_Detail_Fragment" />
         <activity android:name=".RegisterActivity" />
-        <activity android:name=".OrderAdminActivity"
+        <activity android:name=".LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
