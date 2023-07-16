@@ -1,7 +1,9 @@
 package com.example.flowerapp;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -12,6 +14,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,6 +24,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.flowerapp.Adapter.ItemsOrderAdapter;
+import com.example.flowerapp.Entity.Feedback;
 import com.example.flowerapp.Entity.ItemsGiohang;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
@@ -36,16 +40,19 @@ public class DetailOrderActivity extends AppCompatActivity {
     ImageView home_ad, goods, oder, user;
     DatabaseReference databaseorder;
     TextView orderID, createdAt, statusOrder, nameUser, phoneUser, addressUser, dateOrder, dateShip, sumBill, noteBill;
-    Button btnUpdateBill, btnFeedback;
+    Button btnUpdateBill, btnFeedback,btnFeedbackCustomer;
     CheckBox option0, option1, option2, option3, option4;
     private String id_order;
     ListView lstProduct;
+    private ImageView home,stories,pay,delivery;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_order);
         init();
         loadMenu();
+        btnFeedbackCustomer.setVisibility(View.GONE);
         databaseorder = FirebaseDatabase.getInstance().getReference("Order");
         btnUpdateBill.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,8 +66,116 @@ public class DetailOrderActivity extends AppCompatActivity {
                 openDialogFeedback();
             }
         });
+        getQuyen();
     }
+    public String getUserID()
+    {
+        SharedPreferences sharedPreferences = getSharedPreferences("MyCookies", Context.MODE_PRIVATE);
 
+        // Truy xuất Cookie
+        String cookieValue = sharedPreferences.getString("userID", "");
+
+        // Sử dụng Cookie
+        return cookieValue;
+    }
+    public void loadLayout(){
+        init();
+        home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent ih= new Intent(DetailOrderActivity.this, HomeActivity.class);
+                startActivity(ih);
+            }
+        });
+        stories.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent is = new Intent(DetailOrderActivity.this, StoriesActivity.class);
+                startActivity(is);
+            }
+        });
+        pay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent ip= new Intent(DetailOrderActivity.this, GiohangActivity.class);
+                startActivity(ip);
+            }
+        });
+        delivery.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent id= new Intent(DetailOrderActivity.this, DeliveryActivity.class);
+                startActivity(id);
+            }
+        });
+    }
+    public void getQuyen()
+    {
+        databaseorder = FirebaseDatabase.getInstance().getReference("User");
+        databaseorder.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if (snapshot.hasChild(getUserID())) {
+                       for(DataSnapshot item: snapshot.getChildren())
+                       {
+                           if(item.child("status").getValue(Boolean.class)==false)
+                           {
+                               btnFeedbackCustomer.setVisibility(View.VISIBLE);
+                               btnFeedback.setVisibility(View.GONE);
+                               btnUpdateBill.setVisibility(View.GONE);
+                               LinearLayout menu= findViewById(R.id.menu);
+                               menu.setVisibility(View.GONE);
+                               LinearLayout menu_cus= findViewById(R.id.menu_customer);
+                               menu_cus.setVisibility(View.VISIBLE);
+                               loadLayout();
+                               ImageView back= findViewById(R.id.revert);
+                               back.setVisibility(View.GONE);
+                               btnFeedbackCustomer.setOnClickListener(new View.OnClickListener() {
+                                   @Override
+                                   public void onClick(View v) {
+                                       openDialogFeedbackCustomer();
+                                   }
+                               });
+                           }
+                       }
+                    }
+                }
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                }
+            });
+    }
+    private void openDialogFeedbackCustomer() {
+        final Dialog dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.layout_dialog_add_feedback);
+        Window window = dialog.getWindow();
+        window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+        window.setBackgroundDrawable(new ColorDrawable(Color.WHITE));
+        dialog.setCancelable(false);
+        ImageView btn_cancle= dialog.findViewById(R.id.btn_cancle_customer);
+        TextView txtFeedback = dialog.findViewById(R.id.ed_content_feedback);
+        databaseorder.child(id_order).child("feedbacks").addListenerForSingleValueEvent(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Feedback feedback=new Feedback();
+                feedback.setContent(txtFeedback.getText().toString());
+                feedback.setImg("hoahuongduong");
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        btn_cancle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
+    }
     private void openDialogFeedback() {
         final Dialog dialog = new Dialog(this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -78,7 +193,6 @@ public class DetailOrderActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 txtFeedback.setText(snapshot.child("content").getValue(String.class));
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
@@ -96,6 +210,7 @@ public class DetailOrderActivity extends AppCompatActivity {
 
     public void init()
     {
+        btnFeedbackCustomer=findViewById(R.id.btnFeedbackkhachhang);
         orderID = findViewById(R.id.orderID);
         createdAt = findViewById(R.id.createdAt);
         statusOrder = findViewById(R.id.statusOrder);
@@ -113,7 +228,12 @@ public class DetailOrderActivity extends AppCompatActivity {
         goods= findViewById(R.id.goods_ad);
         oder= findViewById(R.id.oder_ad);
         user= findViewById(R.id.user_ad);
+        home= findViewById(R.id.ic_home);
+        stories= findViewById(R.id.ic_stories);
+        pay= findViewById(R.id.ic_pay);
+        delivery= findViewById(R.id.ic_delivery);
     }
+
     public void openDialogUpdateBill() {
         final Dialog dialog = new Dialog(this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -317,7 +437,6 @@ public class DetailOrderActivity extends AppCompatActivity {
             }
         });
     }
-
 
     @Override
     protected void onStart() {

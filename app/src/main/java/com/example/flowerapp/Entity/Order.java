@@ -23,6 +23,10 @@ public class Order {
         this.price = price;
     }
 
+//    public int isStatus() {
+//        return status;
+//    }
+
     public void setStatus(int status) {
         this.status = status;
     }
@@ -66,11 +70,11 @@ public class Order {
     }
 
     public void setItems(List<ItemsGiohang> items) {
-        Items = items;
+        this.items = items;
     }
 
     public List<ItemsGiohang> getItems() {
-        return Items;
+        return items;
     }
 
     public void setNote(String note) {
@@ -83,7 +87,7 @@ public class Order {
     private String create_at;
     private String order_ship_date;
     private String ship_date;
-    private List<ItemsGiohang> Items;
+    private List<ItemsGiohang> items;
     private String id_user;
     private String name_user;
     private String number_phone;
@@ -147,9 +151,13 @@ public class Order {
         this.status = status;
         this.create_at = create_at;
         this.feedbacks= feedbacks;
-        this.Items = items;
+        this.items = items;
     }
-    public Order(){}
+    public Order(){
+        this.address_user = "hà nam ";
+        this.name_user="thu hoài";
+        this.number_phone="0347382190";
+    }
 
     public int getStatus() {
         return status;

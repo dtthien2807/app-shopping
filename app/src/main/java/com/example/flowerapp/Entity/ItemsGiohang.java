@@ -3,6 +3,14 @@ package com.example.flowerapp.Entity;
 import java.io.Serializable;
 
 public class ItemsGiohang implements Serializable {
+    public ItemsGiohang()
+    {
+        this.soluongmuahang= Integer.valueOf(30);
+        this.imgFlower="hoahuongduong";
+        this.nameflower="hoa hướng dương";
+        this.price=Float.valueOf(300000);
+        this.id_flower="3234";
+    }
     public int getSoluongmuahang() {
         return soluongmuahang;
     }
@@ -56,5 +64,4 @@ public class ItemsGiohang implements Serializable {
         this.price = price;
         this.imgFlower = imgFlower;
     }
-    public ItemsGiohang(){}
 }

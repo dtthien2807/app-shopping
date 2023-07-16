@@ -175,7 +175,15 @@
                         android:backgroundTint="#90CCC8C9"
                         android:text="Xem đánh giá"
                         android:textAllCaps="true" />
-
+                    <Button
+                        android:id="@+id/btnFeedbackkhachhang"
+                        android:layout_width="111dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:layout_weight="1"
+                        android:backgroundTint="#90CCC8C9"
+                        android:text="Đánh giá đơn hàng"
+                        android:textAllCaps="true" />
                     <Button
                         android:id="@+id/btnUpdateBill"
                         android:layout_width="wrap_content"
@@ -190,7 +198,84 @@
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
+    <LinearLayout
+        android:id="@+id/menu_customer"
+        android:layout_width="match_parent"
+        android:layout_height="65dp"
+        android:background="#B5EE3F76"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:visibility="gone">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_margin="10dp">
+            <ImageView
+                android:id="@+id/ic_home"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/baseline_home_24"></ImageView>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Trang chủ"></TextView>
+        </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_margin="10dp">
+            <ImageView
+                android:id="@+id/ic_stories"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/baseline_auto_stories_24"></ImageView>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Câu chuyện"></TextView>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_margin="10dp">
+            <ImageView
+                android:id="@+id/ic_pay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/baseline_payment_24"
+                ></ImageView>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Thanh toán"></TextView>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_margin="10dp">
+            <ImageView
+                android:id="@+id/ic_delivery"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/baseline_delivery_dining_24"></ImageView>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Vận chuyển"></TextView>
+        </LinearLayout>
+    </LinearLayout>
     <LinearLayout
         android:id="@+id/menu"
         android:layout_width="match_parent"

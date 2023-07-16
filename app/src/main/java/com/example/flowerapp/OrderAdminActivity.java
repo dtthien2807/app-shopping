@@ -39,7 +39,6 @@ public class OrderAdminActivity extends AppCompatActivity {
         orderListView = findViewById(R.id.lstOrder);
         orderList = new ArrayList<>();
         databaseorder = FirebaseDatabase.getInstance().getReference("Order");
-
         loadMenu();
     }
 
