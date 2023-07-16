@@ -119,7 +119,7 @@ public class GiohangActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot orderSnapshot : dataSnapshot.getChildren()) {
                     long status = orderSnapshot.child("status").getValue(Long.class);
-                    if (status == 0) {
+                    if (status == 5) {
                         id_order[0] = orderSnapshot.child("id_order").getValue(String.class);
                         Load_item();
                         break;

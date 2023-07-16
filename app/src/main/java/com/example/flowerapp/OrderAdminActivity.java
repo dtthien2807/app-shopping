@@ -44,7 +44,6 @@ public class OrderAdminActivity extends AppCompatActivity {
 
         orderList = new ArrayList<>();
         databaseorder = FirebaseDatabase.getInstance().getReference("Order");
-
         loadMenu();
 
         search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {

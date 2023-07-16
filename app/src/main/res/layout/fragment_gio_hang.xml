@@ -48,7 +48,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="#FFFFFF"
-                            android:text="MY CART"
+                            android:text="GIỎ HÀNG"
                             android:textAlignment="center"
                             android:textSize="24sp"
                             android:textStyle="bold" />
@@ -59,7 +59,7 @@
                             android:layout_height="wrap_content"
                             android:paddingLeft="20dp"
                             android:paddingTop="5dp"
-                            android:text="Customer information"
+                            android:text="Thông Tin Người Nhận"
                             android:textSize="20sp"
                             android:textStyle="bold" />
 
@@ -78,7 +78,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:ems="10"
-                                    android:hint="Address..."
+                                    android:hint="Địa chỉ.."
                                     android:inputType="text"
                                     android:minHeight="48dp" />
 
@@ -87,7 +87,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:ems="10"
-                                    android:hint="Contact..."
+                                    android:hint="Số điện thoại..."
                                     android:inputType="text"
                                     android:minHeight="48dp" />
 
@@ -96,7 +96,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:ems="10"
-                                    android:hint="Name ..."
+                                    android:hint="Tên người nhận ..."
                                     android:inputType="text"
                                     android:minHeight="48dp" />
 
@@ -118,7 +118,7 @@
                             android:layout_height="wrap_content"
                             android:paddingLeft="20dp"
                             android:paddingTop="5dp"
-                            android:text="Oder Summary"
+                            android:text="Thông tin đơn hàng"
                             android:textSize="20sp"
                             android:textStyle="bold" />
 
@@ -141,7 +141,7 @@
                                 android:id="@+id/textView6"
                                 android:layout_width="300dp"
                                 android:layout_height="wrap_content"
-                                android:text="Delevery fee"
+                                android:text="Phí vận chuyển "
                                 android:textStyle="italic" />
 
                             <TextView
@@ -162,7 +162,7 @@
                                 android:id="@+id/textView5"
                                 android:layout_width="300dp"
                                 android:layout_height="wrap_content"
-                                android:text="Subtotal"
+                                android:text="Tổng tiền "
                                 android:textStyle="italic" />
 
                             <TextView
@@ -189,7 +189,7 @@
                             android:layout_height="wrap_content"
                             android:paddingLeft="20dp"
                             android:paddingTop="5dp"
-                            android:text="Shipping"
+                            android:text="Vận chuyển "
                             android:textSize="20sp"
                             android:textStyle="bold" />
 
@@ -202,7 +202,7 @@
                                 android:id="@+id/textView16"
                                 android:layout_width="70dp"
                                 android:layout_height="wrap_content"
-                                android:text="Date ship" />
+                                android:text="Ngày nhận" />
 
                             <EditText
                                 android:id="@+id/et_date"
@@ -210,7 +210,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:ems="10"
-                                android:hint="Enter your's date ship..."
+                                android:hint="Vui lòng nhập ngày nhận (nếu cần)..."
                                 android:inputType="date"
                                 tools:ignore="TouchTargetSizeCheck" />
                         </LinearLayout>
@@ -225,14 +225,14 @@
                                 android:id="@+id/textView15"
                                 android:layout_width="70dp"
                                 android:layout_height="wrap_content"
-                                android:text="Note" />
+                                android:text="Ghi chú" />
 
                             <EditText
                                 android:id="@+id/ed_note"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:hint="Add your's note...."
+                                android:hint="Vui lòng nhập ghi chú (nếu cần)"
                                 android:textStyle="italic"
                                 tools:ignore="TouchTargetSizeCheck" />
 

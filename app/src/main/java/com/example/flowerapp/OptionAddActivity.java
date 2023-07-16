@@ -138,7 +138,7 @@ public class OptionAddActivity extends AppCompatActivity {
         String key = databasecategory.push().getKey();
         databasecategory.child(key).removeValue();
         order.setId_order(key);
-        order.setStatus(0);
+        order.setStatus(5);
         order.setId_user(getUserID("userID"));
         order.setCreate_at(created_at);
         databasecategory.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -185,7 +185,7 @@ public class OptionAddActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot orderSnapshot : dataSnapshot.getChildren()) {
                     long status = orderSnapshot.child("status").getValue(Long.class);
-                    if(status==0)
+                    if(status==5)
                     {
                         id_order[0] = orderSnapshot.child("id_order").getValue(String.class);
                         Toast.makeText(OptionAddActivity.this, id_order[0], Toast.LENGTH_SHORT).show();
