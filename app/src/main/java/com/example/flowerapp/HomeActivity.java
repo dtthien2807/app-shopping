@@ -6,7 +6,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -149,5 +151,13 @@ public class HomeActivity extends AppCompatActivity {
         pay= findViewById(R.id.ic_pay);
         delivery= findViewById(R.id.ic_delivery);
         logout= findViewById(R.id.logout);
+    }
+
+    public void logOut(View view) {
+        SharedPreferences settings = getSharedPreferences("MyCookies", Context.MODE_PRIVATE);
+        settings.edit().clear().commit();
+        Toast.makeText(this, "You have logged out successful!", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
     }
 }
