@@ -77,8 +77,7 @@ public class DetailOrderActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences("MyCookies", Context.MODE_PRIVATE);
 
         // Truy xuất Cookie
-       String cookieValue = sharedPreferences.getString("userID", "");
-        //String cookieValue="0912345678";
+        String cookieValue = sharedPreferences.getString("userID", "");
         // Sử dụng Cookie
         return cookieValue;
     }

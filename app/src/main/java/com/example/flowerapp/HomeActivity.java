@@ -93,7 +93,7 @@ public class HomeActivity extends AppCompatActivity {
                         item.setStatus(flowerDocument.child("status").getValue(Boolean.class));
                         item.setQuantity(flowerDocument.child("quantity").getValue(Long.class));
                         item.setPrice(flowerDocument.child("price").getValue(Float.class));
-                        item.setName(flowerDocument.child("name_flower").getValue(String.class));
+                        item.setName(flowerDocument.child("name").getValue(String.class));
                         item.setDescription(flowerDocument.child("description").getValue(String.class));
                         lstFlower.add(item);
 

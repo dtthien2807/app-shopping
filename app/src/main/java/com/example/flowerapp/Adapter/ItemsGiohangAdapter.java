@@ -48,15 +48,9 @@ public class ItemsGiohangAdapter extends ArrayAdapter {
         ItemsGiohang Giohang = itemsGiohangList.get(position);
         tv_nameflower.setText(Giohang.getNameflower());
         tv_soluong.setText(String.valueOf(Giohang.getSoluongmuahang()));
-        Resources resources = context.getResources();
         String imageResourceName = Giohang.getImgFlower();
-//        int imageResourceId = resources.getIdentifier(imageResourceName, "drawable", context.getPackageName());
-//        tv_url.setImageResource(imageResourceId);
 
         Glide.with(context).load(imageResourceName).into(tv_url);
-
-        Animation animation = AnimationUtils.loadAnimation(context,R.anim.slide_left);
-        ListItem.startAnimation(animation);
 
         return  ListItem;
     }
