@@ -61,7 +61,7 @@ public class OrderAdapter extends ArrayAdapter {
 
         int statusOrder = order.getStatus();
         txtId.setText(order.getId_order());
-        nameUser.setText("Khách hàng: " +order.getName_user());
+        nameUser.setText("Người nhận: " +order.getName_user());
         phoneUser.setText("Số điện thoại: " +order.getNumber_phone());
         addressUser.setText("Địa chỉ: " +order.getAddress_user());
         dateOrder.setText("Ngày đặt giao: " +order.getOrder_ship_date());
@@ -106,7 +106,7 @@ public class OrderAdapter extends ArrayAdapter {
             }
             case 5:
             {
-                status.setText("Chờ đặt hàng");
+                status.setText("Chờ thanh toán");
                 status.setBackgroundColor(0xBF57DFD2);
                 status.setTextColor(Color.parseColor("#0E30ED"));
                 break;

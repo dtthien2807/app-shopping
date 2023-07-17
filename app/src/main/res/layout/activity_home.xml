@@ -19,35 +19,18 @@
             android:orientation="vertical">
 
             <LinearLayout
-                android:id="@+id/ll_search"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:background="@drawable/search_style"
-                android:gravity="center"
                 android:orientation="horizontal"
-                android:padding="5dp">
-
-                <EditText
-                    android:id="@+id/et_search"
+                android:gravity="right"
+                android:layout_marginRight="10dp">
+                <ImageView
+                    android:id="@+id/logout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:hint="Search for love........."
-                    android:minHeight="48dp"
-                    android:textColorHint="#ffffff"></EditText>
-
-                <Button
-                    android:id="@+id/btn_search"
-                    android:layout_width="61dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="30dp"
-                    android:backgroundTint="#F6EDED"
-                    app:icon="@android:drawable/ic_search_category_default"
-                    app:iconTint="#F8B5B5"
-                    tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck"></Button>
-
+                    android:onClick="logOut"
+                    android:src="@drawable/baseline_logout_24"/>
             </LinearLayout>
-
             <ScrollView
                 android:id="@+id/scrollView_home"
                 android:layout_width="match_parent"

@@ -6,7 +6,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -35,6 +37,7 @@ public class HomeActivity extends AppCompatActivity {
     SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
     Date date;
     ImageView home, stories, pay, delivery;
+    ImageView logout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,10 +45,16 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
 
         init();
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
         //hiển thị view Category theo chiều dọc
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
         rcyCategoy.setLayoutManager(linearLayoutManager);
-
 
         lstCate(new OnGetDataListener() {
             @Override
@@ -141,5 +150,14 @@ public class HomeActivity extends AppCompatActivity {
         stories= findViewById(R.id.ic_stories);
         pay= findViewById(R.id.ic_pay);
         delivery= findViewById(R.id.ic_delivery);
+        logout= findViewById(R.id.logout);
+    }
+
+    public void logOut(View view) {
+        SharedPreferences settings = getSharedPreferences("MyCookies", Context.MODE_PRIVATE);
+        settings.edit().clear().commit();
+        Toast.makeText(this, "You have logged out successful!", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
     }
 }
