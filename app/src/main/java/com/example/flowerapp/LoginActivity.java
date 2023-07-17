@@ -137,7 +137,7 @@ public class LoginActivity extends AppCompatActivity{
 
             // Tạo một Editor để chỉnh sửa SharedPreferences
                     SharedPreferences.Editor editor = sharedPreferences.edit();
-
+                    editor.clear();
             // Lưu trữ Cookie
                     editor.putString("userID", userID);
 

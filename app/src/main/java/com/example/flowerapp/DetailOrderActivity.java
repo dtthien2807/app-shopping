@@ -78,7 +78,6 @@ public class DetailOrderActivity extends AppCompatActivity {
 
         // Truy xuất Cookie
         String cookieValue = sharedPreferences.getString("userID", "");
-
         // Sử dụng Cookie
         return cookieValue;
     }
@@ -119,29 +118,25 @@ public class DetailOrderActivity extends AppCompatActivity {
         databaseorder.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    if (snapshot.hasChild(getUserID())) {
-                       for(DataSnapshot item: snapshot.getChildren())
-                       {
-                           if(item.child("status").getValue(Boolean.class)==false)
-                           {
-                               btnFeedbackCustomer.setVisibility(View.VISIBLE);
-                               btnFeedback.setVisibility(View.GONE);
-                               btnUpdateBill.setVisibility(View.GONE);
-                               LinearLayout menu= findViewById(R.id.menu);
-                               menu.setVisibility(View.GONE);
-                               LinearLayout menu_cus= findViewById(R.id.menu_customer);
-                               menu_cus.setVisibility(View.VISIBLE);
-                               loadLayout();
-                               ImageView back= findViewById(R.id.revert);
-                               back.setVisibility(View.GONE);
-                               btnFeedbackCustomer.setOnClickListener(new View.OnClickListener() {
-                                   @Override
-                                   public void onClick(View v) {
-                                       openDialogFeedbackCustomer();
-                                   }
-                               });
-                           }
-                       }
+                    for(DataSnapshot snapshot1:snapshot.getChildren()) {
+                        if (snapshot1.child(getUserID()).child("role").getValue(Boolean.class) == false) {
+                            btnFeedbackCustomer.setVisibility(View.VISIBLE);
+                            btnFeedback.setVisibility(View.GONE);
+                            btnUpdateBill.setVisibility(View.GONE);
+                            LinearLayout menu = findViewById(R.id.menu);
+                            menu.setVisibility(View.GONE);
+                            LinearLayout menu_cus = findViewById(R.id.menu_customer);
+                            menu_cus.setVisibility(View.VISIBLE);
+                            loadLayout();
+                            ImageView back = findViewById(R.id.revert);
+                            back.setVisibility(View.GONE);
+                            btnFeedbackCustomer.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    openDialogFeedbackCustomer();
+                                }
+                            });
+                        }
                     }
                 }
                 @Override
@@ -452,6 +447,7 @@ public class DetailOrderActivity extends AppCompatActivity {
     protected void onStart() {
         Intent intent = getIntent();
         id_order = intent.getStringExtra("id_order");
+        databaseorder=FirebaseDatabase.getInstance().getReference("Order");
         super.onStart();
         databaseorder.child(id_order).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

@@ -106,7 +106,7 @@ public class OrderAdapter extends ArrayAdapter {
             }
             case 5:
             {
-                status.setText("Chờ đặt hàng");
+                status.setText("Chờ thanh toán");
                 status.setBackgroundColor(0xBF57DFD2);
                 status.setTextColor(Color.parseColor("#0E30ED"));
                 break;

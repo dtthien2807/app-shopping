@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -24,6 +26,7 @@ import com.example.flowerapp.Adapter.ItemsGiohangAdapter;
 import com.example.flowerapp.Adapter.OrderAdapter;
 import com.example.flowerapp.Entity.Flower;
 import com.example.flowerapp.Entity.ItemsGiohang;
+import com.example.flowerapp.Entity.Order;
 import com.example.flowerapp.Interface.OnGetDataUser;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -36,7 +39,10 @@ import com.google.firebase.database.ValueEventListener;
 
 import org.checkerframework.checker.units.qual.A;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -50,6 +56,9 @@ public class GiohangActivity extends AppCompatActivity {
     DatabaseReference reference;
     final String[] id_order = {"null"};
     ImageView home, stories, pay, delivery;
+    private EditText et_date;
+    Button btn_buy;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,38 +67,58 @@ public class GiohangActivity extends AppCompatActivity {
         setInforUser();
         findOrderByUserId(getUserID());
         loadLayout();
-    }
-    public void thanhtoan()
-    {
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                reference = FirebaseDatabase.getInstance().getReference("Order/" + id_order[0]);
-                FirebaseDatabase database = FirebaseDatabase.getInstance();
-                DatabaseReference ref = database.getReference("path/to/your/data");
-                // Tạo một HashMap để lưu trữ các giá trị cần cập nhật
-                Map<String, Object> updates = new HashMap<>();
-                updates.put("key1", "new value 1");
-                updates.put("key2", "new value 2");
-                updates.put("key3", "new value 3");
-                // Thực hiện cập nhật
-                ref.updateChildren(updates)
-                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void aVoid) {
-                                // Cập nhật thành công
-                            }
-                        })
-                        .addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                // Xảy ra lỗi trong quá trình cập nhật
-                            }
-                        });
                 Intent intent = new Intent(GiohangActivity.this, HomeActivity.class);
                 startActivity(intent);
             }
         });
+        btn_buy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Order order= new Order();
+                order.setStatus(1);
+                order.setNumber_phone(ed_sdt.getText().toString());
+                order.setTotal_bill(Float.parseFloat(tv_total.getText().toString()));
+                order.setOrder_ship_date(et_date.getText().toString());
+                order.setName_user(ed_name.getText().toString());
+                order.setNote(ed_note.getText().toString());
+                order.setPrice(Float.parseFloat(tv_price_ship.getText().toString()));
+                thanhtoan(order);
+            }
+        });
+    }
+    public void thanhtoan(Order order)
+    {
+        reference = FirebaseDatabase.getInstance().getReference("Order/" + id_order[0]);
+        // Tạo một HashMap để lưu trữ các giá trị cần cập nhật
+        Map<String, Object> updates = new HashMap<>();
+        updates.put("price", order.getPrice());
+        updates.put("total_bill", order.getTotal_bill());
+        updates.put("status", 1);
+        updates.put("address_user",order.getAddress_user());
+        updates.put("name_user",order.getName_user());
+        updates.put("number_phone",order.getNumber_phone());
+        updates.put("order_ship_date",order.getOrder_ship_date());
+        // Thực hiện cập nhật
+        reference.updateChildren(updates)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Toast.makeText(GiohangActivity.this, "update success!", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(GiohangActivity.this, DeliveryActivity.class);
+                        startActivity(intent);
+                        // Cập nhật thành công
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        // Xảy ra lỗi trong quá trình cập nhật
+                    }
+                });
+
     }
     public void Load_item()
     {
@@ -118,7 +147,7 @@ public class GiohangActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot orderSnapshot : dataSnapshot.getChildren()) {
-                    long status = orderSnapshot.child("status").getValue(Long.class);
+                    long status=orderSnapshot.child("status").getValue(Integer.class);
                     if (status == 5) {
                         id_order[0] = orderSnapshot.child("id_order").getValue(String.class);
                         Load_item();
@@ -227,7 +256,9 @@ public class GiohangActivity extends AppCompatActivity {
         tv_price_ship=findViewById(R.id.tv_feeship);
         ryc_items=findViewById(R.id.lst_itemgiohang);
         imageButton =findViewById(R.id.img_btn_back_from_cart);
+        btn_buy= findViewById(R.id.btn_thanhtoan);
         home= findViewById(R.id.ic_home);
+        et_date=findViewById(R.id.et_date);
         stories= findViewById(R.id.ic_stories);
         pay= findViewById(R.id.ic_pay);
         delivery= findViewById(R.id.ic_delivery);
@@ -239,24 +270,24 @@ public class GiohangActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.hasChild(getUserID())) {
-                    ed_sdt.setText("Phone: "+snapshot.child(getUserID()).child("numberphone").getValue(String.class));
-                    ed_name.setText("FullName: "+snapshot.child(getUserID()).child("fullname").getValue(String.class));
-                    ed_address.setText("Address: "+snapshot.child(getUserID()).child("address").getValue(String.class));
+                    ed_sdt.setText(snapshot.child(getUserID()).child("numberphone").getValue(String.class));
+                    ed_name.setText(snapshot.child(getUserID()).child("fullname").getValue(String.class));
+                    ed_address.setText(snapshot.child(getUserID()).child("address").getValue(String.class));
                 }
-                }
+            }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
             }
-            });
+        });
     }
     public String getUserID()
     {
         SharedPreferences sharedPreferences = getSharedPreferences("MyCookies", Context.MODE_PRIVATE);
 
         // Truy xuất Cookie
-                String cookieValue = sharedPreferences.getString("userID", "");
+        String cookieValue = sharedPreferences.getString("userID", "");
 
         // Sử dụng Cookie
-                return cookieValue;
+        return cookieValue;
     }
 }
