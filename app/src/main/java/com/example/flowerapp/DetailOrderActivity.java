@@ -34,7 +34,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class DetailOrderActivity extends AppCompatActivity {
@@ -389,6 +392,10 @@ public class DetailOrderActivity extends AppCompatActivity {
                         databaseorder.child(id_order).child("status").setValue(3).addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void unused) {
+                                DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+                                Date date = new Date();
+                                String ship_date = dateFormat.format(date);
+                                databaseorder.child(id_order).child("ship_date").setValue(ship_date);
                                 recreate();
                                 Toast.makeText(DetailOrderActivity.this, "You have updated successful!", Toast.LENGTH_SHORT).show();
                                 dialog.dismiss();
