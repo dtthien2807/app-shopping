@@ -78,7 +78,7 @@ public class GiohangActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Order order= new Order();
-                order.setStatus(1);
+                order.setStatus(0);
                 order.setNumber_phone(ed_sdt.getText().toString());
                 order.setTotal_bill(Float.parseFloat(tv_total.getText().toString()));
                 order.setOrder_ship_date(et_date.getText().toString());

@@ -18,19 +18,14 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <LinearLayout
-                android:layout_width="match_parent"
+            <ImageView
+                android:id="@+id/btnlogout"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="right"
-                android:layout_marginRight="10dp">
-                <ImageView
-                    android:id="@+id/logout"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:onClick="logOut"
-                    android:src="@drawable/baseline_logout_24"/>
-            </LinearLayout>
+                android:layout_marginLeft="370dp"
+                android:clickable="true"
+                android:src="@drawable/baseline_logout_24"/>
+
             <ScrollView
                 android:id="@+id/scrollView_home"
                 android:layout_width="match_parent"

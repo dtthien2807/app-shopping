@@ -48,7 +48,11 @@ public class HomeActivity extends AppCompatActivity {
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                SharedPreferences settings = getSharedPreferences("MyCookies", Context.MODE_PRIVATE);
+                settings.edit().clear().commit();
+                Toast.makeText(HomeActivity.this, "You have logged out successful!", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(HomeActivity.this, LoginActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -150,7 +154,7 @@ public class HomeActivity extends AppCompatActivity {
         stories= findViewById(R.id.ic_stories);
         pay= findViewById(R.id.ic_pay);
         delivery= findViewById(R.id.ic_delivery);
-        logout= findViewById(R.id.logout);
+        logout= findViewById(R.id.btnlogout);
     }
 
     public void logOut(View view) {
