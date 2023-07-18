@@ -380,14 +380,6 @@ public class ProductAdminActivity extends AppCompatActivity {
                 }
             });
 
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//        if (requestCode==2 && requestCode == RESULT_OK && data !=null) {
-//            imgUrl = data.getData();
-//            imgUpload.setImageURI(imgUrl);
-//        }
-//    }
     private String getFileExtension(Uri u)
     {
         ContentResolver cr = getContentResolver();

@@ -154,9 +154,6 @@ public class Order {
         this.items = items;
     }
     public Order(){
-        this.address_user = "hà nam ";
-        this.name_user="thu hoài";
-        this.number_phone="0347382190";
     }
 
     public int getStatus() {

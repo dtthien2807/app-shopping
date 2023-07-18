@@ -242,8 +242,6 @@ public class OptionAddActivity extends AppCompatActivity {
                             item.setDescription(flowerDocument.child("description").getValue(String.class));
 //                            Resources resources = getResources();
                             String imageResourceName = item.getUrl();
-//                            int imageResourceId = resources.getIdentifier(imageResourceName, "drawable", getPackageName());
-//                            imageView.setImageResource(imageResourceId);
                             Glide.with(OptionAddActivity.this).load(imageResourceName).into(imageView);
                             //xu ly so nguyen
                             tv_quanity_cosan.setText(String.valueOf(Math.round(item.getQuantity())));
