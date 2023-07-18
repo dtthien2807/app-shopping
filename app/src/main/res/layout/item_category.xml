@@ -11,6 +11,7 @@
         android:fontFamily="serif"
         android:text="category"
         android:textColor="@color/title_color"
+        android:layout_marginLeft="10dp"
         android:textSize="26dp"
         android:textStyle="bold"></TextView>
 
