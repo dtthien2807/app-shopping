@@ -71,7 +71,7 @@ public class DeliveryActivity extends AppCompatActivity {
                             String ship_date = orderSnapshot.child("ship_date").getValue(String.class);
                             Float total_bill = orderSnapshot.child("total_bill").getValue(Float.class);
                             Integer status = orderSnapshot.child("status").getValue(Integer.class);
-                            String created_at = orderSnapshot.child("created_at").getValue(String.class);
+                            String created_at = orderSnapshot.child("create_at").getValue(String.class);
 
                             Feedback feedback = orderSnapshot.child("feedbacks").getValue(Feedback.class);
 

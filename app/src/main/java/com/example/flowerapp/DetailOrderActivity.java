@@ -1,24 +1,31 @@
 package com.example.flowerapp;
 
+import android.app.Activity;
 import android.app.Dialog;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -26,13 +33,19 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.bumptech.glide.Glide;
 import com.example.flowerapp.Adapter.ItemsOrderAdapter;
 import com.example.flowerapp.Entity.Feedback;
+import com.example.flowerapp.Entity.Flower;
 import com.example.flowerapp.Entity.ItemsGiohang;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -49,27 +62,14 @@ public class DetailOrderActivity extends AppCompatActivity {
     private String id_order;
     ListView lstProduct;
     private ImageView home,stories,pay,delivery;
-
+    ImageView imgUpload;
+    Uri imgUrl;
+    private final StorageReference storageReference = FirebaseStorage.getInstance().getReference();
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_order);
         init();
-        loadMenu();
-        btnFeedbackCustomer.setVisibility(View.GONE);
-        databaseorder = FirebaseDatabase.getInstance().getReference("Order");
-        btnUpdateBill.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openDialogUpdateBill();
-            }
-        });
-        btnFeedback.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openDialogFeedback();
-            }
-        });
         getQuyen();
     }
     public String getUserID()
@@ -115,29 +115,52 @@ public class DetailOrderActivity extends AppCompatActivity {
     public void getQuyen()
     {
         databaseorder = FirebaseDatabase.getInstance().getReference("User");
-        databaseorder.addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseorder.child(getUserID()).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    for(DataSnapshot snapshot1:snapshot.getChildren()) {
-                        if (snapshot1.child(getUserID()).child("role").getValue(Boolean.class) == false) {
-                            btnFeedbackCustomer.setVisibility(View.VISIBLE);
-                            btnFeedback.setVisibility(View.GONE);
-                            btnUpdateBill.setVisibility(View.GONE);
-                            LinearLayout menu = findViewById(R.id.menu);
-                            menu.setVisibility(View.GONE);
-                            LinearLayout menu_cus = findViewById(R.id.menu_customer);
-                            menu_cus.setVisibility(View.VISIBLE);
-                            loadLayout();
-                            ImageView back = findViewById(R.id.revert);
-                            back.setVisibility(View.GONE);
-                            btnFeedbackCustomer.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    openDialogFeedbackCustomer();
-                                }
-                            });
+                    if (snapshot.exists()) {
+                            Boolean check = snapshot.child("role").getValue(Boolean.class);
+                            if (Boolean.TRUE.equals(check)) {
+                                btnFeedbackCustomer.setVisibility(View.INVISIBLE);
+                                btnFeedback.setVisibility(View.VISIBLE);
+                                btnUpdateBill.setVisibility(View.VISIBLE);
+                                LinearLayout menu = findViewById(R.id.menu);
+                                menu.setVisibility(View.VISIBLE);
+                                LinearLayout menu_cus = findViewById(R.id.menu_customer);
+                                menu_cus.setVisibility(View.INVISIBLE);
+                                loadMenu();
+                                btnUpdateBill.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        openDialogUpdateBill();
+                                    }
+                                });
+                                btnFeedback.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        openDialogFeedback();
+                                    }
+                                });
+                            }
+                            else  {
+                                btnFeedbackCustomer.setVisibility(View.VISIBLE);
+                                btnFeedback.setVisibility(View.INVISIBLE);
+                                btnUpdateBill.setVisibility(View.INVISIBLE);
+                                LinearLayout menu = findViewById(R.id.menu);
+                                menu.setVisibility(View.INVISIBLE);
+                                LinearLayout menu_cus = findViewById(R.id.menu_customer);
+                                menu_cus.setVisibility(View.VISIBLE);
+                                loadLayout();
+                                ImageView back = findViewById(R.id.revert);
+                                back.setVisibility(View.GONE);
+                                btnFeedbackCustomer.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        openDialogFeedbackCustomer();
+                                    }
+                                });
+                            }
                         }
-                    }
                 }
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {
@@ -154,17 +177,70 @@ public class DetailOrderActivity extends AppCompatActivity {
         dialog.setCancelable(false);
         ImageView btn_cancle= dialog.findViewById(R.id.btn_cancle_customer);
         TextView txtFeedback = dialog.findViewById(R.id.ed_content_feedback);
-        databaseorder.child(id_order).child("feedbacks").addListenerForSingleValueEvent(new ValueEventListener() {
 
+        Button btnUpload = dialog.findViewById(R.id.btnUpload);
+        Button btn_feedback = dialog.findViewById(R.id.btn_feedback);
+        ProgressBar progressUpload = dialog.findViewById(R.id.progressUpload);
+        imgUpload = dialog.findViewById(R.id.imgUpload);
+
+        progressUpload.setVisibility(View.INVISIBLE);
+
+        databaseorder = FirebaseDatabase.getInstance().getReference("Order");
+
+        btnUpload.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Feedback feedback=new Feedback();
-                feedback.setContent(txtFeedback.getText().toString());
-                feedback.setImg("hoahuongduong");
+            public void onClick(View v) {
+                imageChooser();
             }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
+        });
 
+        btn_feedback.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                databaseorder = FirebaseDatabase.getInstance().getReference("Order").child(id_order).child("feedbacks");
+                String feedback = txtFeedback.getText().toString().trim();;
+
+                databaseorder.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        StorageReference fileRef = storageReference.child(System.currentTimeMillis()+"."+ getFileExtension(imgUrl));
+                        fileRef.putFile(imgUrl).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                            @Override
+                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                Toast.makeText(DetailOrderActivity.this, "Upload success!", Toast.LENGTH_SHORT).show();
+                                fileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                    @Override
+                                    public void onSuccess(Uri downloadPhotoUrl) {
+                                        Feedback feedback1 = new Feedback();
+                                        feedback1.setContent(feedback);
+                                        feedback1.setImg(downloadPhotoUrl.toString());
+                                        databaseorder.setValue(feedback1);
+
+                                        progressUpload.setVisibility(View.INVISIBLE);
+                                        Toast.makeText(DetailOrderActivity.this, "Uploaded ", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                            }
+                        }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                            @Override
+                            public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {
+                                progressUpload.setVisibility(View.VISIBLE);
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                progressUpload.setVisibility(View.INVISIBLE);
+                                Toast.makeText(DetailOrderActivity.this, "Uploading failed!", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                        dialog.dismiss();
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
             }
         });
         btn_cancle.setOnClickListener(new View.OnClickListener() {
@@ -186,6 +262,7 @@ public class DetailOrderActivity extends AppCompatActivity {
         ImageView btnCancel = dialog.findViewById(R.id.btCancel);
         ImageView imgFeedback = dialog.findViewById(R.id.imgFeedback);
         TextView txtFeedback = dialog.findViewById(R.id.txtFeedback);
+        databaseorder = FirebaseDatabase.getInstance().getReference("Order");
         databaseorder.child(id_order).child("feedbacks").addListenerForSingleValueEvent(new ValueEventListener() {
 
             @Override
@@ -251,7 +328,7 @@ public class DetailOrderActivity extends AppCompatActivity {
         option2 = dialog.findViewById(R.id.option2);
         option3 = dialog.findViewById(R.id.option3);
         option4 = dialog.findViewById(R.id.option4);
-
+        databaseorder = FirebaseDatabase.getInstance().getReference("Order");
         databaseorder.child(id_order).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -447,8 +524,8 @@ public class DetailOrderActivity extends AppCompatActivity {
     protected void onStart() {
         Intent intent = getIntent();
         id_order = intent.getStringExtra("id_order");
-        databaseorder=FirebaseDatabase.getInstance().getReference("Order");
         super.onStart();
+        databaseorder=FirebaseDatabase.getInstance().getReference("Order");
         databaseorder.child(id_order).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -539,5 +616,31 @@ public class DetailOrderActivity extends AppCompatActivity {
     public void revert(View view) {
         Intent intent = new Intent(this, OrderAdminActivity.class);
         startActivity(intent);
+    }
+    private void imageChooser()
+    {
+        Intent i = new Intent();
+        i.setType("image/*");
+        i.setAction(Intent.ACTION_GET_CONTENT);
+//        startActivityForResult(i, 2);
+        launchSomeActivity.launch(i);
+    }
+    ActivityResultLauncher<Intent> launchSomeActivity = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(), result -> {
+                if (result.getResultCode() == Activity.RESULT_OK) {
+                    Intent data = result.getData();
+                    // do your operation from here....
+                    if (data != null && data.getData() != null) {
+                        imgUrl = data.getData();
+                        imgUpload.setImageURI(imgUrl);
+                    }
+                }
+            });
+
+    private String getFileExtension(Uri u)
+    {
+        ContentResolver cr = getContentResolver();
+        MimeTypeMap mime = MimeTypeMap.getSingleton();
+        return mime.getExtensionFromMimeType(cr.getType(u));
     }
 }

@@ -85,6 +85,7 @@ public class GiohangActivity extends AppCompatActivity {
                 order.setName_user(ed_name.getText().toString());
                 order.setNote(ed_note.getText().toString());
                 order.setPrice(Float.parseFloat(tv_price_ship.getText().toString()));
+                order.setAddress_user(ed_address.getText().toString());
                 thanhtoan(order);
             }
         });
@@ -96,7 +97,7 @@ public class GiohangActivity extends AppCompatActivity {
         Map<String, Object> updates = new HashMap<>();
         updates.put("price", order.getPrice());
         updates.put("total_bill", order.getTotal_bill());
-        updates.put("status", 1);
+        updates.put("status", 0);
         updates.put("address_user",order.getAddress_user());
         updates.put("name_user",order.getName_user());
         updates.put("number_phone",order.getNumber_phone());
@@ -138,7 +139,6 @@ public class GiohangActivity extends AppCompatActivity {
         });
     }
     public void findOrderByUserId(String userId) {
-
         reference = FirebaseDatabase.getInstance().getReference("Order");
 
         // Sử dụng phương thức orderByChild và equalTo để tìm kiếm đơn hàng có id_user tương ứng
@@ -186,7 +186,6 @@ public class GiohangActivity extends AppCompatActivity {
         });
     }
     public void getDataBill(OnGetDataUser listener) {
-
         List<ItemsGiohang> itemsGiohangList = new ArrayList<>();
         if (id_order[0].equals("null")) {
             Toast.makeText(GiohangActivity.this, "None find order!", Toast.LENGTH_SHORT).show();
